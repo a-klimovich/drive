@@ -1,9 +1,94 @@
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-body {
-  margin: 0;
+body,
+html {
+  min-height: 100%;
+  font-size: 16px;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
+footer {
+  flex: 0 0 auto;
+}
+
+img {
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+h1 {
+  font-size: 24px;
+  line-height: 27px;
+
+  @include md {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  @include md {
+    font-size: 68px;
+    line-height: 77px;
+  }
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 27px;
+
+  @include md {
+    font-size: 26px;
+    line-height: 29px;
+  }
+
+  @include lg {
+    font-size: 32px;
+    line-height: 36px;
+  }
+}
+
+p {
+  font-size: 16px;
+  line-height: 18px;
+
+  @include md {
+    font-size: 20px;
+    line-height: 23px;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  padding: 0 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+
+  @include md {
+    padding: 0 33px;
+    max-width: 768px;
+  }
+
+  @include lg {
+    max-width: 1240px;
+  }
 }
