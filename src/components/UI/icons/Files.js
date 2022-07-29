@@ -1,3 +1,5 @@
+// CONST
+import fileType from '../../../utils/const/fileType';
 // FILES TYPE
 import {ReactComponent as DocIcon} from '../../../assets/image/files-icon/doc.svg';
 import {ReactComponent as JpgIcon} from '../../../assets/image/files-icon/jpg.svg';
@@ -10,37 +12,37 @@ import {ReactComponent as RarIcon} from '../../../assets/image/files-icon/rar.sv
 import {ReactComponent as PointIcon} from '../../../assets/image/files-icon/point.svg';
 import {ReactComponent as PdfIcon} from '../../../assets/image/files-icon/pdf.svg';
 
-const fileTypeIcone = (fileType) => {
-  switch (fileType) {
-    case 'doc':
+const fileTypeIcone = (type) => {
+  switch (type) {
+    case fileType.DOC:
       return <DocIcon />
 
-    case 'jpg':
+    case fileType.IMG:
       return <JpgIcon />
 
-    case 'musik':
+    case fileType.WAV:
       return <MusikIcon />
 
-    case 'zip':
+    case fileType.ZIP:
       return <ZipIcon />
 
-    case 'XLS':
+    case fileType.XLS:
       return <XlsIcon />
 
-    case 'video':
+    case fileType.MP4:
       return <VideoIcon />
+
+    case fileType.PPT:
+      return <PointIcon />
+
+    case fileType.PDF:
+      return <PdfIcon />
 
     case 'txt':
       return <TxtIcon />
 
     case 'rar':
       return <RarIcon />
-
-    case 'point':
-      return <PointIcon />
-
-    case 'pdf':
-      return <PdfIcon />
 
     default:
       break;

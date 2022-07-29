@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "Harmonia Sans";
+  src: local("Harmonia Sans Bold"), local("Harmonia-Sans-Bold"),
+    url("HarmoniaSansProCyr-Bold.woff2") format("woff2"),
+    url("HarmoniaSansProCyr-Bold.woff") format("woff"),
+    url("HarmoniaSansProCyr-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Harmonia Sans";
+  src: local("Harmonia Sans Regular"), local("Harmonia-Sans-Regular"),
+    url("HarmoniaSansProCyr-Regular.woff2") format("woff2"),
+    url("HarmoniaSansProCyr-Regular.woff") format("woff"),
+    url("HarmoniaSansProCyr-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Harmonia Sans";
+  src: local("Harmonia Sans Italic"), local("Harmonia-Sans-Italic"),
+    url("HarmoniaSansProCyr-Italic.woff2") format("woff2"),
+    url("HarmoniaSansProCyr-Italic.woff") format("woff"),
+    url("HarmoniaSansProCyr-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
