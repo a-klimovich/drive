@@ -1,0 +1,20 @@
+header {
+  background-color: $white;
+
+  .header-content {
+    display: flex;
+    height: 74px;
+  }
+
+  .header__user-name {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+  }
+
+  .header__search-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 19px;
+  }
+}

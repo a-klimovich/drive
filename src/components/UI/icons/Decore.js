@@ -9,34 +9,34 @@ import { ReactComponent as StarIcon } from '../../../assets/image/star.svg';
 import { ReactComponent as UserIcon } from '../../../assets/image/user.svg';
 
 
-const decorIcon = (fileType) => {
+const decorIcon = (fileType, props) => {
   switch (fileType) {
     case 'download':
-      return <DownloadIcon />
+      return <DownloadIcon {...props} />
 
     case 'error':
-      return <ErrorIcon />
+      return <ErrorIcon {...props} />
 
     case 'eyse':
-      return <EyseIcon />
+      return <EyseIcon {...props} />
 
     case 'filterOptions':
-      return <FilterOptionsIcon />
+      return <FilterOptionsIcon {...props} />
 
     case 'heart':
-      return <HeartIcon />
+      return <HeartIcon {...props} />
 
     case 'logOut':
-      return <LogOutIcon />
+      return <LogOutIcon {...props} />
 
     case 'search':
-      return <SearchIcon />
+      return <SearchIcon {...props} />
 
     case 'star':
-      return <StarIcon />
+      return <StarIcon {...props} />
 
     case 'user':
-      return <UserIcon />
+      return <UserIcon {...props} />
       
     default:
       break;

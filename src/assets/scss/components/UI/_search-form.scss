@@ -1,0 +1,25 @@
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 422px;
+  height: 40px;
+  background: #f6f6f6;
+  border-radius: 7px;
+  padding: 0px 12px;
+
+  &__form {
+    display: flex;
+    width: 100%;
+
+    input {
+      width: 100%;
+      background: transparent;
+      outline: transparent;
+    }
+  }
+
+  .btn-submit {
+    margin-right: 13px;
+    padding-left: 4px;
+  }
+}

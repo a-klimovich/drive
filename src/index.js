@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 // UTILS
-import ErrorBoundary from './utils/Error/ErrorBoundary';
+import ErrorBoundary from './utils/error/ErrorBoundary';
 // COMPONENTS
 import App from './App';
 // STYLES
