@@ -3,7 +3,7 @@ import fileType from '../../../utils/const/fileType';
 // FILES TYPE
 import {ReactComponent as DocIcon} from '../../../assets/image/files-icon/doc.svg';
 import {ReactComponent as JpgIcon} from '../../../assets/image/files-icon/jpg.svg';
-import {ReactComponent as MusikIcon} from '../../../assets/image/files-icon/musik.svg';
+import {ReactComponent as MusicIcon} from '../../../assets/image/files-icon/musik.svg';
 import {ReactComponent as ZipIcon} from '../../../assets/image/files-icon/zip.svg';
 import {ReactComponent as XlsIcon} from '../../../assets/image/files-icon/XLS.svg';
 import {ReactComponent as VideoIcon} from '../../../assets/image/files-icon/video.svg';
@@ -12,7 +12,7 @@ import {ReactComponent as RarIcon} from '../../../assets/image/files-icon/rar.sv
 import {ReactComponent as PointIcon} from '../../../assets/image/files-icon/point.svg';
 import {ReactComponent as PdfIcon} from '../../../assets/image/files-icon/pdf.svg';
 
-const fileTypeIcone = (type) => {
+const fileTypeIcon = (type) => {
   switch (type) {
     case fileType.DOC:
       return <DocIcon />
@@ -21,7 +21,7 @@ const fileTypeIcone = (type) => {
       return <JpgIcon />
 
     case fileType.WAV:
-      return <MusikIcon />
+      return <MusicIcon />
 
     case fileType.ZIP:
       return <ZipIcon />
@@ -49,4 +49,4 @@ const fileTypeIcone = (type) => {
   }
 }
 
-export default fileTypeIcone;
+export default fileTypeIcon;

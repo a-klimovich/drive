@@ -1,15 +1,14 @@
-import React, { useMemo } from "react";
+import React from "react";
 // COMPONENTS
-// import fileTypeIcone from "./components/UI/icons/files";
-import fileTypeIcone from "../UI/icons/files";
-import decorIcon from "../UI/icons/decore";
+import fileTypeIcon from "../UI/icons/files";
+import decorIcon from "../UI/icons/decors";
 import folderIcon from "../UI/icons/folder";
 import Checkbox from "../form/CheckBox";
 // ANTD
 import { Table } from "antd";
 // base
-import columns from "./base/FileTableColumn";
-import APIIS from "./base/APIIS";
+import columns from "./__common/base/FileTableColumn";
+import APIIS from "./__common/base/APIIS";
 
 const data = [];
 
@@ -39,7 +38,7 @@ APIIS.Folders.map((element) => (data.push({
 })));
 
 APIIS.Documents.map((element) => (data.push({
-  name: <>{fileTypeIcone(element.extension)} {element.title}</>,
+  name: <>{fileTypeIcon(element.extension)} {element.title}</>,
   recommendations: <Checkbox
     label={decorIcon("star", {
       style: {

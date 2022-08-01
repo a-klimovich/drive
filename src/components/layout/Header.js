@@ -1,7 +1,7 @@
 import { useState } from 'react';
 // COMPONENTS
 import Container from "../helpers/Container";
-import decorIcon from "../UI/icons/decore";
+import decorIcon from "../UI/icons/decors";
 import Title from "../UI/Title";
 import SearchForm from "../form/SearchForm";
 import Checkbox from "../form/CheckBox";

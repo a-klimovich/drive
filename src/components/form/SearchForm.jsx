@@ -1,5 +1,5 @@
 import { useState } from "react";
-import decorIcon from '../UI/icons/decore';
+import decorIcon from '../UI/icons/decors';
 
 const SearchForm = () => {
   const [text, setText] = useState("");

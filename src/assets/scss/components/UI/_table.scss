@@ -4,4 +4,9 @@ table {
   .ant-table-cell {
     text-align: start;
   }
+
+  .ant-table-row {
+    height: 28px;
+    margin-bottom: 2px solid $gray;
+  }
 }
