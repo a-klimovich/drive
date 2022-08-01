@@ -21,9 +21,9 @@ root.render(
   <ErrorBoundary>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Authorization />} />
+        <Route path='/authorization' element={<Authorization />} />
         <Route path='/reset-password' element={<ResetPassword />} />
-        <Route path='/store' element={<App />} />
+        <Route path='/' element={<App />} />
       </Routes>
     </BrowserRouter>
   </ErrorBoundary>

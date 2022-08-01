@@ -40,6 +40,7 @@ const Authorization = () => {
             initialValues={{ remember: true }}
             onFinish={onFinish}
             autoComplete='off'
+            validateTrigger={'onBlur'}
           >
             <Form.Item
               label='Логин'
