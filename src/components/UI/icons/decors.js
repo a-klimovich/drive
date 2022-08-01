@@ -1,6 +1,6 @@
 import { ReactComponent as DownloadIcon } from '../../../assets/image/download.svg';
 import { ReactComponent as ErrorIcon } from '../../../assets/image/error.svg';
-import { ReactComponent as EyseIcon } from '../../../assets/image/eyse.svg';
+import { ReactComponent as EyesIcon } from '../../../assets/image/eyes.svg';
 import { ReactComponent as FilterOptionsIcon } from '../../../assets/image/filter-options.svg';
 import { ReactComponent as HeartIcon } from '../../../assets/image/heart.svg';
 import { ReactComponent as LogOutIcon } from '../../../assets/image/log-out.svg';
@@ -17,8 +17,8 @@ const decorIcon = (fileType, props) => {
     case 'error':
       return <ErrorIcon {...props} />
 
-    case 'eyse':
-      return <EyseIcon {...props} />
+    case 'eyes':
+      return <EyesIcon {...props} />
 
     case 'filterOptions':
       return <FilterOptionsIcon {...props} />

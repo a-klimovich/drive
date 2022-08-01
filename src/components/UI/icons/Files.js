@@ -12,37 +12,37 @@ import {ReactComponent as RarIcon} from '../../../assets/image/files-icon/rar.sv
 import {ReactComponent as PointIcon} from '../../../assets/image/files-icon/point.svg';
 import {ReactComponent as PdfIcon} from '../../../assets/image/files-icon/pdf.svg';
 
-const fileTypeIcon = (type) => {
+const fileTypeIcon = (type, props) => {
   switch (type) {
     case fileType.DOC:
-      return <DocIcon />
+      return <DocIcon {...props}/>
 
     case fileType.IMG:
-      return <JpgIcon />
+      return <JpgIcon {...props}/>
 
     case fileType.WAV:
-      return <MusicIcon />
+      return <MusicIcon {...props}/>
 
     case fileType.ZIP:
-      return <ZipIcon />
+      return <ZipIcon {...props}/>
 
     case fileType.XLS:
-      return <XlsIcon />
+      return <XlsIcon {...props}/>
 
     case fileType.MP4:
-      return <VideoIcon />
+      return <VideoIcon {...props}/>
 
     case fileType.PPT:
-      return <PointIcon />
+      return <PointIcon {...props}/>
 
     case fileType.PDF:
-      return <PdfIcon />
+      return <PdfIcon {...props}/>
 
     case 'txt':
-      return <TxtIcon />
+      return <TxtIcon {...props}/>
 
     case 'rar':
-      return <RarIcon />
+      return <RarIcon {...props}/>
 
     default:
       break;

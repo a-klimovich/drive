@@ -1,12 +1,8 @@
-table {
-  width: 100%;
+.ant-table {
+  background: transparent;
 
-  .ant-table-cell {
-    text-align: start;
-  }
-
-  .ant-table-row {
-    height: 28px;
-    margin-bottom: 2px solid $gray;
+  .ant-table-thead > tr > th {
+    background: transparent;
+    font-weight: 700;
   }
 }

@@ -2,7 +2,7 @@ const Checkbox = (props) => {
   const { label, value, onChange, style } = props;
   return (
     <label
-      className="flex-center-all"
+      className="flex-align-center"
       style={style}
     >
       <input type="checkbox" checked={value} onChange={onChange} />

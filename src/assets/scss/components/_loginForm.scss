@@ -1,0 +1,48 @@
+.login-form {
+  .login-form-button {
+    min-width: 100px;
+    background: $yellow;
+    box-shadow: 1px 1px 0px #E2E2E2;
+    border: none;
+    border-radius: 4px;
+
+    &:hover, &:focus {
+      color: $white;
+    }
+  }
+
+  .ant-form-item-label {
+    font-weight: 700;
+    padding: 0;
+  }
+
+  .ant-form-item-required::before {
+    display: none !important;
+  }
+
+  .ant-input {
+    height: 57px;
+    background-color: $gray-light;
+    border-radius: 7px;
+    color: #717579;
+    font-size: 14px;
+    line-height: 17px;
+    border-color: transparent;
+
+    &::placeholder {
+      color: #717579;
+    }
+  }
+
+  .ant-input-affix-wrapper {
+    background-color: $gray-light;
+    padding: 0px 11px;
+    border-radius: 7px;
+    border-color: transparent;
+  }
+  
+  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper, .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover,
+  .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input, .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover {
+    background-color: $gray-light;
+  }
+}

@@ -1,76 +1,48 @@
 import React from "react";
 // COMPONENTS
-import fileTypeIcon from "../UI/icons/files";
 import decorIcon from "../UI/icons/decors";
-import folderIcon from "../UI/icons/folder";
 import Checkbox from "../form/CheckBox";
+import Container from "../helpers/Container";
 // ANTD
 import { Table } from "antd";
-// base
+// BASE
 import columns from "./__common/base/FileTableColumn";
+import TitleFile from "./__common/TitleFile";
 import APIIS from "./__common/base/APIIS";
+
+const newApiData = [
+  ...APIIS.Folders,
+  ...APIIS.Documents
+];
 
 const data = [];
 
-APIIS.Folders.map((element) => (data.push({
-  name: <>{folderIcon(true)} {element.title}</>,
+newApiData.map((element) => (data.push({
+  name: <TitleFile data={element} />,
   recommendations: <Checkbox
-    label={decorIcon("star", {
-      style: {
-        width: '18px',
-        height: '18px',
-        fill: `${false ? '#FFC107' : '#B3B5B7'}`
-      }
-    })}
+    label={decorIcon("star")}
     value={true}
   />,
   favorite: <Checkbox
-    label={decorIcon("heart", {
-      style: {
-        width: '18px',
-        height: '18px',
-        fill: `${false ? '#FFC107' : '#B3B5B7'}`
-      }
-    })}
+    label={decorIcon("heart")}
     value={true}
   />,
-  date: element.updated_at || '',
-})));
-
-APIIS.Documents.map((element) => (data.push({
-  name: <>{fileTypeIcon(element.extension)} {element.title}</>,
-  recommendations: <Checkbox
-    label={decorIcon("star", {
-      style: {
-        width: '18px',
-        height: '18px',
-        fill: `${false ? '#FFC107' : '#B3B5B7'}`
-      }
-    })}
-    value={true}
-  />,
-  favorite: <Checkbox
-    label={decorIcon("heart", {
-      style: {
-        width: '18px',
-        height: '18px',
-        fill: `${false ? '#FFC107' : '#B3B5B7'}`
-      }
-    })}
-    value={true}
-  />,
-  date: element.updated_at || '',
+  date: element.updated_at || '-',
+  view: decorIcon("eyes"), // TODO: link to download ore view file
+  download: decorIcon("download"), // TODO: link to download ore view file
 })));
 
 export default function FileTable() {
   
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      pagination={{
-        position: ['none'],
-      }}
-    />
+    <Container>
+      <Table
+        columns={columns}
+        dataSource={data}
+        pagination={{
+          position: ['none'],
+        }}
+      />
+    </Container>
   );
 };

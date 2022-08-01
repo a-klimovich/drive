@@ -1,10 +1,11 @@
 export const BASE_URL = {
+  API: '/api',
   SEARCH: '/api/search',
   DOCUMENTS: '/api/documents',
   FOLDERS: '/api/folders',
 }
 
-export const QUERYS = {
+export const QUERY = {
   QUERY: '/query',
   TITLE: '/title',
   UPDATE_GTE: '/updated_at__gte',
@@ -22,4 +23,3 @@ export const QUERYS = {
 // ext - тип файла
 // liked - избранное (liked)
 
-// export default BASE_URL;
