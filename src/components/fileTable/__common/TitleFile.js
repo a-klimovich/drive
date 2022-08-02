@@ -33,12 +33,8 @@ const TitleFile = ({ data }) => {
       })}
       <Paragraph
         style={{
-          maxWidth: '90%',
           overflow: 'hidden',
           marginBottom: 0,
-        }}
-        ellipsis={{
-          rows: 1,
         }}
         editable={{
           onChange: setEditableStr,

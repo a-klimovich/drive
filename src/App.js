@@ -1,3 +1,4 @@
+import { BackTop } from 'antd';
 // COMPONENTS
 import Header from "./components/layout/Header";
 import FileTable from './components/fileTable';
@@ -11,6 +12,12 @@ function App() {
       />
 
       <FileTable />
+
+      <BackTop>
+        <div 
+          className='back-to-top'
+        >UP</div>
+      </BackTop>
     </div>
   );
 }
