@@ -1,7 +1,8 @@
 .search-box {
   display: flex;
   align-items: center;
-  width: 422px;
+  width: 100%;
+  max-width: 422px;
   height: 40px;
   background: #f6f6f6;
   border-radius: 7px;
@@ -16,6 +17,11 @@
       background: transparent;
       outline: transparent;
     }
+  }
+
+  button {
+    display: flex;
+    align-items: center;
   }
 
   .btn-submit {

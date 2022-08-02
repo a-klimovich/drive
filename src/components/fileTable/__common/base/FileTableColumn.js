@@ -25,11 +25,7 @@ const columns = [
   },
   {
     title: '',
-    dataIndex: 'view',
-  },
-  {
-    title: '',
-    dataIndex: 'download',
+    dataIndex: 'control',
   },
 ];
 

@@ -6,3 +6,8 @@
     font-weight: 700;
   }
 }
+
+.ant-table-wrapper {
+  max-width: fit-content;
+  overflow-x: auto;
+}

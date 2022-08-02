@@ -1,6 +1,6 @@
 import React from "react";
 // ANTD
-import { Table, Breadcrumb } from "antd";
+import { Table, Breadcrumb, Space, Button } from "antd";
 // COMPONENTS
 import decorIcon from "../UI/icons/decors";
 import Checkbox from "../form/CheckBox";
@@ -19,19 +19,38 @@ const newApiData = [
 
 const data = [];
 
+const onClick = () => {
+  console.log(12 + 'click');
+}
+
 newApiData.map((element) => (data.push({
+  key: `${element.id + '_' + element.title}`,
   name: <TitleFile data={element} />,
   recommendations: <Checkbox
     label={decorIcon("star")}
-    value={true}
+    onChange={onClick}
+    value={element.is_favourite}
   />,
   favorite: <Checkbox
-    label={decorIcon("heart")}
-    value={true}
+    onChange={onClick}
+    value={element.marked_by_admin}
   />,
   date: element.updated_at || '-',
-  view: decorIcon("eyes"), // TODO: link to download ore view file
-  download: decorIcon("download"), // TODO: link to download ore view file
+  control: <Space>
+    <Button
+      type="text"
+      htmlType="button"
+    >
+      {decorIcon("eyes")}
+    </Button>
+
+    <Button
+      type="text"
+      htmlType="button"
+    >
+      {decorIcon("download")}
+    </Button>
+  </Space>,
 })));
 
 export default function FileTable() {

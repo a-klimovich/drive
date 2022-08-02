@@ -6,15 +6,21 @@ header {
     height: 74px;
   }
 
+  .header__logout-btn {
+    padding-top: 5px;
+  }
+
   .header__user-name {
     display: flex;
     align-items: center;
-    margin-right: auto;
+    width: 100%;
   }
 
   .header__search-wrapper {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
+    width: 100%;
     margin-right: 19px;
   }
 }
