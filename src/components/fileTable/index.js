@@ -3,7 +3,8 @@ import React from "react";
 import { Table, Breadcrumb, Space, Button } from "antd";
 // COMPONENTS
 import decorIcon from "../UI/icons/decors";
-import Checkbox from "../form/CheckBox";
+import CheckBoxRecommend from "../form/CheckBoxRecommend";
+import CheckBoxFavorite from "../form/CheckBoxFavorite";
 import Container from "../helpers/Container";
 // BASE
 import columns from "./__common/base/FileTableColumn";
@@ -19,21 +20,14 @@ const newApiData = [
 
 const data = [];
 
-const onClick = () => {
-  console.log(12 + 'click');
-}
-
 newApiData.map((element) => (data.push({
   key: `${element.id + '_' + element.title}`,
   name: <TitleFile data={element} />,
-  recommendations: <Checkbox
-    label={decorIcon("star")}
-    onChange={onClick}
-    value={element.is_favourite}
+  recommendations: <CheckBoxRecommend
+    defaultValue={element.marked_by_admin}
   />,
-  favorite: <Checkbox
-    onChange={onClick}
-    value={element.marked_by_admin}
+  favorite: <CheckBoxFavorite
+    defaultValue={element.is_favourite}
   />,
   date: element.updated_at || '-',
   control: <Space>
@@ -54,7 +48,6 @@ newApiData.map((element) => (data.push({
 })));
 
 export default function FileTable() {
-  
   return (
     <Container>
       <Breadcrumb separator=">">

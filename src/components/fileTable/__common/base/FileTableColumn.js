@@ -7,7 +7,7 @@ const columns = [
     title: 'Рекомендации',
     dataIndex: 'recommendations',
     sorter: {
-      compare: (x, y) => { return (x.recommendations === y.recommendations) ? 0 : x.recommendations ? -1 : 1 },
+      compare: (x, y) => { return (x === y) ? 0 : x ? -1 : 1 },
       multiple: 2,
     },
   },
@@ -15,7 +15,7 @@ const columns = [
     title: 'Избранное',
     dataIndex: 'favorite',
     sorter: {
-      compare: (x, y) => { return (x.favorite === y.favorite) ? 0 : x.favorite ? -1 : 1 },
+      compare: (x, y) => { return (x === y) ? 0 : x ? -1 : 1 },
       multiple: 1,
     },
   },
