@@ -1,5 +1,5 @@
 import React from "react";
-import CenteredContent from '../../components/helpers/CenteredContent';
+import CenteredContent from '../../components/CenteredContent';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {

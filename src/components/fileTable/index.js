@@ -1,53 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // ANTD
-import { Table, Breadcrumb, Space, Button } from "antd";
+import { Table, Breadcrumb } from "antd";
+// HELPERS
+import formattingListElements from '../../utils/helpers/formattingListElements';
 // COMPONENTS
-import decorIcon from "../UI/icons/decors";
-import CheckBoxRecommend from "../form/CheckBoxRecommend";
-import CheckBoxFavorite from "../form/CheckBoxFavorite";
-import Container from "../helpers/Container";
+import Container from "../Container";
 // BASE
-import columns from "./__common/base/FileTableColumn";
-import TitleFile from "./__common/TitleFile";
-import APIIS from "./__common/base/APIIS";
+import columns from "./base/FileTableColumn";
+// AXIOS
+import request from '../../utils/api/axios';
 
 const { Item } = Breadcrumb;
 
-const newApiData = [
-  ...APIIS.Folders,
-  ...APIIS.Documents
-];
-
-const data = [];
-
-newApiData.map((element) => (data.push({
-  key: `${element.id + '_' + element.title}`,
-  name: <TitleFile data={element} />,
-  recommendations: <CheckBoxRecommend
-    defaultValue={element.marked_by_admin}
-  />,
-  favorite: <CheckBoxFavorite
-    defaultValue={element.is_favourite}
-  />,
-  date: element.updated_at || '-',
-  control: <Space>
-    <Button
-      type="text"
-      htmlType="button"
-    >
-      {decorIcon("eyes")}
-    </Button>
-
-    <Button
-      type="text"
-      htmlType="button"
-    >
-      {decorIcon("download")}
-    </Button>
-  </Space>,
-})));
+const getData = () => request.get('/api');
 
 export default function FileTable() {
+  const [data, setData] = useState([]);
+
+  const dataFolders = data?.Folders || [];
+  const dataDocuments = data?.Documents || [];
+
+  
+
+  useEffect(() => {
+    getData().then(res => setData(res?.data))
+  }, [])
+
+  const allElementsStoreList = [
+    ...formattingListElements(dataFolders),
+    ...formattingListElements(dataDocuments)
+  ];
+
   return (
     <Container>
       <Breadcrumb separator=">">
@@ -59,7 +42,7 @@ export default function FileTable() {
 
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={allElementsStoreList}
         pagination={{
           position: ['none'],
         }}

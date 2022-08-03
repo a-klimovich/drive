@@ -2,9 +2,8 @@ import { useState } from 'react';
 // ANTD
 import { Typography } from 'antd';
 // COMPONENTS
-import folderIcon from "../../UI/icons/folder";
-import fileTypeIcon from "../../UI/icons/files";
-import 'antd/dist/antd.css';
+import folderIcon from "./UI/icons/folder";
+import fileTypeIcon from "./UI/icons/files";
 
 const { Paragraph } = Typography;
 

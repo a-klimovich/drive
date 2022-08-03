@@ -1,10 +1,10 @@
 import { useState } from 'react';
 // COMPONENTS
-import Container from "../helpers/Container";
+import Container from "../Container";
 import decorIcon from "../UI/icons/decors";
 import Title from "../UI/Title";
 import SearchForm from "../form/SearchForm";
-import Checkbox from "../form/CheckBox";
+import Checkbox from "../checkbox/CheckBox";
 
 export default function Header(props) {
   const { userName } = props;

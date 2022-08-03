@@ -14,6 +14,7 @@ import App from './App';
 // UTILS
 import ErrorBoundary from './utils/error/ErrorBoundary';
 // STYLES
+import 'antd/dist/antd.min.css';
 import './assets/scss/index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

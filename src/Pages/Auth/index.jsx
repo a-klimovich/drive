@@ -1,7 +1,7 @@
 import { Card, Button, Form, Input } from 'antd';
 import { Link } from 'react-router-dom';
 // COMPONENTS
-import CenteredContent from "../../components/helpers/CenteredContent"
+import CenteredContent from "../../components/CenteredContent"
 import Title from "../../components/UI/Title";
 import decorIcon from "../../components/UI/icons/decors";
 import authImageBG from '../../assets/image/bg-lines.jpg';

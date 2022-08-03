@@ -1,6 +1,6 @@
 import { Card, Form, Button, Input, Typography } from 'antd';
 // COMPONENTS
-import CenteredContent from "../../components/helpers/CenteredContent"
+import CenteredContent from "../../components/CenteredContent"
 import Title from "../../components/UI/Title";
 import authImageBG from '../../assets/image/bg-lines.jpg';
 

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import decorIcon from '../UI/icons/decors';
+import Popover from '../Popover';
+import FilterPopoverForm from './FilterPopoverForm';
 
 const SearchForm = () => {
   const [text, setText] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // searct query!
+    // search query!
   };
 
   const onChange = evt => setText(evt.target.value);
@@ -15,9 +17,10 @@ const SearchForm = () => {
     <div className="search-box">
       <form className="search-box__form">
         <button
-        className="btn-submit"
-         onClick={onSubmit}
-         type='button'>
+          className="btn-submit"
+          onClick={onSubmit}
+          type='button'
+        >
           {decorIcon('search')}
         </button>
 
@@ -29,9 +32,13 @@ const SearchForm = () => {
         />
       </form>
 
-      <button>
-        {decorIcon('filterOptions')}
-      </button>
+      <Popover
+        content={FilterPopoverForm}
+      >
+        <button>
+          {decorIcon('filterOptions')}
+        </button>
+      </Popover>
     </div>
   );
 };
