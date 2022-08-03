@@ -7,6 +7,7 @@ import { ReactComponent as LogOutIcon } from '../../../assets/image/log-out.svg'
 import { ReactComponent as SearchIcon } from '../../../assets/image/search.svg';
 import { ReactComponent as StarIcon } from '../../../assets/image/star.svg';
 import { ReactComponent as UserIcon } from '../../../assets/image/user.svg';
+import { ReactComponent as SadFace } from '../../../assets/image/sad-face.svg';
 
 
 const decorIcon = (fileType, props) => {
@@ -34,6 +35,9 @@ const decorIcon = (fileType, props) => {
 
     case 'star':
       return <StarIcon {...props} />
+
+    case 'sadFace':
+      return <SadFace {...props} />
 
     case 'user':
       return <UserIcon {...props} />

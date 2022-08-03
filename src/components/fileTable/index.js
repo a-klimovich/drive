@@ -5,8 +5,9 @@ import { Table, Breadcrumb } from "antd";
 import formattingListElements from '../../utils/helpers/formattingListElements';
 // COMPONENTS
 import Container from "../Container";
+import EmptyTable from '../UI/EmptyTable';
 // BASE
-import columns from "./base/FileTableColumn";
+import columns from "./base/columns";
 // AXIOS
 import request from '../../utils/api/axios';
 
@@ -16,19 +17,17 @@ const getData = () => request.get('/api');
 
 export default function FileTable() {
   const [data, setData] = useState([]);
-
+  
   const dataFolders = data?.Folders || [];
   const dataDocuments = data?.Documents || [];
-
-  
 
   useEffect(() => {
     getData().then(res => setData(res?.data))
   }, [])
 
   const allElementsStoreList = [
-    ...formattingListElements(dataFolders),
-    ...formattingListElements(dataDocuments)
+    // ...formattingListElements(dataFolders),
+    // ...formattingListElements(dataDocuments)
   ];
 
   return (
@@ -43,6 +42,7 @@ export default function FileTable() {
       <Table
         columns={columns}
         dataSource={allElementsStoreList}
+        locale={{ emptyText: <EmptyTable description='По вашему запросу не найдено ни одного объекта' /> }}
         pagination={{
           position: ['none'],
         }}
