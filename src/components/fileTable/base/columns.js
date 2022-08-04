@@ -6,16 +6,10 @@ const columns = [
   {
     title: 'Рекомендации',
     dataIndex: 'recommendations',
-    sorter: {
-      compare: (x, y) => { return (x === y) ? 0 : x ? -1 : 1 },
-    },
   },
   {
     title: 'Избранное',
     dataIndex: 'favorite',
-    sorter: {
-      compare: (x, y) => { return (x === y) ? 0 : x ? -1 : 1 },
-    },
   },
   {
     title: 'Последнее изменение',

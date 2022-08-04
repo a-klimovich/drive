@@ -1,4 +1,3 @@
-import { useState } from 'react';
 // ANTD
 import { Typography } from 'antd';
 // COMPONENTS
@@ -8,16 +7,20 @@ import fileTypeIcon from "./UI/icons/files";
 const { Paragraph } = Typography;
 
 const TitleFile = ({ data }) => {
-  const [editableStr, setEditableStr] = useState(data?.title || '');
-
   const isFolder = data?.documents !== undefined;
   const isFolderEmpty = isFolder && data?.documents.length;
-  const fileType = data?.extension;
+  const { title, extension: fileType } = data;
+
+  const handleOpenFile = () => {
+    const { id } = data;
+    return `/api/folders/${id}`
+  }
 
   return (
     <div
       key={data?.id}
       style={{ display: 'flex', alignItems: 'center', cursor: 'pointer'}}
+      onDoubleClick={handleOpenFile}
     >
       {isFolder ? folderIcon(isFolderEmpty, {
         style: {
@@ -32,16 +35,10 @@ const TitleFile = ({ data }) => {
       })}
       <Paragraph
         style={{
-          overflow: 'hidden',
           marginBottom: 0,
         }}
-        editable={{
-          onChange: setEditableStr,
-          triggerType: 'text',
-          maxLength: 150,
-        }}
       >
-        {editableStr}
+        { title }
       </Paragraph>
     </div>
   )
