@@ -20,7 +20,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="folder" element={<p>folder</p>} />
           <Route path="folder/:folderID" element={<p>folderID</p>} />
-          <Route path='/*' element={<p>netu nichego</p>} />
+          <Route path='/*' element={<p>Neth niche's</p>} />
         </Route>
 
       </Routes>
