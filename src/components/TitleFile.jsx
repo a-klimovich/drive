@@ -1,26 +1,28 @@
+import { useNavigate } from 'react-router-dom';
 // ANTD
 import { Typography } from 'antd';
 // COMPONENTS
-import folderIcon from "./UI/icons/folder";
-import fileTypeIcon from "./UI/icons/files";
+import folderIcon from "./UI/icons/Folder";
+import fileTypeIcon from "./UI/icons/Files";
 
 const { Paragraph } = Typography;
 
 const TitleFile = ({ data }) => {
-  const isFolder = data?.documents !== undefined;
-  const isFolderEmpty = isFolder && data?.documents.length;
-  const { title, extension: fileType } = data;
+  const navigate = useNavigate();
 
-  const handleOpenFile = () => {
-    const { id } = data;
-    return `/api/folders/${id}`
-  }
+  const isFolder = data?.documents !== undefined;
+  const isFolderEmpty = isFolder && data?.documents.length > 0;
+  const { id, title, name, extension: fileType } = data;
+
+  const goToFolder = (id) => () => {
+    navigate(`/${id}`);
+  };
 
   return (
     <div
       key={data?.id}
       style={{ display: 'flex', alignItems: 'center', cursor: 'pointer'}}
-      onDoubleClick={handleOpenFile}
+      onClick={goToFolder(id)}
     >
       {isFolder ? folderIcon(isFolderEmpty, {
         style: {
@@ -38,7 +40,7 @@ const TitleFile = ({ data }) => {
           marginBottom: 0,
         }}
       >
-        { title }
+        { title || name }
       </Paragraph>
     </div>
   )

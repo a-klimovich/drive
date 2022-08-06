@@ -1,31 +1,25 @@
-import { Routes, Route } from "react-router-dom";
 // STYLES
-import 'antd/dist/antd.min.css';
-import './assets/scss/index.scss';
-// COMPONENTS
-import Layout from "./components/layout";
-// PAGES
-import Authorization from './Pages/Auth';
-import ResetPassword from './Pages/ResetPassword';
-import Home from './Pages/Home';
+import "antd/dist/antd.min.css";
+import "./assets/scss/index.scss";
+// ROUTER
+import Router from "./utils/router";
+import Provider from "./utils/context/Provider";
+// LAYOUT
+import Layout, { Content } from "antd/lib/layout/layout";
+import Header from "./components/layout/Header";
+import Container from "./components/Container";
 
-function App() {
-  return (
-    <div className="App">
-      <Routes>
-        <Route path='/authorization' element={<Authorization />} />
-        <Route path='/reset-password' element={<ResetPassword />} />
-        
-        <Route path='/' element={ <Layout /> }>
-          <Route index element={<Home />} />
-          <Route path="folder" element={<p>folder</p>} />
-          <Route path="folder/:folderID" element={<p>folderID</p>} />
-          <Route path='/*' element={<p>Neth niche's</p>} />
-        </Route>
-
-      </Routes>
-    </div>
-  );
-}
+const App = () => (
+  <Layout className="App">
+    <Header />
+    <Content>
+      <Container>
+        <Provider>
+          <Router />
+        </Provider>
+      </Container>
+    </Content>
+  </Layout>
+);
 
 export default App;
