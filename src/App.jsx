@@ -11,14 +11,14 @@ import Container from "./components/Container";
 
 const App = () => (
   <Layout className="App">
-    <Header />
-    <Content>
-      <Container>
-        <Provider>
+    <Provider>
+      <Header />
+      <Content>
+        <Container>
           <Router />
-        </Provider>
-      </Container>
-    </Content>
+        </Container>
+      </Content>
+    </Provider>
   </Layout>
 );
 

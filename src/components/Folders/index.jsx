@@ -23,7 +23,7 @@ const Folders = () => {
       setCurrentFolder(getFolderData(currentFolder, folderId))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [folderId]);
+  }, [data, folderId]);
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),

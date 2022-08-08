@@ -8,10 +8,15 @@ import Checkbox from "../checkbox/CheckBox";
 
 export default function Header(props) {
   const { userName } = props;
-  const [checkedOne, setCheckedOne] = useState(false);
+  const [checkedFavorite, setCheckedFavorite] = useState(false);
+  const [checkedRecommend, setCheckedRecommend] = useState(false);
 
-  const handleChangeOne = () => {
-    setCheckedOne(!checkedOne);
+  const handleChangeFavorite = () => {
+    setCheckedFavorite(!checkedFavorite);
+  };
+
+  const handleChangeRecommend = () => {
+    setCheckedRecommend(!checkedRecommend);
   };
 
   return (
@@ -33,12 +38,12 @@ export default function Header(props) {
                 style: {
                   width: '18px',
                   height: '18px',
-                  fill: `${checkedOne ? '#FFC107' : '#B3B5B7'}`
+                  fill: `${checkedFavorite ? '#FFC107' : '#B3B5B7'}`
                 }
               })}
-              value={checkedOne}
-              onChange={handleChangeOne}
-              style={{marginRight: '26px'}}
+              value={checkedFavorite}
+              onChange={handleChangeFavorite}
+              style={{ marginRight: '26px' }}
             />
 
             <Checkbox
@@ -46,14 +51,14 @@ export default function Header(props) {
                 style: {
                   width: '18px',
                   height: '16px',
-                  fill: `${checkedOne ? '#FC4D4D' : '#B3B5B7'}`
+                  fill: `${checkedRecommend ? '#FC4D4D' : '#B3B5B7'}`
                 }
               })}
-              value={checkedOne}
-              onChange={handleChangeOne}
-              style={{marginRight: '26px'}}
+              value={checkedRecommend}
+              onChange={handleChangeRecommend}
+              style={{ marginRight: '26px' }}
             />
-
+            
             <SearchForm />
           </div>
 

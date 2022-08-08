@@ -4,11 +4,10 @@ import Popover from '../Popover';
 import FilterPopoverForm from './FilterPopoverForm';
 
 const SearchForm = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // search query!
   };
 
   const onChange = evt => setText(evt.target.value);

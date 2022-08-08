@@ -1,9 +1,25 @@
-
-import { Form, Select, Checkbox, Input, Space, Button } from 'antd';
+import React, { useState } from "react";
+import {
+  ConfigProvider,
+  Form,
+  Select,
+  Checkbox,
+  Input,
+  Space,
+  Button,
+  DatePicker
+} from 'antd';
+// URL
+import { BASE_URL } from '../../utils/api/url';
+// COMPONENTS
+import fileTypeIcon from '../UI/icons/Files';
+// AXIOS
+import request from '../../utils/api/axios';
 
 const { Item } = Form;
 const { Option } = Select;
 const { Group } = Checkbox;
+const { RangePicker } = DatePicker;
 
 const layout = {
   labelCol: {
@@ -16,22 +32,72 @@ const layout = {
 
 const initialValues = {
   type: '',
-  editDate: '',
   keywords: '',
   checkboxGroup: [],
 }
 
+const fileTypeOptions = [
+  { value: 'DOC', title: 'Документы' },
+  { value: 'IMG', title: 'Изображения' },
+  { value: 'MP4', title: 'Видео' },
+  { value: 'PDF', title: 'Файл PDF' },
+  { value: 'PPT', title: 'Презентации' },
+  { value: 'WAV', title: 'Аудио' },
+  { value: 'XLS', title: 'Таблицы' },
+  { value: 'ZIP', title: 'Архивы' },
+];
+
+
 const FilterPopoverForm = () => {
+  const [searchDataResult, setSearchDataResult] = useState({});
+
   const [form] = Form.useForm();
+  const [dateRange, setDateRange] = useState([]);
+  console.log(dateRange);
+  const findActiveCheckBox = (list, search) => list.find((val) => val === search);
 
   const onFinish = (value) => {
-    // TODO: формировать высылать запрос по фильтрам
-    console.log(value);
-  }
+    const { checkboxGroup = [], keywords = '', type = '' } = value;
 
-  return (<Form 
+    const startDate = dateRange.length < 0
+      ? `&updated_at__gte=${dateRange[0]}`
+      : '';
+
+    const endDate = dateRange.length < 0
+      ? `&updated_at__lt=${dateRange[1]}`
+      : '';
+
+    const keyText = keywords !== ''
+      ? `&title=${keywords}`
+      : '';
+
+    const isRecommend = findActiveCheckBox(checkboxGroup, 'marked') !== undefined
+      ? `&liked=${true}`
+      : '';
+
+    const isFollow = findActiveCheckBox(checkboxGroup, 'like') !== undefined
+      ? `&marked=${true}`
+      : '';
+
+    const fileType = type !== ''
+      ? `&ext=${type}`
+      : '';
+
+    request.get(`${BASE_URL.SEARCH}${keyText}${isRecommend}${isFollow}${fileType}${startDate}${endDate}`)
+      .then(res => setSearchDataResult(res?.data))
+      .then(rej => console.log(rej));
+  };
+
+  const handlerDataRange = (_, dateString) => setDateRange(dateString);
+
+  const clearSearch = () => {
+    setDateRange([])
+    form.resetFields();
+  };
+
+  return (<Form
     {...layout}
-    style={{ 
+    style={{
       minWidth: '422px',
     }}
     className='searchInputPop'
@@ -39,25 +105,39 @@ const FilterPopoverForm = () => {
     form={form}
     onFinish={onFinish}
   >
-    <Item 
+    <Item
       label="Тип"
       name="type"
     >
-      <Select>
-        <Option value="all">Все</Option>
+      <Select
+        allowClear
+      >
+        {
+          fileTypeOptions.map((elem, id) => (
+            <Option
+              key={id + elem.value}
+              value={elem.value}
+            >
+              <div className="flex-align-center">
+                {fileTypeIcon(elem.value, {
+                  style: { marginRight: '10px' }
+                })}
+                {elem.title}
+              </div>
+            </Option>
+          ))
+        }
       </Select>
     </Item>
 
-    <Item 
+    <Item
       label="Дата изменения"
-      name="editDate"
+      name="dataRange"
     >
-      <Select>
-        <Option value="all">Все</Option>
-      </Select>
+      <RangePicker onChange={handlerDataRange} />
     </Item>
 
-    <Item 
+    <Item
       label="Содержит слова"
       name="keywords"
     >
@@ -65,20 +145,18 @@ const FilterPopoverForm = () => {
     </Item>
 
     <Item
-      name="checkboxGroup" 
+      name="checkboxGroup"
     >
       <Group>
-        <Checkbox value="caused">Избранное</Checkbox>
-        <Checkbox value="recommendation">Рекомендации</Checkbox>
+        <Checkbox value="like">Избранное</Checkbox>
+        <Checkbox value="marked">Рекомендации</Checkbox>
       </Group>
     </Item>
 
     <Space>
       <Button
-        type='text' 
-        onClick={() => {
-          form.resetFields();
-        }}
+        type='text'
+        onClick={clearSearch}
       >
         Сбросить
       </Button>
