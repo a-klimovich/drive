@@ -8,13 +8,17 @@ const folderItems = (arr) => {
 
   arr.map((element) => (dataSource.push({
     key: `${element.id}_${element.title}`,
-    name: <TitleFile data={element} />,
+
+    name: <TitleFile data={element} isFolderItem={true} />,
+
     recommendations: <CheckBoxRecommend
-      defaultValue={element.marked_by_admin}
+      defaultValue={element.recommended}
     />,
+
     favorite: <CheckBoxFavorite
       defaultValue={element.is_favourite}
     />,
+
     date: element.updated_at || '-',
   })));
 

@@ -22,9 +22,8 @@ const Folders = () => {
     } else {
       setCurrentFolder(getFolderData(currentFolder, folderId))
     }
-  }, [currentFolder, data, folderId]);
-
-  console.log(currentFolder);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [folderId]);
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),
@@ -38,7 +37,7 @@ const Folders = () => {
           <Link to='/'>Home</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          <Link to='/'>{currentFolder?.title}</Link>
+          <Link to={`/${folderId}`}>{currentFolder?.title || currentFolder?.name}</Link>
         </Breadcrumb.Item>
       </Breadcrumb>
 

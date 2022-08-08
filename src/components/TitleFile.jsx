@@ -5,36 +5,35 @@ import { Typography } from 'antd';
 import folderIcon from "./UI/icons/Folder";
 import fileTypeIcon from "./UI/icons/Files";
 
-const { Paragraph } = Typography;
+const { Paragraph, Link } = Typography;
 
-const TitleFile = ({ data }) => {
+const TitleFile = ({ data, isFolderItem = false, ...props }) => {
   const navigate = useNavigate();
 
-  const isFolder = data?.documents !== undefined;
-  const isFolderEmpty = isFolder && data?.documents.length > 0;
-  const { id, title, name, extension: fileType } = data;
+  const folderEmpty = data?.folders?.length;
+  const documentsEmpty = data?.documents?.length;
+
+  const folderIsEmpty = () => (folderEmpty > 0 && documentsEmpty > 0)
+
+  const { id, title, name, extension: fileType, file } = data;
 
   const goToFolder = (id) => () => {
     navigate(`/${id}`);
   };
 
-  return (
+  return isFolderItem ? (
     <div
       key={data?.id}
       style={{ display: 'flex', alignItems: 'center', cursor: 'pointer'}}
-      onClick={goToFolder(id)}
+      onDoubleClick={goToFolder(id)}
     >
-      {isFolder ? folderIcon(isFolderEmpty, {
-        style: {
-          marginRight: '20px'
-        }
-      }) : fileTypeIcon(fileType, {
-        style: {
-          minWidth: '18px',
-          marginRight: '16px',
-          marginLeft: '4px'
-        }
-      })}
+      {
+        folderIcon(!folderIsEmpty(), {
+          style: {
+            marginRight: '20px'
+          }
+        })
+      }
       <Paragraph
         style={{
           marginBottom: 0,
@@ -43,6 +42,30 @@ const TitleFile = ({ data }) => {
         { title || name }
       </Paragraph>
     </div>
+  ) : (
+    <Link
+      key={data?.id}
+      style={{ display: 'flex', alignItems: 'center', cursor: 'pointer'}}
+      target='_blank'
+      href={file}
+    >
+      {
+        fileTypeIcon(fileType, {
+          style: {
+            minWidth: '18px',
+            marginRight: '16px',
+            marginLeft: '4px'
+          }
+        })
+      }
+      <Paragraph
+        style={{
+          marginBottom: 0,
+        }}
+      >
+        { title || name }
+      </Paragraph>
+    </Link>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Space, Button } from "antd";
+import { Button } from "antd";
 // COMPONENTS
 import decorIcon from "../../UI/icons/decors";
 import CheckBoxRecommend from "../../checkbox/CheckBoxRecommend";
@@ -10,29 +10,25 @@ const documentItems = (arr) => {
 
   arr.map((element) => (dataSource.push({
     key: `${element.id}_${element.title}`,
+
     name: <TitleFile data={element} />,
+
     recommendations: <CheckBoxRecommend
-      defaultValue={element.marked_by_admin}
+      defaultValue={element.recommended}
     />,
+
     favorite: <CheckBoxFavorite
       defaultValue={element.is_favourite}
     />,
+
     date: element.updated_at || '-',
-    control: <Space>
-      <Button
-        type="text"
-        htmlType="button"
-      >
-        {decorIcon("eyes")}
-      </Button>
-  
-      <Button
-        type="text"
-        htmlType="button"
-      >
-        {decorIcon("download")}
-      </Button>
-    </Space>,
+
+    control: <Button
+      type="text"
+      icon={decorIcon("download")}
+      href={element?.file}
+      download
+    />,
   })));
   return dataSource;
 }
