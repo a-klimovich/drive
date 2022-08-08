@@ -1,6 +1,4 @@
-import { Space, Button } from "antd";
 // COMPONENTS
-import decorIcon from "../../UI/icons/decors";
 import CheckBoxRecommend from "../../checkbox/CheckBoxRecommend";
 import CheckBoxFavorite from "../../checkbox/CheckBoxFavorite";
 import TitleFile from "../../TitleFile";
@@ -18,21 +16,6 @@ const folderItems = (arr) => {
       defaultValue={element.is_favourite}
     />,
     date: element.updated_at || '-',
-    control: <Space>
-      <Button
-        type="text"
-        htmlType="button"
-      >
-        {decorIcon("eyes")}
-      </Button>
-  
-      <Button
-        type="text"
-        htmlType="button"
-      >
-        {decorIcon("download")}
-      </Button>
-    </Space>,
   })));
 
   return dataSource;

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Context from "../../utils/context/Context";
 import { getFolderData } from "../../utils/hooks/getFolderData";
@@ -14,12 +14,21 @@ import documentItems from "./base/documentItems";
 const Folders = () => {
   const { data } = useContext(Context);
   const { folderId } = useParams();
+  const [currentFolder, setCurrentFolder] = useState({});
 
-  const currentFolderData = getFolderData(data, folderId);
+  useEffect(() => {
+    if(getFolderData(data, folderId) !== null) {
+      setCurrentFolder(getFolderData(data, folderId));
+    } else {
+      setCurrentFolder(getFolderData(currentFolder, folderId))
+    }
+  }, [currentFolder, data, folderId]);
+
+  console.log(currentFolder);
 
   const dataSourceTable = [
-    ...folderItems(currentFolderData?.folders || []),
-    ...documentItems(currentFolderData.documents || [])
+    ...folderItems(currentFolder?.folders || []),
+    ...documentItems(currentFolder?.documents || [])
   ];
 
   return (
@@ -29,7 +38,7 @@ const Folders = () => {
           <Link to='/'>Home</Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>
-          <Link to='/'>{currentFolderData?.title}</Link>
+          <Link to='/'>{currentFolder?.title}</Link>
         </Breadcrumb.Item>
       </Breadcrumb>
 

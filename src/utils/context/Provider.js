@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Context from "./Context";
-// import { data as mockedData } from "./_mocks";
 // AXIOS
 import request from '../../utils/api/axios';
 
