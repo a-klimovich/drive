@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
-  ConfigProvider,
   Form,
   Select,
   Checkbox,
@@ -15,6 +14,7 @@ import { BASE_URL } from '../../utils/api/url';
 import fileTypeIcon from '../UI/icons/Files';
 // AXIOS
 import request from '../../utils/api/axios';
+import Context from '../../utils/context/Context';
 
 const { Item } = Form;
 const { Option } = Select;
@@ -49,13 +49,13 @@ const fileTypeOptions = [
 
 
 const FilterPopoverForm = () => {
-  const [searchDataResult, setSearchDataResult] = useState({});
-
+  const state = useContext(Context);
   const [form] = Form.useForm();
   const [dateRange, setDateRange] = useState([]);
-  console.log(dateRange);
-  const findActiveCheckBox = (list, search) => list.find((val) => val === search);
+  // const [searchDataResult, setSearchDataResult] = useState({});
 
+  const findActiveCheckBox = (list, search) => list.find((val) => val === search);
+  const handlerDataRange = (_, dateString) => setDateRange(dateString);
   const onFinish = (value) => {
     const { checkboxGroup = [], keywords = '', type = '' } = value;
 
@@ -84,16 +84,24 @@ const FilterPopoverForm = () => {
       : '';
 
     request.get(`${BASE_URL.SEARCH}${keyText}${isRecommend}${isFollow}${fileType}${startDate}${endDate}`)
-      .then(res => setSearchDataResult(res?.data))
+      .then(res => {
+        // setSearchDataResult(res?.data)
+        state.dispatch({type: 'SET_DATA', payload: {
+          ...state.state,
+          documents: res?.data,
+        }})
+      })
       .then(rej => console.log(rej));
   };
-
-  const handlerDataRange = (_, dateString) => setDateRange(dateString);
-
+  
   const clearSearch = () => {
     setDateRange([])
     form.resetFields();
+    state.dispatch({ type: 'RESET_DATA' })
   };
+
+  // data.setNewData(searchDataResult);
+  console.log(state.state);
 
   return (<Form
     {...layout}

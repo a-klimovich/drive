@@ -12,18 +12,18 @@ import folderItems from "./base/folderItems";
 import documentItems from "./base/documentItems";
 
 const Folders = () => {
-  const { data } = useContext(Context);
+  const { state } = useContext(Context);
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
 
   useEffect(() => {
-    if(getFolderData(data, folderId) !== null) {
-      setCurrentFolder(getFolderData(data, folderId));
+    if(getFolderData(state, folderId) !== null) {
+      setCurrentFolder(getFolderData(state, folderId));
     } else {
       setCurrentFolder(getFolderData(currentFolder, folderId))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, folderId]);
+  }, [state, folderId]);
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),

@@ -1,12 +1,20 @@
+import { useState } from "react";
+
 const Checkbox = (props) => {
-  const { label, value, onChange, style } = props;
+  const { defaultValue, style, children } = props;
+  const [val, setVal] = useState(defaultValue || false);
+
+  const onChange = () => {
+    setVal(!val);
+  }
+
   return (
     <label
       className="flex-align-center"
-      style={style}
+      style={{...style, width: 'fit-content', cursor: 'pointer'}}
     >
-      <input type="checkbox" checked={value} onChange={onChange} />
-      {label}
+      <input type="checkbox" checked={val} onChange={onChange} />
+      {children}
     </label>
   );
 };
