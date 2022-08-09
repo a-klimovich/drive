@@ -10,6 +10,8 @@ import {
 } from 'antd';
 // URL
 import { BASE_URL } from '../../utils/api/url';
+// HELPERS
+import filterSearchQueries from '../../utils/helpers/filterSearchQueries';
 // COMPONENTS
 import fileTypeIcon from '../UI/icons/Files';
 // AXIOS
@@ -52,56 +54,35 @@ const FilterPopoverForm = () => {
   const state = useContext(Context);
   const [form] = Form.useForm();
   const [dateRange, setDateRange] = useState([]);
-  // const [searchDataResult, setSearchDataResult] = useState({});
-
-  const findActiveCheckBox = (list, search) => list.find((val) => val === search);
   const handlerDataRange = (_, dateString) => setDateRange(dateString);
+
   const onFinish = (value) => {
-    const { checkboxGroup = [], keywords = '', type = '' } = value;
+    const search = filterSearchQueries(value, dateRange);
 
-    const startDate = dateRange.length < 0
-      ? `&updated_at__gte=${dateRange[0]}`
-      : '';
-
-    const endDate = dateRange.length < 0
-      ? `&updated_at__lt=${dateRange[1]}`
-      : '';
-
-    const keyText = keywords !== ''
-      ? `&title=${keywords}`
-      : '';
-
-    const isRecommend = findActiveCheckBox(checkboxGroup, 'marked') !== undefined
-      ? `&liked=${true}`
-      : '';
-
-    const isFollow = findActiveCheckBox(checkboxGroup, 'like') !== undefined
-      ? `&marked=${true}`
-      : '';
-
-    const fileType = type !== ''
-      ? `&ext=${type}`
-      : '';
-
-    request.get(`${BASE_URL.SEARCH}${keyText}${isRecommend}${isFollow}${fileType}${startDate}${endDate}`)
-      .then(res => {
-        // setSearchDataResult(res?.data)
-        state.dispatch({type: 'SET_DATA', payload: {
-          ...state.state,
-          documents: res?.data,
-        }})
-      })
-      .then(rej => console.log(rej));
-  };
+    if (search !== '' ) {
+      state.dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: true}});
   
-  const clearSearch = () => {
-    setDateRange([])
+      request.get(`${BASE_URL.SEARCH}${search}`)
+        .then(res => {
+          state.dispatch({type: 'SHOW_FILTERED', payload: {
+            filtered: {
+              folders: [],
+              documents: res?.data,
+            },
+          }})
+        })
+        .catch((error) => {
+          console.Error(error);
+        })
+        .finally(() => state.dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: false}}));
+    }
+  }
+  
+  const handleClearForm = () => {
+    setDateRange([]);
     form.resetFields();
-    state.dispatch({ type: 'RESET_DATA' })
+    state.dispatch({type: 'SHOW_FILTERED', payload: state})
   };
-
-  // data.setNewData(searchDataResult);
-  console.log(state.state);
 
   return (<Form
     {...layout}
@@ -164,7 +145,7 @@ const FilterPopoverForm = () => {
     <Space>
       <Button
         type='text'
-        onClick={clearSearch}
+        onClick={handleClearForm}
       >
         Сбросить
       </Button>

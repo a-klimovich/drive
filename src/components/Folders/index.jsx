@@ -16,14 +16,18 @@ const Folders = () => {
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
 
+  const actualContentRender = state?.filtered
+    ? state.filtered
+    : state.base;
+
   useEffect(() => {
-    if(getFolderData(state, folderId) !== null) {
-      setCurrentFolder(getFolderData(state, folderId));
+    if(getFolderData(actualContentRender, folderId) !== null) {
+      setCurrentFolder(getFolderData(actualContentRender, folderId));
     } else {
       setCurrentFolder(getFolderData(currentFolder, folderId))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state, folderId]);
+  }, [actualContentRender, folderId]);
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),
@@ -42,6 +46,7 @@ const Folders = () => {
       </Breadcrumb>
 
       <Table
+        loading={state.loaded}
         columns={columns}
         dataSource={dataSourceTable}
         locale={{ emptyText: <EmptyTable description='По вашему запросу не найдено ни одного объекта' /> }}

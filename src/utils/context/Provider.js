@@ -1,42 +1,73 @@
-import { useState, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import Context from "./Context";
 import { BASE_URL } from '../api/url';
 // AXIOS
 import request from '../../utils/api/axios';
 
-function init(initialDate) {
-  return initialDate;
-}
+export const initialState = {
+  loaded: true,
+};
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'INITIAL_STATE':
-      return init(action.payload);
+const reducer = (state, action) => {
+  const { type, payload } = action;
 
-    case 'SET_DATA':
-      return action.payload
+  switch (type) {
+    case "SHOW_BASE":
+      console.log("SHOW_BASE", payload);
 
-    case 'RESET_DATA':
-      return init();
+      return {
+        ...state,
+        base: payload.base
+      };
+      
+    case "SHOW_FILTERED":
+      console.log("SHOW_FILTERED", payload);
+
+      return {
+        ...state,
+        filtered: payload.filtered
+      };
+
+    case "CONTENT_IS_LOADED":
+      console.log("CONTENT_IS_LOADED", payload);
+
+      return {
+        ...state,
+        loaded: payload.loaded,
+      };
 
     default:
-      throw new Error();
+      throw new Error('Ups... Store is done)');
   }
 };
 
 const Provider = ({ children }) => {
-  const [data, setFolders] = useState({});
-  const [state, dispatch] = useReducer(reducer, data, init);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     request.get(BASE_URL.API)
-      .then(res => {
-        dispatch({type: 'INITIAL_STATE', payload: res?.data});
-        return setFolders(res?.data)
+      .then((response) => {
+        dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: true}});
+        dispatch({ 
+          type: 'SHOW_BASE',
+          payload: {
+            base: response?.data
+          },
+        });
       })
+      .catch((error) => {
+        console.Error(error);
+      })
+      .finally(() => dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: false}}));
   }, []);
 
-  return <Context.Provider value={{ state, dispatch }}>
+  const value = {
+    loading: false,
+    state,
+    dispatch
+  };
+
+  return <Context.Provider value={value}>
     {children}
   </Context.Provider>;
 };
