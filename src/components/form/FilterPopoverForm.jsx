@@ -100,6 +100,7 @@ const FilterPopoverForm = () => {
         name="type"
       >
         <Select
+          placeholder="Выберите тип файла"
           allowClear
         >
           {
@@ -131,7 +132,9 @@ const FilterPopoverForm = () => {
         label="Содержит слова"
         name="keywords"
       >
-        <Input />
+        <Input
+          placeholder="Введите слова, найденные в файле"
+        />
       </Item>
 
       <Item
