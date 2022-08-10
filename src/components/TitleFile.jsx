@@ -7,7 +7,7 @@ import fileTypeIcon from "./UI/icons/Files";
 
 const { Paragraph, Link } = Typography;
 
-const TitleFile = ({ data, isFolderItem = false, ...props }) => {
+const TitleFile = ({ data, isFolderItem = false }) => {
   const navigate = useNavigate();
 
   const folderEmpty = data?.folders?.length;

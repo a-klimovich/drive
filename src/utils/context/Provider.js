@@ -12,8 +12,8 @@ const reducer = (state, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "SHOW_BASE":
-      console.log("SHOW_BASE", payload);
+    case "GET_BASE_DATA":
+      console.log("GET_BASE_DATA", payload);
 
       return {
         ...state,
@@ -29,8 +29,6 @@ const reducer = (state, action) => {
       };
 
     case "CONTENT_IS_LOADED":
-      console.log("CONTENT_IS_LOADED", payload);
-
       return {
         ...state,
         loaded: payload.loaded,
@@ -49,7 +47,7 @@ const Provider = ({ children }) => {
       .then((response) => {
         dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: true}});
         dispatch({ 
-          type: 'SHOW_BASE',
+          type: 'GET_BASE_DATA',
           payload: {
             base: response?.data
           },

@@ -24,4 +24,8 @@ input {
   &::-webkit-search-results-decoration {
     display: none;
   }
+
+  &:focus {
+    border: none;
+  }
 }

@@ -15,19 +15,41 @@ const Folders = () => {
   const { state } = useContext(Context);
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
+  const [paths, setPaths] = useState([]);
 
   const actualContentRender = state?.filtered
     ? state.filtered
     : state.base;
 
   useEffect(() => {
-    if(getFolderData(actualContentRender, folderId) !== null) {
-      setCurrentFolder(getFolderData(actualContentRender, folderId));
-    } else {
-      setCurrentFolder(getFolderData(currentFolder, folderId))
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    getFolderData(actualContentRender, folderId) !== null
+      ? setCurrentFolder(getFolderData(actualContentRender, folderId))
+      : setCurrentFolder(getFolderData(currentFolder, folderId))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actualContentRender, folderId]);
+
+  useEffect(() => {
+    setPaths([{
+      path: '/',
+      name: 'Home',
+    }])
+  }, []);
+
+  useEffect(() => {
+    if (currentFolder?.id) {
+      setPaths([
+        ...paths,
+        {
+          path: `${currentFolder?.id}`,
+          name: currentFolder?.title || currentFolder?.id,
+        }
+      ])
+    }
+  }, [currentFolder]);
+
+  const clearBreadcrumbs = (current) => {
+    console.log(current);
+  };
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),
@@ -37,12 +59,13 @@ const Folders = () => {
   return (
     <>
       <Breadcrumb>
-        <Breadcrumb.Item>
-          <Link to='/'>Home</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <Link to={`/${folderId}`}>{currentFolder?.title || currentFolder?.name}</Link>
-        </Breadcrumb.Item>
+        {
+          paths.map((item) => (
+            <Breadcrumb.Item key={`${item.path}_i${item.name}`} >
+              <Link to={item.path}>{item.name}</Link>
+            </Breadcrumb.Item>
+          ))
+        }
       </Breadcrumb>
 
       <Table
