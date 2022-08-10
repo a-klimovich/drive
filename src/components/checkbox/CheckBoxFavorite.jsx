@@ -15,7 +15,12 @@ const CheckBoxFavorite = (props) => {
       className="flex-align-center"
       style={{...style, width: 'fit-content', cursor: 'pointer'}}
     >
-      <input type="checkbox" checked={val} onChange={onChange} />
+      <input 
+        type="checkbox" 
+        checked={val} 
+        onChange={onChange}
+        onClick={props.onClick}
+      />
       {decorIcon("heart", {
         style: {
           width: '18px',

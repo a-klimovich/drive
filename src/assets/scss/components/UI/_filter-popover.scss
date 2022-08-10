@@ -1,0 +1,52 @@
+.ant-popover-inner-content {
+  border-radius: 4px;
+}
+
+.filter-popover-form {
+  .ant-form-item .ant-form-item-label > label {
+    display: flex;
+    color: #717579;
+  }
+
+  .ant-select-selector, .ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-picker, .ant-input {
+    border: none;
+    border-bottom: 1px solid #E2E2E2;
+
+    outline: 0;
+    outline-offset: 0;
+    box-shadow: none!important;
+  }
+
+  input, .ant-select .ant-select-in-form-item .ant-select-single .ant-select-allow-clear .ant-select-show-arrow {
+    outline: 0;
+    outline-offset: 0;
+    box-shadow: none!important;
+  }
+
+  &__btn-reset {
+    background: #F6F6F6;
+    box-shadow: 1px 1px 0px #E2E2E2;
+    border-radius: 4px;
+    color: #404952;
+    border: none;
+  }
+
+  &__btn__submit {
+    background: #FFC107;
+    box-shadow: 1px 1px 0px #E2E2E2;
+    border-radius: 4px;
+    color: #404952;
+    border: none;
+
+    &:hover {
+      background: $white;
+      color: #FFC107;
+      border-color: #FFC107;
+    }
+  }
+
+  .ant-space-align-center {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

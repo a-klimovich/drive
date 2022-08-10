@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 // ANTD
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 // COMPONENTS
 import decorIcon from '../UI/icons/decors';
 import Popover from '../Popover';
@@ -13,6 +13,10 @@ import request from '../../utils/api/axios';
 import Context from "../../utils/context/Context";
 
 const { Item } = Form;
+
+const initialValues = {
+  titleName: ''
+};
 
 const SearchForm = () => {
   const state = useContext(Context);
@@ -37,9 +41,7 @@ const SearchForm = () => {
           console.Error(error);
         })
         .finally(() => state.dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: false}}));
-    }
-
-    return handleClearForm();
+    } else handleClearForm();
   }
   
   const handleClearForm = () => {
@@ -51,6 +53,7 @@ const SearchForm = () => {
     <div className="search-box">
       <Form 
         className="search-box__form"
+        initialValues={initialValues}
         onFinish={onFinish}
         form={form}
       >
@@ -76,9 +79,6 @@ const SearchForm = () => {
             }}
           />
         </Item>
-        {/* <input
-          
-        /> */}
       </Form>
 
       <Popover

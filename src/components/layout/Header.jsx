@@ -1,4 +1,3 @@
-import { useState } from 'react';
 // COMPONENTS
 import Container from "../Container";
 import decorIcon from "../UI/icons/decors";

@@ -33,7 +33,7 @@ const layout = {
 };
 
 const initialValues = {
-  type: '',
+  type: null,
   keywords: '',
   checkboxGroup: [],
 }
@@ -84,74 +84,93 @@ const FilterPopoverForm = () => {
     state.dispatch({type: 'SHOW_FILTERED', payload: state})
   };
 
-  return (<Form
-    {...layout}
-    style={{
-      minWidth: '422px',
-    }}
-    className='searchInputPop'
-    initialValues={initialValues}
-    form={form}
-    onFinish={onFinish}
-  >
-    <Item
-      label="Тип"
-      name="type"
+  return (
+    <Form
+      {...layout}
+      style={{
+        minWidth: '422px',
+      }}
+      className='filter-popover-form'
+      initialValues={initialValues}
+      form={form}
+      onFinish={onFinish}
     >
-      <Select
-        allowClear
+      <Item
+        label="Тип"
+        name="type"
       >
-        {
-          fileTypeOptions.map((elem, id) => (
-            <Option
-              key={id + elem.value}
-              value={elem.value}
-            >
-              <div className="flex-align-center">
-                {fileTypeIcon(elem.value, {
-                  style: { marginRight: '10px' }
-                })}
-                {elem.title}
-              </div>
-            </Option>
-          ))
-        }
-      </Select>
-    </Item>
+        <Select
+          allowClear
+        >
+          {
+            fileTypeOptions.map((elem, id) => (
+              <Option
+                key={id + elem.value}
+                value={elem.value}
+              >
+                <div className="flex-align-center">
+                  {fileTypeIcon(elem.value, {
+                    style: { marginRight: '10px' }
+                  })}
+                  {elem.title}
+                </div>
+              </Option>
+            ))
+          }
+        </Select>
+      </Item>
 
-    <Item
-      label="Дата изменения"
-      name="dataRange"
-    >
-      <RangePicker onChange={handlerDataRange} />
-    </Item>
-
-    <Item
-      label="Содержит слова"
-      name="keywords"
-    >
-      <Input />
-    </Item>
-
-    <Item
-      name="checkboxGroup"
-    >
-      <Group>
-        <Checkbox value="like">Избранное</Checkbox>
-        <Checkbox value="marked">Рекомендации</Checkbox>
-      </Group>
-    </Item>
-
-    <Space>
-      <Button
-        type='text'
-        onClick={handleClearForm}
+      <Item
+        label="Дата изменения"
+        name="dataRange"
       >
-        Сбросить
-      </Button>
-      <Button type="primary" htmlType='submit'>Поиск</Button>
-    </Space>
-  </Form>)
+        <RangePicker onChange={handlerDataRange} />
+      </Item>
+
+      <Item
+        label="Содержит слова"
+        name="keywords"
+      >
+        <Input />
+      </Item>
+
+      <Item
+        name="checkboxGroup"
+      >
+        <Group>
+          <Checkbox
+            value="like"
+          >
+            Избранное
+          </Checkbox>
+
+          <Checkbox
+            value="marked"
+          >
+            Рекомендации
+          </Checkbox>
+        </Group>
+      </Item>
+
+      <Space>
+        <Button
+          type='text'
+          onClick={handleClearForm}
+          className="filter-popover-form__btn-reset"
+        >
+          Сбросить
+        </Button>
+
+        <Button 
+          type="primary" 
+          htmlType='submit'
+          className="filter-popover-form__btn__submit"
+        >
+          Поиск
+        </Button>
+      </Space>
+    </Form>
+  )
 };
 
 export default FilterPopoverForm;

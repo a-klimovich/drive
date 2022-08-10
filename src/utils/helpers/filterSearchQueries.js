@@ -23,7 +23,7 @@ export default function filterSearchQueries (value, dateRange) {
     ? `&marked=marked`
     : '';
 
-  const fileType = type !== ''
+  const fileType = type !== null && type !== ''
     ? `&ext=${type}`
     : '';
 
