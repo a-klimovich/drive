@@ -15,7 +15,10 @@ const Folders = () => {
   const { state } = useContext(Context);
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
-  const [paths, setPaths] = useState([]);
+  const [paths, setPaths] = useState([{
+    path: '/',
+    name: 'Home',
+  }]);
 
   const actualContentRender = state?.filtered
     ? state.filtered
@@ -28,28 +31,30 @@ const Folders = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actualContentRender, folderId]);
 
-  useEffect(() => {
-    setPaths([{
-      path: '/',
-      name: 'Home',
-    }])
-  }, []);
 
-  useEffect(() => {
-    if (currentFolder?.id) {
-      setPaths([
-        ...paths,
-        {
-          path: `${currentFolder?.id}`,
-          name: currentFolder?.title || currentFolder?.id,
-        }
-      ])
-    }
-  }, [currentFolder]);
-
-  const clearBreadcrumbs = (current) => {
-    console.log(current);
+  const getFolderPath = (data, id) => {
+    if (data?.id === id) return [];
+  
+    if (data?.folders?.length === 0) return null;
+  
+    return data?.folders?.reduce((acc, folder) => {
+      const path = getFolderPath(folder, id);
+  
+      if (path !== null) {
+        return [folder, ...path];
+      }
+  
+      return acc;
+    }, []);
   };
+  
+  const folderPath = getFolderPath(actualContentRender, folderId);
+
+  console.log("current page folders", folderPath?.slice(-1)[0]);
+  console.log(
+    "breadcrumbs",
+    folderPath?.map(({ title }) => title)
+  );
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),
@@ -75,6 +80,7 @@ const Folders = () => {
         locale={{ emptyText: <EmptyTable description='По вашему запросу не найдено ни одного объекта' /> }}
         pagination={{
           position: ['none'],
+          pageSize: 100,
         }}
       />
     </>

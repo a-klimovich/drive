@@ -1,3 +1,4 @@
+import React, {useContext} from "react";
 // COMPONENTS
 import Container from "../Container";
 import decorIcon from "../UI/icons/decors";
@@ -5,9 +6,12 @@ import Title from "../UI/Title";
 import SearchForm from "../form/SearchForm";
 import CheckBoxRecommend from "../checkbox/CheckBoxRecommend";
 import CheckBoxFavorite from "../checkbox/CheckBoxFavorite";
+// CONTEXT
+import Context from "../../utils/context/Context";
 
 export default function Header(props) {
-  const { userName } = props;
+  const { state } = useContext(Context);
+  const { base } = state;
 
   return (
     <header>
@@ -19,18 +23,19 @@ export default function Header(props) {
                 marginRight: '12px',
               }
             })}
-            <Title>{`Здравствуйте! ${userName}`}</Title>
+            <Title>{`Здравствуйте! ${base?.user?.name}`}</Title>
           </div>
 
           <div className="header__search-wrapper">
-            <CheckBoxRecommend
+            {/* TODO: Useless checkbox */}
+            {/* <CheckBoxRecommend
               defaultValue={false}
               style={{ marginRight: '26px' }}
             />
             <CheckBoxFavorite
               defaultValue={false}
               style={{ marginRight: '26px' }}
-            />
+            /> */}
 
             <SearchForm />
           </div>

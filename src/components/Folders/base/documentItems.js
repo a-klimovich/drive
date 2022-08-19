@@ -23,9 +23,11 @@ const documentItems = (arr) => {
   }
 
   arr.map((element) => (dataSource.push({
-    key: `${element.id}_${element.title}`,
+    key: `${element.id}_${element.title || element.name}`,
 
     name: <TitleFile data={element} />,
+
+    filterRecommended: element.recommended,
 
     recommendations: <CheckBoxRecommend
       defaultValue={element.recommended}
@@ -34,8 +36,9 @@ const documentItems = (arr) => {
     favorite: <CheckBoxFavorite
       defaultValue={element.is_favourite}
       onClick={handleFavorite(element)}
-
     />,
+
+    filterFavorite: element.is_favourite,
 
     date: element.updated_at || '-',
 
