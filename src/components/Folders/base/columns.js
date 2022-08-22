@@ -1,7 +1,11 @@
-const columns = [
+
+export const columns = [
   {
     title: 'Название',
     dataIndex: 'name',
+    onFilter: (value, record) => record.name.includes(value),
+    sorter: (a, b) => a.name.length - b.name.length,
+    width: '100%',
   },
   {
     title: 'Рекомендации',
@@ -27,4 +31,15 @@ const columns = [
   },
 ];
 
-export default columns;
+export const columnsMobile = [
+  {
+    title: 'Название',
+    dataIndex: 'name',
+    onFilter: (value, record) => record.name.includes(value),
+    sorter: (a, b) => a.name.length - b.name.length,
+    width: '100%',
+  },
+  {
+    dataIndex: 'info',
+  }
+];

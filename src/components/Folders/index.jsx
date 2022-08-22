@@ -3,35 +3,26 @@ import { useParams, Link } from 'react-router-dom';
 import Context from '../../utils/context/Context';
 import { getFolderData } from '../../utils/hooks/getFolderData';
 // ANTD
-import { Table, Breadcrumb } from 'antd';
+import { Table, Breadcrumb, Grid } from 'antd';
+// HELPERS
+import getFolderPath from '../../utils/helpers/getFolderPath';
 // COMPONENTS
 import EmptyTable from '../UI/EmptyTable';
 // BASE
-import columns from './base/columns';
+import { columns, columnsMobile } from './base/columns';
 import folderItems from './base/folderItems';
 import documentItems from './base/documentItems';
 
-const getFolderPath = (data, id) => {
-  if (`${ data?.id }` === `${ id }`) return [];
-
-  if (data?.folders?.length === 0) return null;
-
-  return data?.folders.reduce((acc, folder) => {
-    const path = getFolderPath(folder, id);
-
-    if (path !== null) {
-      return [folder, ...path];
-    }
-
-    return acc;
-  }, []);
-};
+const { useBreakpoint } = Grid;
 
 const Folders = () => {
   const { state, loaded } = useContext(Context);
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
+  const screens = useBreakpoint();
   
+  console.log(screens);
+
   const actualContentRender = state?.filtered !== null ? state.filtered : state;
 
   useEffect(() => {
@@ -52,9 +43,9 @@ const Folders = () => {
     <>
       <Breadcrumb>
         <Breadcrumb.Item >
-          <Link to={`/`}>{'Главная'}</Link>
+          <Link to={`/`}>{'Moй кабинет'}</Link>
         </Breadcrumb.Item>
-        
+
         {
           folderPath?.map((item) => (
             <Breadcrumb.Item key={`i${item.title}`} >
@@ -66,7 +57,7 @@ const Folders = () => {
 
       <Table
         loading={loaded}
-        columns={columns}
+        columns={!screens.md ? columnsMobile : columns}
         dataSource={dataSourceTable}
         locale={{
           emptyText: (
