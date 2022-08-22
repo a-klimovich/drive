@@ -19,7 +19,7 @@ const initialValues = {
 };
 
 const SearchForm = () => {
-  const { state, setState, setLoaded, loaded } = useContext(Context);
+  const { state, setState, setLoaded } = useContext(Context);
   const [form] = Form.useForm();
 
   const handlerFiltered = (value) => {
@@ -40,9 +40,7 @@ const SearchForm = () => {
         })
         .finally(() => setLoaded(false));
     } else handleClearForm();
-  }
-
-  console.log('SSloaded', loaded);
+  };
   
   const handleClearForm = () => {
     form.resetFields();

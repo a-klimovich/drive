@@ -43,7 +43,7 @@ const fileTypeOptions = [
 
 
 const FilterPopoverForm = () => {
-  const { state, setState, setLoaded, loaded } = useContext(Context);
+  const { state, setState, setLoaded } = useContext(Context);
   const [form] = Form.useForm();
   const [dateRange, setDateRange] = useState([]);
   const handlerDataRange = (_, dateString) => setDateRange(dateString);
@@ -68,8 +68,6 @@ const FilterPopoverForm = () => {
         .finally(() => setLoaded(false));
     }
   };
-
-  console.log('POpoverloaded', loaded);
 
   const handleClearForm = () => {
     form.resetFields();
