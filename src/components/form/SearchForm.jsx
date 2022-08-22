@@ -19,34 +19,35 @@ const initialValues = {
 };
 
 const SearchForm = () => {
-  const state = useContext(Context);
+  const { state, setState, setLoaded, loaded } = useContext(Context);
   const [form] = Form.useForm();
 
-  const onFinish = (value) => {
+  const handlerFiltered = (value) => {
     const { titleName } = value;
 
     if (titleName !== '' && titleName !== undefined) {
-      state.dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: true}});
-  
+      
       request.get(`${BASE_URL.SEARCH}title=${titleName}`)
+        .then(setLoaded(true))
         .then(res => {
-          state.dispatch({type: 'SHOW_FILTERED', payload: {
-            filtered: {
-              folders: [],
-              documents: res?.data,
-            },
-          }})
+          setState({...state, filtered: {
+            documents: res.data,
+            folders: [],
+          }});
         })
         .catch((error) => {
           console.Error(error);
         })
-        .finally(() => state.dispatch({type: 'CONTENT_IS_LOADED', payload: {loaded: false}}));
+        .finally(() => setLoaded(false));
     } else handleClearForm();
   }
+
+  console.log('SSloaded', loaded);
   
   const handleClearForm = () => {
     form.resetFields();
-    state.dispatch({type: 'SHOW_FILTERED', payload: state})
+    setLoaded(false);
+    setState({...state, filtered: null});
   };
 
   return (
@@ -54,7 +55,7 @@ const SearchForm = () => {
       <Form 
         className="search-box__form"
         initialValues={initialValues}
-        onFinish={onFinish}
+        onFinish={handlerFiltered}
         form={form}
       >
         <button

@@ -28,17 +28,13 @@ const getFolderPath = (data, id) => {
 };
 
 const Folders = () => {
-  const { state } = useContext(Context);
+  const { state, loaded } = useContext(Context);
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
-  const [paths, setPaths] = useState([{
-    path: '/',
-    name: 'Home',
-  }]);
 
-  const actualContentRender = state?.filtered
+  const actualContentRender = state?.filtered !== null
     ? state.filtered
-    : state.base;
+    : state;
 
   useEffect(() => {
     getFolderData(actualContentRender, folderId) !== null
@@ -49,11 +45,11 @@ const Folders = () => {
   
   const folderPath = getFolderPath(actualContentRender, folderId);
 
-  console.log("current page folders", folderPath?.slice(-1)[0]);
-  console.log(
-    "breadcrumbs",
-    folderPath?.map(({ title }) => title)
-  );
+  // console.log("current page folders", folderPath?.slice(-1)[0]);
+  // console.log(
+  //   "breadcrumbs",
+  //   folderPath?.map(({ title }) => title)
+  // );
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),
@@ -62,7 +58,7 @@ const Folders = () => {
 
   return (
     <>
-      <Breadcrumb>
+      {/* <Breadcrumb>
         {
           paths.map((item) => (
             <Breadcrumb.Item key={`${item.path}_i${item.name}`} >
@@ -70,10 +66,10 @@ const Folders = () => {
             </Breadcrumb.Item>
           ))
         }
-      </Breadcrumb>
+      </Breadcrumb> */}
 
       <Table
-        loading={state.loaded}
+        loading={loaded}
         columns={columns}
         dataSource={dataSourceTable}
         locale={{ emptyText: <EmptyTable description='По вашему запросу не найдено ни одного объекта' /> }}

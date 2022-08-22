@@ -11,7 +11,6 @@ import Context from "../../utils/context/Context";
 
 export default function Header(props) {
   const { state } = useContext(Context);
-  const { base } = state;
 
   return (
     <header>
@@ -23,7 +22,7 @@ export default function Header(props) {
                 marginRight: '12px',
               }
             })}
-            <Title>{`Здравствуйте! ${base?.user?.name}`}</Title>
+            <Title>{`Здравствуйте! ${state?.user?.name}`}</Title>
           </div>
 
           <div className="header__search-wrapper">
