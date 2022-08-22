@@ -27,15 +27,15 @@ export default function Header(props) {
           </div>
 
           <div className="header__search-wrapper">
-            {/* TODO: Useless checkbox */}
-            {/* <CheckBoxRecommend
+            <CheckBoxRecommend
               defaultValue={false}
               style={{ marginRight: '26px' }}
             />
+            
             <CheckBoxFavorite
               defaultValue={false}
               style={{ marginRight: '26px' }}
-            /> */}
+            />
 
             <SearchForm />
           </div>

@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 // ANTD
 import { Typography } from 'antd';
 // COMPONENTS
-import folderIcon from "./UI/icons/Folder";
-import fileTypeIcon from "./UI/icons/Files";
+import folderIcon from "./UI/icons/folder";
+import fileTypeIcon from "./UI/icons/files";
 
 const { Paragraph, Link } = Typography;
 

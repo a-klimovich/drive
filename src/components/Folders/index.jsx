@@ -11,6 +11,22 @@ import columns from "./base/columns";
 import folderItems from "./base/folderItems";
 import documentItems from "./base/documentItems";
 
+const getFolderPath = (data, id) => {
+  if (data?.id === id) return [];
+
+  if (data?.folders?.length === 0) return null;
+
+  return data?.folders?.reduce((acc, folder) => {
+    const path = getFolderPath(folder, id);
+
+    if (path !== null) {
+      return [folder, ...path];
+    }
+
+    return acc;
+  }, []);
+};
+
 const Folders = () => {
   const { state } = useContext(Context);
   const { folderId } = useParams();
@@ -30,23 +46,6 @@ const Folders = () => {
       : setCurrentFolder(getFolderData(currentFolder, folderId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actualContentRender, folderId]);
-
-
-  const getFolderPath = (data, id) => {
-    if (data?.id === id) return [];
-  
-    if (data?.folders?.length === 0) return null;
-  
-    return data?.folders?.reduce((acc, folder) => {
-      const path = getFolderPath(folder, id);
-  
-      if (path !== null) {
-        return [folder, ...path];
-      }
-  
-      return acc;
-    }, []);
-  };
   
   const folderPath = getFolderPath(actualContentRender, folderId);
 

@@ -13,7 +13,7 @@ import { BASE_URL } from '../../utils/api/url';
 // HELPERS
 import filterSearchQueries from '../../utils/helpers/filterSearchQueries';
 // COMPONENTS
-import fileTypeIcon from '../UI/icons/Files';
+import fileTypeIcon from '../UI/icons/files';
 // AXIOS
 import request from '../../utils/api/axios';
 import Context from '../../utils/context/Context';
