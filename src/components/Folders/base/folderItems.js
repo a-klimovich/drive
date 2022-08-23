@@ -1,5 +1,5 @@
 // COMPONENTS
-import CheckBoxRecommend from "../../checkbox/CheckBoxRecommend";
+import decorIcon from '../../UI/icons/decors';
 import CheckBoxFavorite from "../../checkbox/CheckBoxFavorite";
 import TitleFile from "../../TitleFile";
 // URL
@@ -23,9 +23,13 @@ const folderItems = (arr) => {
 
     name: <TitleFile data={element} isFolderItem={true} />,
 
-    recommendations: <CheckBoxRecommend
-      defaultValue={element.recommended}
-    />,
+    recommendations: decorIcon("star", {
+      style: {
+        width: '18px',
+        height: '18px',
+        fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`
+      }
+    }),
 
     filterRecommended: element.recommended,
     

@@ -1,7 +1,6 @@
 import { Button } from 'antd';
 // COMPONENTS
 import decorIcon from '../../UI/icons/decors';
-import CheckBoxRecommend from '../../checkbox/CheckBoxRecommend';
 import CheckBoxFavorite from '../../checkbox/CheckBoxFavorite';
 import TitleFile from '../../TitleFile';
 import DrawerFileInfo from '../../DrawerFileInfo';
@@ -32,7 +31,13 @@ const documentItems = (arr) => {
 
       filterRecommended: element.recommended,
 
-      recommendations: <CheckBoxRecommend defaultValue={element.recommended} />,
+      recommendations: decorIcon("star", {
+        style: {
+          width: '18px',
+          height: '18px',
+          fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`
+        }
+      }),
 
       favorite: (
         <CheckBoxFavorite
@@ -64,9 +69,13 @@ const documentItems = (arr) => {
             />
           }
 
-          Recommended={<CheckBoxRecommend
-            defaultValue={element.recommended}
-          />}
+          Recommended={decorIcon("star", {
+            style: {
+              width: '18px',
+              height: '18px',
+              fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`
+            }
+          })}
         />
       ),
     })

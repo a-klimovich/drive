@@ -2,7 +2,7 @@ header {
   background-color: $white;
 
   .header-content {
-    padding: 12px 0;
+    padding: 12px 20px;
     display: flex;
   }
 
@@ -15,6 +15,11 @@ header {
 
   .header__logout-btn {
     padding-top: 5px;
+    margin-left: 15px;
+
+    @include sm {
+      margin-left: 0;
+    }
   }
 
   .header__user-name {
@@ -31,5 +36,10 @@ header {
     width: 100%;
     height: 100%;
     margin-right: 19px;
+    padding-top: 14px;
+
+    @include sm {
+      padding-top: 0;
+    }
   }
 }

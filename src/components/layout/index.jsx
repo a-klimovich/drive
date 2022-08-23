@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 // COMPONENTS
-import Container from "../Container";
 import Header from "./Header";
 import ScrollToTop from '../UI/ScrollToTop';
 
@@ -9,9 +8,7 @@ const Layout = () => {
     <>
       <Header />
 
-      <Container>
-        <Outlet />
-      </Container>
+      <Outlet />
 
       <ScrollToTop visibilityHeight={300}/>
     </>

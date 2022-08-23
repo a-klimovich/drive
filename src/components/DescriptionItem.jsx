@@ -1,6 +1,6 @@
-const DescriptionItem = ({ title, content }) => (
-  <div className="site-description-item-profile-wrapper">
-    <p className="site-description-item-profile-p-label">
+const DescriptionItem = ({ title, content, spaceBetweenContent = false }) => (
+  <div className="drower-description-item-wrapper">
+    <p className={ `drower-description-item-p ${ spaceBetweenContent ? 'flex-space-between' : ''}` }>
       <b>{title}:{' '}</b>
       {content}
     </p>

@@ -3,9 +3,8 @@ export const columns = [
   {
     title: 'Название',
     dataIndex: 'name',
-    // onFilter: (value, record) => record.name.includes(value),
     sorter: (a, b) => a.name.length - b.name.length,
-    width: '100%',
+    width: '90%',
   },
   {
     title: 'Рекомендации',
@@ -22,7 +21,7 @@ export const columns = [
   {
     title: 'Последнее изменение',
     dataIndex: 'date',
-    width: 200,
+    width: '100%',
   },
   {
     title: '',

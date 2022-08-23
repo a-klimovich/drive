@@ -47,13 +47,23 @@ const DrawerFileInfo = ({ data, AddToFavorite, Recommended}) => {
           </Col>
 
           <Col span={24}>
-            <DescriptionItem title="Ccылка" content={<Link target='_blank' href={data.file || '' } >Скачать / Открыть</Link>} />
+            <DescriptionItem 
+              title="Ccылка" 
+              spaceBetweenContent
+              content={
+              <Link target='_blank' 
+                href={data.file || '' }
+              >
+                Скачать / Открыть
+              </Link>
+              } />
           </Col>
 
           <Col span={24}>
             <DescriptionItem
               title="Избранный"
               content={AddToFavorite}
+              spaceBetweenContent
             />
           </Col>
 
@@ -61,6 +71,7 @@ const DrawerFileInfo = ({ data, AddToFavorite, Recommended}) => {
             <DescriptionItem
               title="Рекомендованный"
               content={Recommended}
+              spaceBetweenContent
             />
           </Col>
         </Row>
