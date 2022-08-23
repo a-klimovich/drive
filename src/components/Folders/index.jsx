@@ -20,8 +20,6 @@ const Folders = () => {
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
   const screens = useBreakpoint();
-  
-  console.log(screens);
 
   const actualContentRender = state?.filtered !== null ? state.filtered : state;
 
@@ -66,7 +64,7 @@ const Folders = () => {
         }}
         pagination={{
           position: ['none'],
-          pageSize: 10,
+          pageSize: 100,
         }}
       />
     </>
