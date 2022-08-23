@@ -25,7 +25,7 @@ const TitleFile = ({ data, isFolderItem = false }) => {
     <div
       key={data?.id}
       style={{ display: 'flex', alignItems: 'center', cursor: 'pointer'}}
-      onDoubleClick={goToFolder(id)}
+      onClick={goToFolder(id)}
     >
       {
         folderIcon(!folderIsEmpty(), {
