@@ -23,6 +23,8 @@ const folderItems = (arr) => {
 
     name: <TitleFile data={element} isFolderItem={true} />,
 
+    filterByName: element?.title || element.name,
+
     recommendations: decorIcon("star", {
       style: {
         width: '18px',

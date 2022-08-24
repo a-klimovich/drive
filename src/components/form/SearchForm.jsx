@@ -21,13 +21,29 @@ const initialValues = {
 const SearchForm = () => {
   const { state, setState, setLoaded } = useContext(Context);
   const [form] = Form.useForm();
+  
+  const handleClearForm = () => {
+    form.resetFields();
+    setLoaded(false);
+    setState({...state, filtered: null});
+  };
 
-  const handlerFiltered = (value) => {
-    const { titleName } = value;
+  
+  const debounce = (cb, delay = 1000) => {
+    let timeout;
+    
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        cb(...args)
+      }, delay)
+    }
+  }
 
-    if (titleName !== '' && titleName !== undefined) {
+  const updateValue = debounce((vel) => {
+    if (vel !== '' && vel !== undefined) {
       
-      request.get(`${BASE_URL.SEARCH}title=${titleName}`)
+      request.get(`${BASE_URL.SEARCH}title=${vel}`)
         .then(setLoaded(true))
         .then(res => {
           setState({...state, filtered: {
@@ -40,20 +56,15 @@ const SearchForm = () => {
         })
         .finally(() => setLoaded(false));
     } else handleClearForm();
-  };
+  }, 300)
   
-  const handleClearForm = () => {
-    form.resetFields();
-    setLoaded(false);
-    setState({...state, filtered: null});
-  };
-
   return (
     <div className="search-box">
       <Form 
         className="search-box__form"
         initialValues={initialValues}
-        onFinish={handlerFiltered}
+        // onFinish={handlerFiltered}
+        onValuesChange={({ titleName }) => updateValue(titleName)}
         form={form}
       >
         <button

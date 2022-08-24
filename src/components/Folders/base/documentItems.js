@@ -29,6 +29,8 @@ const documentItems = (arr) => {
 
       name: <TitleFile data={element} />,
 
+      filterByName: element?.title || element.name,
+
       filterRecommended: element.recommended,
 
       recommendations: decorIcon("star", {

@@ -3,7 +3,9 @@ export const columns = [
   {
     title: 'Название',
     dataIndex: 'name',
-    sorter: (a, b) => a.name.length - b.name.length,
+    sorter: (a, b) => {
+      return a.filterByName.toLowerCase() > b.filterByName.toLowerCase() ? -1 : 1
+    },
     width: '90%',
   },
   {
