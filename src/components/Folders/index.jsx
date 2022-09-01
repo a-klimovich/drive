@@ -21,36 +21,33 @@ const Folders = () => {
   const [currentFolder, setCurrentFolder] = useState({});
   const screens = useBreakpoint();
 
-  const actualContentRender = state?.filtered !== null ? state.filtered : state;
+  const actualContentRender = state.filtered ? state.filtered : state;
 
   useEffect(() => {
-    getFolderData(actualContentRender, folderId) !== null
-      ? setCurrentFolder(getFolderData(actualContentRender, folderId))
-      : setCurrentFolder(getFolderData(currentFolder, folderId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setCurrentFolder(getFolderData(actualContentRender, folderId))
   }, [actualContentRender, folderId]);
-  
+
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || []),
     ...documentItems(currentFolder?.documents || []),
   ];
 
-  const folderPath = getFolderPath(actualContentRender, folderId);
+  const folderPath = getFolderPath(state, folderId);
 
   return (
     <>
       <Breadcrumb>
-        <Breadcrumb.Item >
+        <Breadcrumb.Item>
           <Link to={`/`}>{'Moй кабинет'}</Link>
         </Breadcrumb.Item>
 
-        {
-          folderPath?.map((item) => (
-            <Breadcrumb.Item key={`i${item.title}`} >
-              <Link to={`/${ item.id }`}>{item.title}</Link>
+        {folderPath?.map((item) => {
+          return (
+            <Breadcrumb.Item key={`i${item?.title}`}>
+              <Link to={`/${item?.id}`}>{item?.title}</Link>
             </Breadcrumb.Item>
-          ))
-        }
+          );
+        })}
       </Breadcrumb>
 
       <Table

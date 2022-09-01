@@ -17,7 +17,7 @@ const documentItems = (arr) => {
       .patch(`${BASE_URL.DOCUMENTS}/${val?.id}`, {
         is_favourite: true,
       })
-      .then((res) => console.log(res))
+      .then((res) => res?.data?.is_favourite)
       .catch((error) => {
         console.log(error.message);
       });

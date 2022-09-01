@@ -1,6 +1,19 @@
 header {
   background-color: $white;
 
+  .title {
+    margin-bottom: 0px;
+
+    a {
+      color: $black;
+
+      &:hover {
+        color: $black;
+        text-decoration: underline;
+      }
+    }
+  }
+
   .header-content {
     padding: 12px 20px;
     display: flex;
