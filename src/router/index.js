@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Folders from "../../components/Folders";
+import Folders from "../components/Folders";
 
 const Router = () => {
   return (
