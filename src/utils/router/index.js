@@ -7,7 +7,7 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<Folders />} />
       <Route path="/:folderId" element={<Folders />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/user" element={<Profile />} />
     </Routes>
   );
 };

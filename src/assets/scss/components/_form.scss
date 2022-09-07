@@ -1,0 +1,88 @@
+.ant-form-item-control-input-content {
+
+  .ant-input-number,
+  .ant-picker {
+    width: 100%;
+  }
+}
+
+.profile-settings-form {
+  padding: 15px 0;
+
+  .profile-page-goBack {
+    margin-bottom: 25px;
+  }
+
+  .ant-form-item-label label,
+  p {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #404952;
+  }
+
+  p {
+    margin-top: 10px;
+    text-align: center;
+
+    @include md {
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .ant-checkbox span {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  .ant-picker {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  input,
+  .ant-select-selector {
+    padding: 8px 12px;
+    height: auto;
+  }
+
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    height: 40px;
+  }
+
+  .ant-form-item-control-input {
+    min-height: 40px;
+  }
+
+  .form-profile-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      width: 120px;
+      font-size: 13px;
+      line-height: 16px;
+      box-shadow: 1px 1px 0px $gray-light-2;
+      border-radius: 4px;
+      background-color: $yellow;
+
+      &:hover, &:focus {
+        color: #404952;
+        border-color: #404952;
+      }
+    }
+  }
+
+  .solo-checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    background: #D9D9D9;
+  }
+}

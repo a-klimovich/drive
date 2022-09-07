@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 // ANTD
 import { Row, Col, Typography } from 'antd';
 // COMPONENTS
@@ -11,7 +12,11 @@ import Context from '../../utils/context/Context';
 const { Link } = Typography;
 
 export default function Header(props) {
+  const navigate = useNavigate();
   const { state } = useContext(Context);
+  const handleRedirectProfile = () => {
+    navigate('/user')
+  }
 
   return (
     <header>
@@ -25,7 +30,7 @@ export default function Header(props) {
             })}
             <Title>
               {'Здравствуйте!'}{' '}
-              <Link href="https://lk.pnkbel.by/user/">{state?.user?.name}</Link>
+              <Link onClick={handleRedirectProfile}>{state?.user?.name}</Link>
             </Title>
           </div>
         </Col>

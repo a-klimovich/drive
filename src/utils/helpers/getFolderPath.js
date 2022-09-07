@@ -1,5 +1,4 @@
 const getFolderPath = (data, pathId) => {
-  console.log(data);
   if (Number(data?.id) === Number(pathId) || pathId === undefined) return [];
 
   if (data?.folders?.length === 0) return null;
