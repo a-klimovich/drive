@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 // COMPONENTS
 import decorIcon from '../../UI/icons/decors';
 import CheckBoxFavorite from "../../checkbox/CheckBoxFavorite";
