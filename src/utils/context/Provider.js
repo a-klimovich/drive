@@ -11,11 +11,13 @@ const Provider = ({ children }) => {
   useEffect(() => {
     request.get(BASE_URL.API)
       .then((response) => {
-        setLoaded(true);
-        setState({
-          ...response.data,
-           filtered: null
-        });
+        if (response?.statusText === 'OK') {
+          setLoaded(true);
+          setState({
+            ...response.data,
+            filtered: null
+          });
+        }
       })
       .catch((error) => {
         console.Error(error);

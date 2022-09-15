@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Context from '../../utils/context/Context';
 import { getFolderData } from '../../utils/hooks/getFolderData';
@@ -12,24 +12,66 @@ import EmptyTable from '../UI/EmptyTable';
 import { columns, columnsMobile } from './base/columns';
 import folderItems from './base/folderItems';
 import documentItems from './base/documentItems';
+// URL
+import { BASE_URL } from '../../utils/api/url';
+// AXIOS
+import request from '../../utils/api/axios';
 
 const { useBreakpoint } = Grid;
 
 const Folders = () => {
-  const { state, loaded } = useContext(Context);
+  const { state, loaded, setLoaded, setState } = useContext(Context);
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
   const screens = useBreakpoint();
 
   const actualContentRender = state.filtered ? state.filtered : state;
 
+  const refreshStateNewGet = () => {
+    console.log(123444);
+    request.get(BASE_URL.API)
+      .then((response) => {
+        if (response?.statusText === 'OK') {
+          console.log(12);
+          setLoaded(true);
+          setState({
+            ...response.data,
+            filtered: null
+          });
+        }
+      })
+      .catch((error) => {
+        console.Error(error);
+      })
+      .finally(() => setLoaded(false));
+  }
+
+  const handleFavoriteFolder = (val) => () => {
+    request.patch(`${BASE_URL.FOLDERS}/${val?.id}`)
+      .then(() => refreshStateNewGet())
+      .catch((error) => {
+        console.log(error.message);
+      })
+  };
+
+  const handleFavoriteDocs = (val) => () => {
+    request
+      .patch(`${BASE_URL.DOCUMENTS}/${val?.id}`, {
+        is_favourite: true,
+      })
+      .then(() => refreshStateNewGet())
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   useEffect(() => {
     setCurrentFolder(getFolderData(actualContentRender, folderId))
   }, [actualContentRender, folderId]);
 
   const dataSourceTable = [
-    ...folderItems(currentFolder?.folders || []),
-    ...documentItems(currentFolder?.documents || []),
+    ...folderItems(currentFolder?.folders || [], handleFavoriteFolder),
+    ...documentItems(currentFolder?.documents || [], handleFavoriteDocs),
   ];
 
   const folderPath = getFolderPath(state, folderId);
