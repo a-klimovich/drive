@@ -1,0 +1,30 @@
+export default Object.freeze({
+  siteUrl: '',
+  certificate: '',
+  dateCancellation: '',
+  dateEntry: '',
+  dateException: '',
+  dateIssue: '',
+  dateMembership: '',
+  dateRenewal: '',
+  email: '',
+  firstName: '',
+  lastname: '',
+  phoneNumber: '',
+  shureName: '',
+  insuranceContract: {
+    number: '',
+    series: '',
+    date: '',
+    validity: [],
+    term: [],
+    liabilityLimit: '',
+    currency: '',
+  },
+  placeOfWork: {
+    companyName: '',
+    unp: '',
+    city: '',
+    region: '',
+  }
+})
