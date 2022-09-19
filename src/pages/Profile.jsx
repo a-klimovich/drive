@@ -24,7 +24,7 @@ const { Group: CheckboxGroup } = Checkbox;
 const { Group: RadioGroup } = Radio;
 
 const foramtDate = 'YYYY-MM-DD';
-const dataFormater = (val) => moment(val).format(foramtDate);
+const dataFormater = (val) => val ? moment(val).format(foramtDate) : '';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -35,8 +35,7 @@ const Profile = () => {
   const [legalEntities, setLegalEntities] = useState([]);
   const [individualEntrepreneurs, setIndividualEntrepreneurs] = useState([]);
   const [individualPerson, setIndividualPerson] = useState([]);
-  const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] =
-    useState(false);
+  const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] = useState(false);
 
   const handlerDataRangeTerm = (arrDate) => {
     const formatedDateRange =  arrDate?.map((date) => dataFormater(date))
@@ -48,7 +47,6 @@ const Profile = () => {
   };
 
   const handleChangeQualifications = (checkedValues) => {
-    console.log(checkedValues);
     setQualifications(checkedValues);
   };
 
@@ -75,7 +73,7 @@ const Profile = () => {
   // TODO: req to GET defaultValue = value
 
   const onFinish = (values) => {
-    console.log();
+    console.log(values.dateCancellation);
     console.log("form values", {
       ...values,
       qualifications: qualifications,
@@ -106,8 +104,7 @@ const Profile = () => {
       initialValues={initialValue}
       defaultValue
       className={"profile-settings-form"}
-      // scrollToFirstError
-      validateTrigger="onBlur"
+      scrollToFirstError
     >
       <div className="container">
         <Button onClick={() => navigate(-1)} className="profile-page-goBack">
@@ -173,15 +170,15 @@ const Profile = () => {
             <Item
               name="certificate"
               label="Аттестат №"
-              // rules={[
-              //   {
-              //     required: true,
-              //   },
-              //   {
-              //     pattern: /^[\d]{0,7}$/,
-              //     message: "Максимальное кол-во символов 7",
-              //   },
-              // ]}
+              rules={[
+                {
+                  required: true,
+                },
+                {
+                  pattern: /^[\d]{0,7}$/,
+                  message: "Максимальное кол-во символов 7",
+                },
+              ]}
             >
               <InputNumber
                 controls={false}
@@ -208,11 +205,6 @@ const Profile = () => {
             <Item
               name="dateCancellation"
               label="Дата аннулирования"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <DatePicker placeholder="Выберите дату" />
             </Item>
@@ -221,11 +213,6 @@ const Profile = () => {
             <Item
               name="dateRenewal"
               label="Дата возобновления действия"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <DatePicker placeholder="Выберите дату" />
             </Item>
@@ -243,12 +230,7 @@ const Profile = () => {
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
               name="dateEntry"
-              label="Дата вступления "
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              label="Дата вступления"
             >
               <DatePicker placeholder="Выберите дату" />
             </Item>
@@ -257,11 +239,6 @@ const Profile = () => {
             <Item
               name="dateMembership"
               label="Дата приостановления членства"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <DatePicker placeholder="Выберите дату" />
             </Item>
@@ -269,54 +246,41 @@ const Profile = () => {
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
               name="dateException"
-              label="Дата исключения "
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              label="Дата исключения"
             >
               <DatePicker placeholder="Выберите дату" />
             </Item>
           </Col>
         </Row>
 
-        <p>Квалификация, как в аттестате:</p>
+        <p className="required-mark">Квалификация, как в аттестате:</p>
 
-        <Item
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+        <CheckboxGroup
+          defaultValue={["checked-1"]}
+          onChange={handleChangeQualifications}
         >
-          <CheckboxGroup
-            defaultValue={["checked-1"]}
-            onChange={handleChangeQualifications}
-          >
-            <Row>
-              <Col span={24}>
-                <Checkbox value={"checked-1"}>
-                  налоговое консультирование организаций, индивидуальных
-                  предпринимателей и физических лиц
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value={"checked-2"}>
-                  налоговое консультирование организаций
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value={"checked-3"}>
-                  налоговое консультирование индивидуальных предпринимателей и
-                  физических лиц
-                </Checkbox>
-              </Col>
-            </Row>
-          </CheckboxGroup>
-        </Item>
+          <Row>
+            <Col span={24}>
+              <Checkbox value={"checked-1"}>
+                налоговое консультирование организаций, индивидуальных
+                предпринимателей и физических лиц
+              </Checkbox>
+            </Col>
+            <Col span={24}>
+              <Checkbox value={"checked-2"}>
+                налоговое консультирование организаций
+              </Checkbox>
+            </Col>
+            <Col span={24}>
+              <Checkbox value={"checked-3"}>
+                налоговое консультирование индивидуальных предпринимателей и
+                физических лиц
+              </Checkbox>
+            </Col>
+          </Row>
+        </CheckboxGroup>
 
-        <p>Высшее образование:</p>
+        <p className="required-mark">Высшее образование:</p>
 
         <CheckboxGroup
           defaultValue={["checked-1"]}
@@ -430,10 +394,10 @@ const Profile = () => {
                 <Item label="Валюта">
                   <RadioGroup
                     name={["insuranceContract", "currency"]}
-                    defaultValue="rub"
+                    defaultValue="byn"
                   >
-                    <Radio value="rub" defaultChecked>
-                      RUB
+                    <Radio value="byn" defaultChecked>
+                      BYN
                     </Radio>
                     <Radio value="usd" defaultChecked={false}>
                       USD
@@ -457,11 +421,6 @@ const Profile = () => {
             <Item
               name={["placeOfWork", "companyName"]}
               label="Наименование организации или ИП "
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <Input placeholder="Введите наименование" />
             </Item>
@@ -470,11 +429,6 @@ const Profile = () => {
             <Item
               name={["placeOfWork", "unp"]}
               label="УНП"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <Input placeholder="Введите УНП" />
             </Item>
@@ -483,11 +437,6 @@ const Profile = () => {
             <Item
               name={["placeOfWork", "region"]}
               label="Место регистрации область"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <Select placeholder="Введите город">
                 <Option value="Minsk">Minsk</Option>
@@ -498,11 +447,6 @@ const Profile = () => {
             <Item
               name={["placeOfWork", "city"]}
               label="Место регистрации город"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <Select placeholder="Выберите область">
                 <Option value="Lida">Lida</Option>
@@ -557,16 +501,25 @@ const Profile = () => {
           </Col>
 
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item name="siteUrl" label="Адрес официального сайта">
+            <Item 
+              name="siteUrl" 
+              label="Адрес официального сайта"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
               <Input placeholder="Введите адрес" />
             </Item>
           </Col>
         </Row>
 
         <p>Оказываемые услуги</p>
+
         <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
+        
         <CheckboxGroup
-          defaultValue={["checked-1"]}
           onChange={handleChangeLegalEntities}
         >
           <Row>
@@ -610,7 +563,6 @@ const Profile = () => {
 
         <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
         <CheckboxGroup
-          defaultValue={["checked-1"]}
           onChange={handleChangeIndividualEntrepreneurs}
         >
           <Row>
@@ -655,7 +607,6 @@ const Profile = () => {
         <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
 
         <CheckboxGroup
-          defaultValue={["checked-1"]}
           onChange={handleChangeIndividualPerson}
         >
           <Row>

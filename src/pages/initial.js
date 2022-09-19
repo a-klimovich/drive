@@ -12,6 +12,12 @@ export default Object.freeze({
   lastname: '',
   phoneNumber: '',
   shureName: '',
+  qualifications: [],
+  education: [],
+  provideServicesTaxConsultant: false,
+  legalEntities: [],
+  individualEntrepreneurs: [],
+  individualPerson: [],
   insuranceContract: {
     number: '',
     series: '',
