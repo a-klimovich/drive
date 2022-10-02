@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Context from '../../utils/context/Context';
-import { getFolderData } from '../../utils/hooks/getFolderData';
 // ANTD
 import { Table, Breadcrumb, Grid } from 'antd';
 // HELPERS
@@ -24,15 +23,13 @@ const Folders = () => {
   const { folderId } = useParams();
   const [currentFolder, setCurrentFolder] = useState({});
   const screens = useBreakpoint();
-
+  const folderPath = getFolderPath(state, folderId);
   const actualContentRender = state.filtered ? state.filtered : state;
 
   const refreshStateNewGet = () => {
-    console.log(123444);
     request.get(BASE_URL.API)
       .then((response) => {
         if (response?.statusText === 'OK') {
-          console.log(12);
           setLoaded(true);
           setState({
             ...response.data,
@@ -66,15 +63,17 @@ const Folders = () => {
   };
 
   useEffect(() => {
-    setCurrentFolder(getFolderData(actualContentRender, folderId))
-  }, [actualContentRender, folderId]);
+    if (folderPath?.length) {
+      setCurrentFolder(folderPath[folderPath?.length - 1]);
+    } else {
+      setCurrentFolder(actualContentRender)
+    }
+  }, [folderPath]);
 
   const dataSourceTable = [
     ...folderItems(currentFolder?.folders || [], handleFavoriteFolder),
     ...documentItems(currentFolder?.documents || [], handleFavoriteDocs),
   ];
-
-  const folderPath = getFolderPath(state, folderId);
 
   return (
     <>
@@ -86,7 +85,9 @@ const Folders = () => {
         {folderPath?.map((item) => {
           return (
             <Breadcrumb.Item key={`i${item?.title}`}>
-              <Link to={`/${item?.id}`}>{item?.title}</Link>
+              <Link to={`/${item?.id}`}>
+                {item?.title}
+              </Link>
             </Breadcrumb.Item>
           );
         })}

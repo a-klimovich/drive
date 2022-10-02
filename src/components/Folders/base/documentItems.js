@@ -14,7 +14,7 @@ const documentItems = (arr, handleFavoriteDocs) => {
 
       name: <TitleFile data={element} />,
 
-      filterByName: element?.title || element.name,
+      filterByName: element.name,
 
       filterRecommended: element.recommended,
 

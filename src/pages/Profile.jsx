@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import initialValue from "./initial";
+import Context from "../utils/context/Context";
+import { BASE_URL } from "../utils/api/url";
+// AXIOS
+import request from "../utils/api/axios";
 
 import {
   DatePicker,
@@ -23,31 +27,43 @@ const { Item } = Form;
 const { Group: CheckboxGroup } = Checkbox;
 const { Group: RadioGroup } = Radio;
 
-const foramtDate = 'YYYY-MM-DD';
-const dataFormater = (val) => val ? moment(val).format(foramtDate) : '';
+const foramtDate = "YYYY-MM-DD";
+const dataFormater = (val) => (val ? moment(val).format(foramtDate) : "");
 
 const Profile = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const { state } = useContext(Context);
   const [dataRangeFormatting, setDataRangeFormatting] = useState([]);
-  const [qualifications, setQualifications] = useState([]);
+  const [qualification, setQualifications] = useState("val1");
+  const [currency, setCurrency] = useState("byn");
   const [education, setEducation] = useState([]);
   const [legalEntities, setLegalEntities] = useState([]);
   const [individualEntrepreneurs, setIndividualEntrepreneurs] = useState([]);
   const [individualPerson, setIndividualPerson] = useState([]);
-  const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] = useState(false);
+  const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] =
+    useState(false);
+  const [formValue, setFormValue] = useState(initialValue);
+
+  useEffect(() => {
+    setFormValue(state.user);
+  }, [state]);
 
   const handlerDataRangeTerm = (arrDate) => {
-    const formatedDateRange =  arrDate?.map((date) => dataFormater(date))
+    const formatedDateRange = arrDate?.map((date) => dataFormater(date));
     setDataRangeFormatting(formatedDateRange);
   };
   const handlerDataRangeValidity = (arrDate) => {
-    const formatedDateRange =  arrDate?.map((date) => dataFormater(date))
+    const formatedDateRange = arrDate?.map((date) => dataFormater(date));
     setDataRangeFormatting(formatedDateRange);
   };
 
-  const handleChangeQualifications = (checkedValues) => {
-    setQualifications(checkedValues);
+  const handleChangeQualifications = (e) => {
+    setQualifications(e.target.value);
+  };
+
+  const handleValueCurrancy = (e) => {
+    setCurrency(e.target.value);
   };
 
   const handleChangeEducation = (checkedValues) => {
@@ -73,26 +89,28 @@ const Profile = () => {
   // TODO: req to GET defaultValue = value
 
   const onFinish = (values) => {
-    console.log(values.dateCancellation);
-    console.log("form values", {
+    const userDateValue = {
       ...values,
-      qualifications: qualifications,
-      education: education,
-      provideServicesTaxConsultant: provideServicesTaxConsultant,
-      legalEntities: legalEntities,
-      individualEntrepreneurs: individualEntrepreneurs,
-      individualPerson: individualPerson,
-      insuranceContract: {
-        ...values.insuranceContract,
-        term: dataRangeFormatting,
-        validity: dataRangeFormatting,
-      },
-      dateCancellation: dataFormater(values.dateCancellation),
-      dateEntry: dataFormater(values.dateEntry),
-      dateException: dataFormater(values.dateException),
-      dateIssue: dataFormater(values.dateIssue),
-      dateMembership: dataFormater(values.dateMembership),
-      dateRenewal: dataFormater(values.dateRenewal),
+      qualification,
+      currency,
+      high_education: education,
+      is_consultant: provideServicesTaxConsultant,
+      legal_entity_services: legalEntities,
+      entrepreneurs_services: individualEntrepreneurs,
+      personal_services: individualPerson,
+      date_insurance_start: dataRangeFormatting,
+      period_insurance_start: dataRangeFormatting,
+      date_insurance_from: dataFormater(values.date_insurance_from),
+      date_certificate_stop: dataFormater(values.date_certificate_stop),
+      date_certificate_start: dataFormater(values.date_certificate_stop),
+      date_membership_exclusion: dataFormater(values.date_membership_exclusion),
+      date_membership_start: dataFormater(values.date_membership_start),
+      date_membership_stop: dataFormater(values.date_membership_stop),
+      date_certificate_renew: dataFormater(values.date_certificate_renew),
+    };
+
+    request.patch(`${BASE_URL.USER}`, userDateValue).catch(function (error) {
+      console.log(error);
     });
   };
 
@@ -101,13 +119,14 @@ const Profile = () => {
       form={form}
       layout="vertical"
       onFinish={onFinish}
-      initialValues={initialValue}
+      initialValues={formValue}
       defaultValue
       className={"profile-settings-form"}
       scrollToFirstError
+      validateTrigger="onBlur"
     >
       <div className="container">
-        <Button onClick={() => navigate(-1)} className="profile-page-goBack">
+        <Button onClick={() => navigate('/')} className="profile-page-goBack">
           Вернуться
         </Button>
 
@@ -120,7 +139,7 @@ const Profile = () => {
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
               label="Фамилия"
-              name="lastname"
+              name="last_name"
               rules={[
                 {
                   required: true,
@@ -134,7 +153,7 @@ const Profile = () => {
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
               label="Имя"
-              name="firstName"
+              name="first_name"
               rules={[
                 {
                   required: true,
@@ -148,7 +167,7 @@ const Profile = () => {
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
               label="Отчество"
-              name="shureName"
+              name="middle_name"
               rules={[
                 {
                   required: true,
@@ -189,7 +208,7 @@ const Profile = () => {
 
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name="dateIssue"
+              name="date_certificate_start"
               label="Дата выдачи"
               rules={[
                 {
@@ -202,16 +221,13 @@ const Profile = () => {
           </Col>
 
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="dateCancellation"
-              label="Дата аннулирования"
-            >
+            <Item name="date_certificate_stop" label="Дата аннулирования">
               <DatePicker placeholder="Выберите дату" />
             </Item>
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name="dateRenewal"
+              name="date_certificate_renew"
               label="Дата возобновления действия"
             >
               <DatePicker placeholder="Выберите дату" />
@@ -228,26 +244,20 @@ const Profile = () => {
           ]}
         >
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="dateEntry"
-              label="Дата вступления"
-            >
+            <Item name="date_membership_start" label="Дата вступления">
               <DatePicker placeholder="Выберите дату" />
             </Item>
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name="dateMembership"
+              name="date_membership_stop"
               label="Дата приостановления членства"
             >
               <DatePicker placeholder="Выберите дату" />
             </Item>
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="dateException"
-              label="Дата исключения"
-            >
+            <Item name="date_membership_exclusion" label="Дата исключения">
               <DatePicker placeholder="Выберите дату" />
             </Item>
           </Col>
@@ -255,30 +265,25 @@ const Profile = () => {
 
         <p className="required-mark">Квалификация, как в аттестате:</p>
 
-        <CheckboxGroup
-          defaultValue={["checked-1"]}
-          onChange={handleChangeQualifications}
-        >
+        <RadioGroup onChange={handleChangeQualifications} defaultValue="val1">
           <Row>
             <Col span={24}>
-              <Checkbox value={"checked-1"}>
+              <Radio value="val1">
                 налоговое консультирование организаций, индивидуальных
                 предпринимателей и физических лиц
-              </Checkbox>
+              </Radio>
             </Col>
             <Col span={24}>
-              <Checkbox value={"checked-2"}>
-                налоговое консультирование организаций
-              </Checkbox>
+              <Radio value="val2">налоговое консультирование организаций</Radio>
             </Col>
             <Col span={24}>
-              <Checkbox value={"checked-3"}>
+              <Radio value="val3">
                 налоговое консультирование индивидуальных предпринимателей и
                 физических лиц
-              </Checkbox>
+              </Radio>
             </Col>
           </Row>
-        </CheckboxGroup>
+        </RadioGroup>
 
         <p className="required-mark">Высшее образование:</p>
 
@@ -306,7 +311,7 @@ const Profile = () => {
         >
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name={["insuranceContract", "number"]}
+              name="insurance"
               label="Страховой полис №"
               rules={[
                 {
@@ -319,7 +324,7 @@ const Profile = () => {
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name={["insuranceContract", "series"]}
+              name="insurance_serial_num"
               label="серия"
               rules={[
                 {
@@ -332,7 +337,7 @@ const Profile = () => {
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name={["insuranceContract", "date"]}
+              name="date_insurance_from"
               label="от"
               rules={[
                 {
@@ -353,7 +358,7 @@ const Profile = () => {
         >
           <Col xs={24} sm={12} md={8} lg={6}>
             <Item
-              name={["insuranceContract", "validity"]}
+              name="period_insurance_start"
               label="Срок действия"
               rules={[
                 {
@@ -366,7 +371,7 @@ const Profile = () => {
           </Col>
           <Col xs={24} sm={12} md={8} lg={6}>
             <Item
-              name={["insuranceContract", "term"]}
+              name="date_insurance_start"
               label="Срок страхования"
               rules={[
                 {
@@ -384,7 +389,7 @@ const Profile = () => {
                 <Item label="Лимит ответственности">
                   <InputNumber
                     controls
-                    name={["insuranceContract", "liabilityLimit"]}
+                    name="liability_limit"
                     placeholder="Введите сумму"
                   />
                 </Item>
@@ -392,10 +397,7 @@ const Profile = () => {
 
               <Col span={12}>
                 <Item label="Валюта">
-                  <RadioGroup
-                    name={["insuranceContract", "currency"]}
-                    defaultValue="byn"
-                  >
+                  <RadioGroup onChange={handleValueCurrancy} defaultValue="byn">
                     <Radio value="byn" defaultChecked>
                       BYN
                     </Radio>
@@ -418,39 +420,39 @@ const Profile = () => {
           ]}
         >
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name={["placeOfWork", "companyName"]}
-              label="Наименование организации или ИП "
-            >
+            <Item name="organization" label="Наименование организации или ИП ">
               <Input placeholder="Введите наименование" />
             </Item>
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name={["placeOfWork", "unp"]}
-              label="УНП"
-            >
+            <Item name="unp" label="УНП">
               <Input placeholder="Введите УНП" />
             </Item>
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name={["placeOfWork", "region"]}
-              label="Место регистрации область"
-            >
+            <Item name="registration_region" label="Место регистрации область">
               <Select placeholder="Введите город">
-                <Option value="Minsk">Minsk</Option>
+                <Option value="7">Минск</Option>
+                <Option value="1">Брестская</Option>
+                <Option value="2">Гомельская</Option>
+                <Option value="3">Гродненская</Option>
+                <Option value="4">Могилевская</Option>
+                <Option value="5">Минская</Option>
+                <Option value="6">Витебская</Option>
               </Select>
             </Item>
           </Col>
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name={["placeOfWork", "city"]}
-              label="Место регистрации город"
+              name="registration_city"
+              label="Место регистрации, город"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
             >
-              <Select placeholder="Выберите область">
-                <Option value="Lida">Lida</Option>
-              </Select>
+              <Input placeholder="г. Название" />
             </Item>
           </Col>
         </Row>
@@ -473,7 +475,7 @@ const Profile = () => {
         >
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item
-              name="phoneNumber"
+              name="phone"
               label="Номер телефона"
               rules={[
                 {
@@ -501,8 +503,8 @@ const Profile = () => {
           </Col>
 
           <Col xs={24} sm={12} md={12} lg={8}>
-            <Item 
-              name="siteUrl" 
+            <Item
+              name="url"
               label="Адрес официального сайта"
               rules={[
                 {
@@ -518,10 +520,8 @@ const Profile = () => {
         <p>Оказываемые услуги</p>
 
         <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
-        
-        <CheckboxGroup
-          onChange={handleChangeLegalEntities}
-        >
+
+        <CheckboxGroup onChange={handleChangeLegalEntities}>
           <Row>
             <Col span={24}>
               <Checkbox value={"checked-1"}>
@@ -562,9 +562,7 @@ const Profile = () => {
         </CheckboxGroup>
 
         <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
-        <CheckboxGroup
-          onChange={handleChangeIndividualEntrepreneurs}
-        >
+        <CheckboxGroup onChange={handleChangeIndividualEntrepreneurs}>
           <Row>
             <Col span={24}>
               <Checkbox value={"checked-1"}>
@@ -606,9 +604,7 @@ const Profile = () => {
 
         <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
 
-        <CheckboxGroup
-          onChange={handleChangeIndividualPerson}
-        >
+        <CheckboxGroup onChange={handleChangeIndividualPerson}>
           <Row>
             <Col span={24}>
               <Checkbox checked value={"checked-1"}>

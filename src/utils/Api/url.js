@@ -1,5 +1,6 @@
 export const BASE_URL = {
   API: '/api',
+  USER: '/api/user/',
   SEARCH: '/api/search/?',
   DOCUMENTS: '/api/documents',
   FOLDERS: '/api/folders',
@@ -14,12 +15,3 @@ export const QUERY = {
   EXT: 'ext',
   LIKED: 'liked',
 }
-
-// query - строка поиска в описании
-// title - поиск по названию
-// updated_at__gte - начальная дата (включительно) 2022-07-21
-// updated_at__lt - конечная дата (не включительно)
-// marked - рекомендованное (marked)
-// ext - тип файла
-// liked - избранное (liked)
-
