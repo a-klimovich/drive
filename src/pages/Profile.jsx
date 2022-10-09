@@ -101,13 +101,15 @@ const Profile = () => {
       date_insurance_start: dataRangeFormatting,
       period_insurance_start: dataRangeFormatting,
       date_insurance_from: dataFormater(values.date_insurance_from),
-      date_certificate_stop: dataFormater(values.date_certificate_stop),
+      date_certificate_stop: dataFormater(values.date_certificate_start),
       date_certificate_start: dataFormater(values.date_certificate_stop),
       date_membership_exclusion: dataFormater(values.date_membership_exclusion),
       date_membership_start: dataFormater(values.date_membership_start),
       date_membership_stop: dataFormater(values.date_membership_stop),
       date_certificate_renew: dataFormater(values.date_certificate_renew),
     };
+
+    console.log(userDateValue);
 
     request.patch(`${BASE_URL.USER}`, userDateValue).catch(function (error) {
       console.log(error);
@@ -265,7 +267,7 @@ const Profile = () => {
 
         <p className="required-mark">Квалификация, как в аттестате:</p>
 
-        <RadioGroup onChange={handleChangeQualifications} defaultValue="val1">
+        <RadioGroup onChange={handleChangeQualifications}>
           <Row>
             <Col span={24}>
               <Radio value="val1">
@@ -288,7 +290,6 @@ const Profile = () => {
         <p className="required-mark">Высшее образование:</p>
 
         <CheckboxGroup
-          defaultValue={["checked-1"]}
           onChange={handleChangeEducation}
         >
           <Row>
@@ -397,11 +398,11 @@ const Profile = () => {
 
               <Col span={12}>
                 <Item label="Валюта">
-                  <RadioGroup onChange={handleValueCurrancy} defaultValue="byn">
-                    <Radio value="byn" defaultChecked>
+                  <RadioGroup onChange={handleValueCurrancy}>
+                    <Radio value="byn">
                       BYN
                     </Radio>
-                    <Radio value="usd" defaultChecked={false}>
+                    <Radio value="usd">
                       USD
                     </Radio>
                   </RadioGroup>
@@ -432,7 +433,7 @@ const Profile = () => {
           <Col xs={24} sm={12} md={12} lg={8}>
             <Item name="registration_region" label="Место регистрации область">
               <Select placeholder="Введите город">
-                <Option value="7">Минск</Option>
+                <Option value="0">Не выбрано</Option>
                 <Option value="1">Брестская</Option>
                 <Option value="2">Гомельская</Option>
                 <Option value="3">Гродненская</Option>
@@ -446,11 +447,6 @@ const Profile = () => {
             <Item
               name="registration_city"
               label="Место регистрации, город"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
             >
               <Input placeholder="г. Название" />
             </Item>

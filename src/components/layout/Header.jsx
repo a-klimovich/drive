@@ -15,7 +15,7 @@ export default function Header(props) {
   const navigate = useNavigate();
   const { state } = useContext(Context);
   const handleRedirectProfile = () => {
-    navigate('/user')
+    navigate('/user/')
   }
 
   return (

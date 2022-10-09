@@ -18,6 +18,15 @@ import request from '../../utils/api/axios';
 
 const { useBreakpoint } = Grid;
 
+
+const BreadcrumbCustomItem = () => {
+  return (
+    <div className='hui'>
+
+    </div>
+  )
+}
+
 const Folders = () => {
   const { state, loaded, setLoaded, setState } = useContext(Context);
   const { folderId } = useParams();
@@ -79,14 +88,19 @@ const Folders = () => {
     <>
       <Breadcrumb>
         <Breadcrumb.Item>
-          <Link to={`/`}>{'Moй кабинет'}</Link>
+          <Link 
+            to={`/`}
+            separator="/"
+          >{'Moй кабинет'}</Link>
         </Breadcrumb.Item>
 
         {folderPath?.map((item) => {
           return (
             <Breadcrumb.Item key={`i${item?.title}`}>
               <Link to={`/${item?.id}`}>
-                {item?.title}
+                {
+                  item?.title
+                }
               </Link>
             </Breadcrumb.Item>
           );
