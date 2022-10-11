@@ -78,11 +78,20 @@
     }
   }
 
+  .radio-grup-column {
+    display: flex;
+    flex-direction: column;
+  }
+
   .solo-checkbox {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 25px;
     background: #D9D9D9;
+
+    .ant-form-item {
+      margin-bottom: 0;
+    }
   }
 }

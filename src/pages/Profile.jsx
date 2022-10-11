@@ -1,19 +1,30 @@
 import React, { useState, useEffect, useContext } from "react";
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
-import initialValue from "./initial";
+import moment from "moment";
+// UTILS
 import Context from "../utils/context/Context";
 import { BASE_URL } from "../utils/api/url";
+import normalizeValue from "../utils/normalizeFormValue";
+
+// COMMON COMPONENTS
+import PersonalDate from './__common/PersonalDate';
+import Membership from './__common/Membership';
+import WorakPlaces from './__common/WorakPlaces';
+import Contacts from './__common/Contacts';
+import Insurance from './__common/Insurance';
+
+// BASE
+import initialValue from "./initial";
+import optionList from "./optionList";
+
 // AXIOS
 import request from "../utils/api/axios";
 
 import {
   DatePicker,
-  Input,
   Radio,
   Checkbox,
   InputNumber,
-  Select,
   Row,
   Col,
   Form,
@@ -21,97 +32,87 @@ import {
 } from "antd";
 
 const { RangePicker } = DatePicker;
-const { Option } = Select;
-
-const { Item } = Form;
 const { Group: CheckboxGroup } = Checkbox;
-const { Group: RadioGroup } = Radio;
 
 const foramtDate = "YYYY-MM-DD";
+
 const dataFormater = (val) => (val ? moment(val).format(foramtDate) : "");
+const formatedDateRange = (val) => val?.map((item) => item ? moment(item).format(foramtDate) : "");
 
 const Profile = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { state } = useContext(Context);
-  const [dataRangeFormatting, setDataRangeFormatting] = useState([]);
-  const [qualification, setQualifications] = useState("val1");
-  const [currency, setCurrency] = useState("byn");
+  const { user } = state;
+
+  const [periodInsuranceStart, setPeriodInsuranceStart] = useState([]);
+  const [dataRangeInsurense, setDataRangeInsurense] = useState([]);
+  const [qualification, setQualifications] = useState('');
+  const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
   const [legalEntities, setLegalEntities] = useState([]);
   const [individualEntrepreneurs, setIndividualEntrepreneurs] = useState([]);
   const [individualPerson, setIndividualPerson] = useState([]);
-  const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] =
-    useState(false);
-  const [formValue, setFormValue] = useState(initialValue);
+  const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] = useState(false);
+  
+  const handleChangeQualifications = (e, val) => setQualifications(e?.target?.value || val);
+  const handleValueCurrancy = (e, val) => setCurrency(e?.target?.value || val);
+  const handlerDataRangeTerm = (arrDate) => setDataRangeInsurense(formatedDateRange(arrDate));
+  const handlerDataRangeValidity = (arrDate) => setPeriodInsuranceStart(formatedDateRange(arrDate));
+  const handleProvideServicesTaxConsultant = (checkedValues) => setProvideServicesTaxConsultant(checkedValues.target.checked);
+  const handleChangeEducation = (checkedValues) => setEducation(checkedValues)
+  // TODO: 
+  const handleChangeLegalEntities = (checkedValues) => setLegalEntities(checkedValues);
+  const handleChangeIndividualEntrepreneurs = (checkedValues) => setIndividualEntrepreneurs(checkedValues);
+  const handleChangeIndividualPerson = (checkedValues) => setIndividualPerson(checkedValues);
+  
 
   useEffect(() => {
-    setFormValue(state.user);
-  }, [state]);
+    if (user) {
+      form.setFieldsValue({
+        ...normalizeValue(user),
+      });
 
-  const handlerDataRangeTerm = (arrDate) => {
-    const formatedDateRange = arrDate?.map((date) => dataFormater(date));
-    setDataRangeFormatting(formatedDateRange);
-  };
-  const handlerDataRangeValidity = (arrDate) => {
-    const formatedDateRange = arrDate?.map((date) => dataFormater(date));
-    setDataRangeFormatting(formatedDateRange);
-  };
-
-  const handleChangeQualifications = (e) => {
-    setQualifications(e.target.value);
-  };
-
-  const handleValueCurrancy = (e) => {
-    setCurrency(e.target.value);
-  };
-
-  const handleChangeEducation = (checkedValues) => {
-    setEducation(checkedValues);
-  };
-
-  const handleChangeLegalEntities = (checkedValues) => {
-    setLegalEntities(checkedValues);
-  };
-
-  const handleChangeIndividualEntrepreneurs = (checkedValues) => {
-    setIndividualEntrepreneurs(checkedValues);
-  };
-
-  const handleChangeIndividualPerson = (checkedValues) => {
-    setIndividualPerson(checkedValues);
-  };
-
-  const handleProvideServicesTaxConsultant = (checkedValues) => {
-    setProvideServicesTaxConsultant(checkedValues.target.checked);
-  };
-
-  // TODO: req to GET defaultValue = value
+      handleChangeQualifications({}, user?.qualification)
+      handleValueCurrancy({}, user?.currency)
+    }
+  }, [user, form]);
 
   const onFinish = (values) => {
-    const userDateValue = {
+    const {
+      date_insurance_from,
+      date_certificate_start,
+      date_certificate_stop,
+      date_membership_exclusion,
+      date_membership_start,
+      date_membership_stop,
+      date_certificate_renew,
+    } = values;
+
+    const updateValue = {
       ...values,
-      qualification,
       currency,
+      qualification,
+
       high_education: education,
       is_consultant: provideServicesTaxConsultant,
       legal_entity_services: legalEntities,
       entrepreneurs_services: individualEntrepreneurs,
       personal_services: individualPerson,
-      date_insurance_start: dataRangeFormatting,
-      period_insurance_start: dataRangeFormatting,
-      date_insurance_from: dataFormater(values.date_insurance_from),
-      date_certificate_stop: dataFormater(values.date_certificate_start),
-      date_certificate_start: dataFormater(values.date_certificate_stop),
-      date_membership_exclusion: dataFormater(values.date_membership_exclusion),
-      date_membership_start: dataFormater(values.date_membership_start),
-      date_membership_stop: dataFormater(values.date_membership_stop),
-      date_certificate_renew: dataFormater(values.date_certificate_renew),
+      date_insurance_start: dataRangeInsurense,
+      period_insurance_start: periodInsuranceStart,
+
+      date_insurance_from: dataFormater(date_insurance_from),
+      date_certificate_stop: dataFormater(date_certificate_stop),
+      date_certificate_start: dataFormater(date_certificate_start),
+      date_membership_exclusion: dataFormater(date_membership_exclusion),
+      date_membership_start: dataFormater(date_membership_start),
+      date_membership_stop: dataFormater(date_membership_stop),
+      date_certificate_renew: dataFormater(date_certificate_renew),
     };
 
-    console.log(userDateValue);
-
-    request.patch(`${BASE_URL.USER}`, userDateValue).catch(function (error) {
+    // REQUEST
+    request.patch(`${BASE_URL.USER}`, updateValue).catch(function (error) {
       console.log(error);
     });
   };
@@ -121,235 +122,49 @@ const Profile = () => {
       form={form}
       layout="vertical"
       onFinish={onFinish}
-      initialValues={formValue}
-      defaultValue
+      initialValues={initialValue}
       className={"profile-settings-form"}
       scrollToFirstError
       validateTrigger="onBlur"
     >
       <div className="container">
-        <Button onClick={() => navigate('/')} className="profile-page-goBack">
+        <Button onClick={() => navigate("/")} className="profile-page-goBack">
           Вернуться
         </Button>
 
-        <Row
-          gutter={[
-            { xs: 5, sm: 5, md: 10, lg: 15 },
-            { xs: 4, sm: 6, md: 15, lg: 10 },
-          ]}
-        >
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              label="Фамилия"
-              name="last_name"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Введите фамилию" />
-            </Item>
-          </Col>
-
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              label="Имя"
-              name="first_name"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Введите имя" />
-            </Item>
-          </Col>
-
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              label="Отчество"
-              name="middle_name"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Введите отчество" />
-            </Item>
-          </Col>
-        </Row>
-
-        <Row
-          gutter={[
-            { xs: 5, sm: 5, md: 10, lg: 15 },
-            { xs: 4, sm: 6, md: 15, lg: 10 },
-          ]}
-        >
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="certificate"
-              label="Аттестат №"
-              rules={[
-                {
-                  required: true,
-                },
-                {
-                  pattern: /^[\d]{0,7}$/,
-                  message: "Максимальное кол-во символов 7",
-                },
-              ]}
-            >
-              <InputNumber
-                controls={false}
-                placeholder="Введите 7 цифр номера"
-              />
-            </Item>
-          </Col>
-
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="date_certificate_start"
-              label="Дата выдачи"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <DatePicker placeholder="Выберите дату" />
-            </Item>
-          </Col>
-
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item name="date_certificate_stop" label="Дата аннулирования">
-              <DatePicker placeholder="Выберите дату" />
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="date_certificate_renew"
-              label="Дата возобновления действия"
-            >
-              <DatePicker placeholder="Выберите дату" />
-            </Item>
-          </Col>
-        </Row>
+        <PersonalDate />
 
         <p>Член ПНК</p>
 
-        <Row
-          gutter={[
-            { xs: 5, sm: 5, md: 10, lg: 15 },
-            { xs: 4, sm: 6, md: 15, lg: 10 },
-          ]}
-        >
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item name="date_membership_start" label="Дата вступления">
-              <DatePicker placeholder="Выберите дату" />
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="date_membership_stop"
-              label="Дата приостановления членства"
-            >
-              <DatePicker placeholder="Выберите дату" />
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item name="date_membership_exclusion" label="Дата исключения">
-              <DatePicker placeholder="Выберите дату" />
-            </Item>
-          </Col>
-        </Row>
+        <Membership />
 
         <p className="required-mark">Квалификация, как в аттестате:</p>
 
-        <RadioGroup onChange={handleChangeQualifications}>
-          <Row>
-            <Col span={24}>
-              <Radio value="val1">
-                налоговое консультирование организаций, индивидуальных
-                предпринимателей и физических лиц
-              </Radio>
-            </Col>
-            <Col span={24}>
-              <Radio value="val2">налоговое консультирование организаций</Radio>
-            </Col>
-            <Col span={24}>
-              <Radio value="val3">
-                налоговое консультирование индивидуальных предпринимателей и
-                физических лиц
-              </Radio>
-            </Col>
-          </Row>
-        </RadioGroup>
+        <Radio.Group
+          options={optionList.qualification}
+          onChange={handleChangeQualifications}
+          value={qualification}
+          name={qualification}
+          layout="vertical"
+          className='radio-grup-column'
+        />
 
         <p className="required-mark">Высшее образование:</p>
 
-        <CheckboxGroup
-          onChange={handleChangeEducation}
-        >
+        <CheckboxGroup value={user?.high_education} onChange={handleChangeEducation}>
           <Row>
             <Col>
-              <Checkbox value="checked-1">экономическое</Checkbox>
+              <Checkbox value="checked-1">Экономическое</Checkbox>
             </Col>
             <Col>
-              <Checkbox value="checked-2">юридическое</Checkbox>
+              <Checkbox value="checked-2">Юридическое</Checkbox>
             </Col>
           </Row>
         </CheckboxGroup>
 
         <p>Договор страхования ответственности</p>
 
-        <Row
-          gutter={[
-            { xs: 5, sm: 5, md: 10, lg: 15 },
-            { xs: 4, sm: 6, md: 15, lg: 10 },
-          ]}
-        >
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="insurance"
-              label="Страховой полис №"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <InputNumber controls={false} placeholder="Введите номер" />
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="insurance_serial_num"
-              label="серия"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Введите серию" />
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="date_insurance_from"
-              label="от"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <DatePicker placeholder="Выберите дату" />
-            </Item>
-          </Col>
-        </Row>
+        <Insurance />
 
         <Row
           gutter={[
@@ -358,7 +173,7 @@ const Profile = () => {
           ]}
         >
           <Col xs={24} sm={12} md={8} lg={6}>
-            <Item
+            <Form.Item
               name="period_insurance_start"
               label="Срок действия"
               rules={[
@@ -368,10 +183,11 @@ const Profile = () => {
               ]}
             >
               <RangePicker onChange={(val) => handlerDataRangeValidity(val)} />
-            </Item>
+            </Form.Item>
           </Col>
+
           <Col xs={24} sm={12} md={8} lg={6}>
-            <Item
+            <Form.Item
               name="date_insurance_start"
               label="Срок страхования"
               rules={[
@@ -381,32 +197,30 @@ const Profile = () => {
               ]}
             >
               <RangePicker onChange={(val) => handlerDataRangeTerm(val)} />
-            </Item>
+            </Form.Item>
           </Col>
 
           <Col xs={24} sm={12} md={12} lg={12}>
             <Row gutter={[{ xs: 5, sm: 5, md: 10, lg: 15 }, 0]}>
               <Col span={12}>
-                <Item label="Лимит ответственности">
+                <Form.Item label="Лимит ответственности">
                   <InputNumber
                     controls
                     name="liability_limit"
                     placeholder="Введите сумму"
                   />
-                </Item>
+                </Form.Item>
               </Col>
 
               <Col span={12}>
-                <Item label="Валюта">
-                  <RadioGroup onChange={handleValueCurrancy}>
-                    <Radio value="byn">
-                      BYN
-                    </Radio>
-                    <Radio value="usd">
-                      USD
-                    </Radio>
-                  </RadioGroup>
-                </Item>
+                <Form.Item label="Валюта">
+                  <Radio.Group
+                    options={optionList.currency}
+                    onChange={handleValueCurrancy}
+                    value={currency}
+                    name={currency}
+                  />
+                </Form.Item>
               </Col>
             </Row>
           </Col>
@@ -414,110 +228,28 @@ const Profile = () => {
 
         <p>Место работы в качестве налогового консультанта </p>
 
-        <Row
-          gutter={[
-            { xs: 5, sm: 5, md: 10, lg: 15 },
-            { xs: 4, sm: 6, md: 15, lg: 10 },
-          ]}
-        >
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item name="organization" label="Наименование организации или ИП ">
-              <Input placeholder="Введите наименование" />
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item name="unp" label="УНП">
-              <Input placeholder="Введите УНП" />
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item name="registration_region" label="Место регистрации область">
-              <Select placeholder="Введите город">
-                <Option value="0">Не выбрано</Option>
-                <Option value="1">Брестская</Option>
-                <Option value="2">Гомельская</Option>
-                <Option value="3">Гродненская</Option>
-                <Option value="4">Могилевская</Option>
-                <Option value="5">Минская</Option>
-                <Option value="6">Витебская</Option>
-              </Select>
-            </Item>
-          </Col>
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="registration_city"
-              label="Место регистрации, город"
-            >
-              <Input placeholder="г. Название" />
-            </Item>
-          </Col>
-        </Row>
+        <WorakPlaces />
       </div>
 
       <div className="solo-checkbox">
-        <Checkbox onChange={handleProvideServicesTaxConsultant}>
-          Не оказываю услуги в качестве налогового консультанта
-        </Checkbox>
+        <Form.Item
+          name="is_consultant"
+          valuePropName="checked"
+        >
+          <Checkbox onChange={handleProvideServicesTaxConsultant}>Не оказываю услуги в качестве налогового консультанта</Checkbox>
+        </Form.Item>
       </div>
 
       <div className="container">
         <p>Контактная информация</p>
 
-        <Row
-          gutter={[
-            { xs: 5, sm: 5, md: 10, lg: 15 },
-            { xs: 4, sm: 6, md: 15, lg: 10 },
-          ]}
-        >
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="phone"
-              label="Номер телефона"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="801642345678" />
-            </Item>
-          </Col>
-
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="email"
-              label="e-mail"
-              rules={[
-                {
-                  required: true,
-                  type: "email",
-                },
-              ]}
-            >
-              <Input placeholder="Введите e-mail" />
-            </Item>
-          </Col>
-
-          <Col xs={24} sm={12} md={12} lg={8}>
-            <Item
-              name="url"
-              label="Адрес официального сайта"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input placeholder="Введите адрес" />
-            </Item>
-          </Col>
-        </Row>
+        <Contacts />
 
         <p>Оказываемые услуги</p>
 
         <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
 
-        <CheckboxGroup onChange={handleChangeLegalEntities}>
+        <CheckboxGroup value={user?.legal_entity_services} onChange={handleChangeLegalEntities}>
           <Row>
             <Col span={24}>
               <Checkbox value={"checked-1"}>
@@ -558,7 +290,8 @@ const Profile = () => {
         </CheckboxGroup>
 
         <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
-        <CheckboxGroup onChange={handleChangeIndividualEntrepreneurs}>
+
+        <CheckboxGroup value={user?.entrepreneurs_services} onChange={handleChangeIndividualEntrepreneurs}>
           <Row>
             <Col span={24}>
               <Checkbox value={"checked-1"}>
@@ -600,7 +333,7 @@ const Profile = () => {
 
         <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
 
-        <CheckboxGroup onChange={handleChangeIndividualPerson}>
+        <CheckboxGroup value={user?.personal_services} onChange={handleChangeIndividualPerson}>
           <Row>
             <Col span={24}>
               <Checkbox checked value={"checked-1"}>
@@ -633,9 +366,9 @@ const Profile = () => {
           </Row>
         </CheckboxGroup>
 
-        <Item className="form-profile-btn">
+        <Form.Item className="form-profile-btn">
           <Button htmlType="primary">Сохранить</Button>
-        </Item>
+        </Form.Item>
       </div>
     </Form>
   );

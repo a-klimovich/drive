@@ -1,5 +1,5 @@
-export default Object.freeze({
-  name: "artur",
+const initialValue = {
+  name: "",
   first_name: "",
   middle_name: null,
   last_name: "",
@@ -8,7 +8,7 @@ export default Object.freeze({
   date_certificate_stop: null,
   date_certificate_renew: null,
   qualification: '',
-  high_education: [],
+  high_education: ['checked-2'],
   date_membership_start: null,
   date_membership_stop: null,
   date_membership_exclusion: '',
@@ -29,5 +29,7 @@ export default Object.freeze({
   url: null,
   legal_entity_services: null,
   entrepreneurs_services: null,
-  personal_services: null
-})
+  personal_services: null,
+};
+
+export default initialValue;

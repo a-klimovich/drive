@@ -18,15 +18,6 @@ import request from '../../utils/api/axios';
 
 const { useBreakpoint } = Grid;
 
-
-const BreadcrumbCustomItem = () => {
-  return (
-    <div className='hui'>
-
-    </div>
-  )
-}
-
 const Folders = () => {
   const { state, loaded, setLoaded, setState } = useContext(Context);
   const { folderId } = useParams();
@@ -77,6 +68,7 @@ const Folders = () => {
     } else {
       setCurrentFolder(actualContentRender)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [folderPath]);
 
   const dataSourceTable = [
