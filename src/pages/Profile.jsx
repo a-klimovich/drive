@@ -71,10 +71,15 @@ const Profile = () => {
     if (user) {
       form.setFieldsValue({
         ...normalizeValue(user),
+        // ...normalizeValue(user),
       });
 
-      handleChangeQualifications({}, user?.qualification)
-      handleValueCurrancy({}, user?.currency)
+      handleChangeQualifications({}, user?.qualification);
+      handleValueCurrancy({}, user?.currency);
+      handleChangeLegalEntities(user?.legal_entity_services);
+      handleChangeIndividualEntrepreneurs(user?.entrepreneurs_services);
+      handleChangeIndividualPerson(user?.personal_services);
+      handleChangeEducation(user?.high_education);
     }
   }, [user, form]);
 
@@ -151,7 +156,7 @@ const Profile = () => {
 
         <p className="required-mark">Высшее образование:</p>
 
-        <CheckboxGroup value={user?.high_education} onChange={handleChangeEducation}>
+        <CheckboxGroup value={education} onChange={handleChangeEducation}>
           <Row>
             <Col>
               <Checkbox value="checked-1">Экономическое</Checkbox>
@@ -249,7 +254,7 @@ const Profile = () => {
 
         <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
 
-        <CheckboxGroup value={user?.legal_entity_services} onChange={handleChangeLegalEntities}>
+        <CheckboxGroup value={legalEntities} onChange={handleChangeLegalEntities}>
           <Row>
             <Col span={24}>
               <Checkbox value={"checked-1"}>
@@ -291,7 +296,7 @@ const Profile = () => {
 
         <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
 
-        <CheckboxGroup value={user?.entrepreneurs_services} onChange={handleChangeIndividualEntrepreneurs}>
+        <CheckboxGroup value={individualEntrepreneurs} onChange={handleChangeIndividualEntrepreneurs}>
           <Row>
             <Col span={24}>
               <Checkbox value={"checked-1"}>
@@ -333,7 +338,7 @@ const Profile = () => {
 
         <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
 
-        <CheckboxGroup value={user?.personal_services} onChange={handleChangeIndividualPerson}>
+        <CheckboxGroup value={individualPerson} onChange={handleChangeIndividualPerson}>
           <Row>
             <Col span={24}>
               <Checkbox checked value={"checked-1"}>

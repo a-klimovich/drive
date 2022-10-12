@@ -10,11 +10,11 @@ const { Link, Text } = Typography;
 const TitleFile = ({ data, isFolderItem = false }) => {
   const { id, title, name, extension: fileType, file } = data;
   
-  const folderEmpty = data?.folders?.length;
-  const documentsEmpty = data?.documents?.length;
+  const folderEmpty = data?.folders?.length === 0;
+  const documentsEmpty = data?.documents?.length === 0;
   
   const navigate = useNavigate();
-  const folderIsEmpty = () => (folderEmpty > 0 && documentsEmpty > 0)
+  const folderIsEmpty = () => (folderEmpty && documentsEmpty)
 
   const goToFolder = (id) => () => {
     navigate(`/${id}`);
@@ -27,7 +27,7 @@ const TitleFile = ({ data, isFolderItem = false }) => {
       onClick={goToFolder(id)}
     >
       {
-        folderIcon(!folderIsEmpty(), {
+        folderIcon(folderIsEmpty(), {
           style: {
             marginRight: '20px'
           }
