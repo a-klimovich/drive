@@ -1,0 +1,21 @@
+.page {
+  &.overlay {
+    &::after {
+      content: "";
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.45);
+      top: 0;
+      z-index: 9;
+    }
+
+    .spiner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 99;
+    }
+  }
+}
