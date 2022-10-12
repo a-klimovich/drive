@@ -1,7 +1,9 @@
 const getFolderPath = (data, pathId) => {
-  if (Number(data?.id) === Number(pathId) || pathId === undefined) return [];
+  if (String(data?.id) === String(pathId) || pathId === undefined) return [];
 
   if (data?.folders?.length === 0) return null;
+  
+  if (data?.folders.filter((e) => String(e?.id) === String(pathId))?.length !== 0) return data?.folders.filter((e) => String(e?.id) === String(pathId));
   
   return data?.folders?.reduce((acc, folder) => {
     const path = getFolderPath(folder, pathId);
