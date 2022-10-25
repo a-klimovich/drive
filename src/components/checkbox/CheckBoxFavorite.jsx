@@ -1,9 +1,9 @@
 import { useState } from 'react';
 // COMPONENTS
-import decorIcon from "../UI/icons/decors";
+import decorIcon from "components/UI/icons/decors";
 
 const CheckBoxFavorite = (props) => {
-  const { defaultValue, style } = props;
+  const { defaultValue, style, onClick } = props;
   const [val, setVal] = useState(defaultValue);
 
   const onChange = () => {
@@ -19,7 +19,7 @@ const CheckBoxFavorite = (props) => {
         type="checkbox" 
         checked={val} 
         onChange={onChange}
-        onClick={props.onClick}
+        onClick={onClick}
       />
       {decorIcon("heart", {
         style: {

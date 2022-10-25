@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Form, Select, Checkbox, Input, Space, Button, DatePicker } from 'antd';
 // URL
-import { BASE_URL } from '../../utils/api/url';
+import { BASE_URL } from 'api/url';
 // HELPERS
-import filterSearchQueries from '../../utils/helpers/filterSearchQueries';
+import filterSearchQueries from 'helpers/filterSearchQueries';
 // COMPONENTS
-import fileTypeIcon from '../UI/icons/files';
+import fileTypeIcon from 'components/UI/icons/files';
 // AXIOS
-import request from '../../utils/api/axios';
-import Context from '../../utils/context/Context';
+import request from 'api/axios';
+import Context from 'context/Context';
 
 const { Item } = Form;
 const { Option } = Select;

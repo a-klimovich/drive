@@ -4,8 +4,10 @@ import decorIcon from '../../UI/icons/decors';
 import CheckBoxFavorite from '../../checkbox/CheckBoxFavorite';
 import TitleFile from '../../TitleFile';
 import DrawerFileInfo from '../../DrawerFileInfo';
+// URL
+import { BASE_URL } from '../../../api/url';
 
-const documentItems = (arr, handleFavoriteDocs) => {
+const documentItems = (arr, handleFavorite) => {
   let dataSource = [];
 
   arr.map((element) =>
@@ -29,7 +31,7 @@ const documentItems = (arr, handleFavoriteDocs) => {
       favorite: (
         <CheckBoxFavorite
           defaultValue={element.is_favourite}
-          onClick={handleFavoriteDocs(element)}
+          onClick={handleFavorite(element, BASE_URL.DOCUMENTS)}
         />
       ),
 
@@ -52,7 +54,7 @@ const documentItems = (arr, handleFavoriteDocs) => {
           AddToFavorite={
             <CheckBoxFavorite
               defaultValue={element.is_favourite}
-              onClick={handleFavoriteDocs(element)}
+              onClick={handleFavorite(element, BASE_URL.DOCUMENTS)}
             />
           }
 

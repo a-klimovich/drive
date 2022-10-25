@@ -1,5 +1,5 @@
 // CONST
-import fileType from '../../../utils/helpers/const/fileType';
+import fileType from '../../../helpers/const/fileType';
 // FILES TYPE
 import {ReactComponent as DocIcon} from '../../../assets/image/files-icon/doc.svg';
 import {ReactComponent as JpgIcon} from '../../../assets/image/files-icon/jpg.svg';

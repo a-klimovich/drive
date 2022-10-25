@@ -3,9 +3,11 @@ import React from 'react';
 import decorIcon from '../../UI/icons/decors';
 import CheckBoxFavorite from "../../checkbox/CheckBoxFavorite";
 import TitleFile from "../../TitleFile";
+// URL
+import { BASE_URL } from '../../../api/url';
 
 
-const folderItems = (arr, handleFavoriteFolder) => {
+const folderItems = (arr, handleFavorite) => {
   let dataSource = [];
 
   arr.map((element) => (dataSource.push({
@@ -27,7 +29,7 @@ const folderItems = (arr, handleFavoriteFolder) => {
     
     favorite: <CheckBoxFavorite
       defaultValue={element.is_favourite}
-      onClick={handleFavoriteFolder(element)}
+      onClick={handleFavorite(element, BASE_URL.FOLDERS)}
     />,
 
     filterFavorite: element.is_favourite,

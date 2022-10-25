@@ -1,18 +1,17 @@
 // STYLES
 import "antd/dist/antd.min.css";
-import "./assets/scss/index.scss";
+import "./scss/index.scss";
 // ROUTER
-import Router from "./utils/router";
-import Provider from "./utils/context/Provider";
+import Router from "./router";
+import Provider from "./context/Provider";
 // LAYOUT
 import Layout, { Content } from "antd/lib/layout/layout";
-import Header from "./components/layout/Header";
+import Header from "components/layout/Header";
 
 const App = () => (
   <Layout className="App">
     <Provider>
       <Header />
-      
       <Content>
         <Router />
       </Content>

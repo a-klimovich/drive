@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import Folders from "../../components/Folders";
-import Profile from "../../pages/Profile";
+import Folders from "components/folders";
+import Profile from "../pages/Profile";
 
 const Router = () => {
   return (

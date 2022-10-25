@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Context from "./Context";
-import { BASE_URL } from '../api/url';
+import { BASE_URL } from 'api/url';
 // AXIOS
-import request from '../../utils/api/axios';
+import request from 'api/axios';
 
 const Provider = ({ children }) => {
   const [loaded, setLoaded] = useState(true);

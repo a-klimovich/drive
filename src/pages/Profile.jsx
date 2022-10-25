@@ -2,12 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 // UTILS
-import Context from "../utils/context/Context";
-import { BASE_URL } from "../utils/api/url";
-import normalizeValue from "../utils/normalizeFormValue";
+import Context from "context/Context";
+import normalizeValue from "utils/normalizeFormValue";
+
+// API
+import { BASE_URL } from "api/url";
+import request from "api/axios";
 
 // COMPONENTS
-import Page from "../components/layout/Page";
+import Page from "components/layout/Page";
 import PersonalDate from "./__common/PersonalDate";
 import Membership from "./__common/Membership";
 import WorakPlaces from "./__common/WorakPlaces";
@@ -18,8 +21,6 @@ import Insurance from "./__common/Insurance";
 import initialValue from "./initial";
 import optionList from "./optionList";
 
-// AXIOS
-import request from "../utils/api/axios";
 
 import { DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, notification } from "antd";
 
@@ -227,8 +228,8 @@ const Profile = () => {
             <Col xs={24} sm={12} md={12} lg={12}>
               <Row gutter={[{ xs: 5, sm: 5, md: 10, lg: 15 }, 0]}>
                 <Col span={12}>
-                  <Form.Item label='Лимит ответственности'>
-                    <InputNumber controls name='liability_limit' placeholder='Введите сумму' />
+                  <Form.Item name='liability_limit' label='Лимит ответственности'>
+                    <InputNumber  placeholder='Введите сумму' />
                   </Form.Item>
                 </Col>
 

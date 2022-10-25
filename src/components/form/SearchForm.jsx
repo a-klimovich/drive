@@ -2,15 +2,15 @@ import { useContext } from "react";
 // ANTD
 import { Form } from 'antd';
 // COMPONENTS
-import decorIcon from '../UI/icons/decors';
-import Popover from '../Popover';
-import FilterPopoverForm from './FilterPopoverForm';
+import decorIcon from 'components/UI/icons/decors';
+import Popover from 'components/Popover';
+import FilterPopoverForm from 'components/form/FilterPopoverForm';
 // URL
-import { BASE_URL } from '../../utils/api/url';
+import { BASE_URL } from 'api/url';
 // AXIOS
-import request from '../../utils/api/axios';
+import request from 'api/axios';
 // CONTEXT
-import Context from "../../utils/context/Context";
+import Context from "context/Context";
 
 const { Item } = Form;
 

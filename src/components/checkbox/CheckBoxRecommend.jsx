@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // COMPONENTS
-import decorIcon from "../UI/icons/decors";
+import decorIcon from "components/UI/icons/decors";
 
 const CheckBoxRecommend = (props) => {
   const { defaultValue, style } = props;

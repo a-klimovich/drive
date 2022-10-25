@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 // ANTD
 import { Row, Col, Typography } from 'antd';
 // COMPONENTS
-import decorIcon from '../UI/icons/decors';
-import Title from '../UI/Title';
-import SearchForm from '../form/SearchForm';
+import decorIcon from 'components/UI/icons/decors';
+import Title from 'components/UI/Title';
+import SearchForm from 'components/form/SearchForm';
 // CONTEXT
-import Context from '../../utils/context/Context';
+import Context from 'context/Context';
 
 const { Link } = Typography;
 
