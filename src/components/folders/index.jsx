@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useState, useMemo,
+} from 'react';
 import { useParams } from 'react-router-dom';
 // ANTD
 import { Table, Grid } from 'antd';
@@ -11,16 +13,15 @@ import Context from 'context/Context';
 import getFolderPath from 'helpers/getFolderPath';
 // COMPONENTS
 import EmptyTable from 'components/UI/EmptyTable';
-import BreadCrumbs from 'components/BredCrumbs'
+import BreadCrumbs from 'components/BredCrumbs';
 // BASE
 import { columns, columnsMobile } from './base/columns';
 import folderItems from './base/folderItems';
 import documentItems from './base/documentItems';
-import { useMemo } from 'react';
 
 const { useBreakpoint } = Grid;
 
-const Folders = () => {
+function Folders() {
   const { state, loaded, setLoaded } = useContext(Context);
   const { folderId } = useParams();
   const [folder, setFolder] = useState({});
@@ -38,9 +39,10 @@ const Folders = () => {
     if (folderId) {
       setLoaded(true);
 
-      request.get(`${BASE_URL.FOLDERS}/${folderId}/?limit=${limit}&offset=${offset}`)
+      request
+        .get(`${BASE_URL.FOLDERS}/${folderId}/?limit=${limit}&offset=${offset}`)
         .then((res) => {
-          setFolder(res?.data)
+          setFolder(res?.data);
         })
         .catch((error) => {
           console.log(error.message);
@@ -49,9 +51,9 @@ const Folders = () => {
     }
 
     if (folderId === undefined) {
-      setFolder(actualContentRender)
+      setFolder(actualContentRender);
     }
-  }, [folderId, setLoaded, actualContentRender, offset, limit])
+  }, [folderId, setLoaded, actualContentRender, offset, limit]);
 
   const handleChangePagination = (page, pageSize) => {
     setLimit(pageSize);
@@ -61,10 +63,11 @@ const Folders = () => {
     } else {
       setOffset(pageSize * page);
     }
-  }
+  };
 
   const handleFavorite = (val, baseUrl) => () => {
-    request.patch(`${baseUrl}/${val?.id}`)
+    request
+      .patch(`${baseUrl}/${val?.id}`)
       .then(() => {
         setLoaded(true);
       })
@@ -81,18 +84,14 @@ const Folders = () => {
 
   return (
     <>
-      <BreadCrumbs
-        folderPath={folderPath}
-      />
+      <BreadCrumbs folderPath={folderPath} />
 
       <Table
         loading={loaded}
-        columns={!screens.md ? columnsMobile : columns} 
+        columns={!screens.md ? columnsMobile : columns}
         dataSource={dataSourceTable}
         locale={{
-          emptyText: (
-            <EmptyTable description="По вашему запросу не найдено ни одного объекта" />
-          ),
+          emptyText: <EmptyTable description="По вашему запросу не найдено ни одного объекта" />,
         }}
         pagination={{
           defaultCurrent: 1,
@@ -105,6 +104,6 @@ const Folders = () => {
       />
     </>
   );
-};
+}
 
 export default Folders;
