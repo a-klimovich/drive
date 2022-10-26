@@ -148,6 +148,7 @@
       }
     ],
     "no-with": 2,
+    "linebreak-style": 0,
     "radix": 2,
     "vars-on-top": 2,
     "wrap-iife": 2,

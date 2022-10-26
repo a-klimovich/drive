@@ -1,35 +1,35 @@
 import { useState } from 'react';
 // COMPONENTS
-import decorIcon from "components/UI/icons/decors";
+import decorIcon from 'components/UI/icons/decors';
 
-const CheckBoxFavorite = (props) => {
-  const { defaultValue, style, onClick } = props;
+function CheckBoxFavorite(props) {
+  const { defaultValue, onClick } = props;
   const [val, setVal] = useState(defaultValue);
 
   const onChange = () => {
     setVal(!val);
-  }
+  };
 
   return (
+    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label
       className="flex-align-center"
-      style={{...style, width: 'fit-content', cursor: 'pointer'}}
     >
-      <input 
-        type="checkbox" 
-        checked={val} 
+      <input
+        type="checkbox"
+        checked={val}
         onChange={onChange}
         onClick={onClick}
       />
-      {decorIcon("heart", {
+      {decorIcon('heart', {
         style: {
           width: '18px',
           height: '18px',
-          fill: `${val ? '#FC4D4D' : '#B3B5B7'}`
-        }
+          fill: `${val ? '#FC4D4D' : '#B3B5B7'}`,
+        },
       })}
     </label>
   );
-};
+}
 
 export default CheckBoxFavorite;

@@ -1,11 +1,8 @@
-
 export const columns = [
   {
     title: 'Название',
     dataIndex: 'name',
-    sorter: (a, b) => {
-      return a.filterByName.toLowerCase() > b.filterByName.toLowerCase() ? -1 : 1
-    },
+    sorter: (a, b) => (a.filterByName.toLowerCase() > b.filterByName.toLowerCase() ? -1 : 1),
     width: '90%',
   },
   {
@@ -41,5 +38,5 @@ export const columnsMobile = [
   },
   {
     dataIndex: 'info',
-  }
+  },
 ];

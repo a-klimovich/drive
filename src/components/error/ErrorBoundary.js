@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import CenteredContent from 'components/CenteredContent';
 
 export default class ErrorBoundary extends React.Component {
@@ -7,15 +7,9 @@ export default class ErrorBoundary extends React.Component {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI.
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
-
-  // componentDidCatch(error, errorInfo) {
-  //   // You can also log the error to an error reporting service
-  //   logErrorToMyService(error, errorInfo);
-  // }
 
   render() {
     if (this.state.hasError) {
@@ -23,7 +17,7 @@ export default class ErrorBoundary extends React.Component {
         <CenteredContent>
           <h1>Something went wrong.</h1>
         </CenteredContent>
-      )
+      );
     }
 
     return this.props.children;

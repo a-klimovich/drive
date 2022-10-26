@@ -1,11 +1,17 @@
-import { Input, Row, Col, Form } from "antd";
+import {
+  Input, Row, Col, Form,
+} from 'antd';
 
 export default function Contacts() {
   return (
     <Row
       gutter={[
-        { xs: 5, sm: 5, md: 10, lg: 15 },
-        { xs: 4, sm: 6, md: 15, lg: 10 },
+        {
+          xs: 5, sm: 5, md: 10, lg: 15,
+        },
+        {
+          xs: 4, sm: 6, md: 15, lg: 10,
+        },
       ]}
     >
       <Col xs={24} sm={12} md={12} lg={8}>
@@ -29,7 +35,7 @@ export default function Contacts() {
           rules={[
             {
               required: true,
-              type: "email",
+              type: 'email',
             },
           ]}
         >

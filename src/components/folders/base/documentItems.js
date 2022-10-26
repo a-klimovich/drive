@@ -8,67 +8,65 @@ import DrawerFileInfo from '../../DrawerFileInfo';
 import { BASE_URL } from '../../../api/url';
 
 const documentItems = (arr, handleFavorite) => {
-  let dataSource = [];
+  const dataSource = [];
 
-  arr.map((element) =>
-    dataSource.push({
-      key: `${element.id}_${element.title || element.name}`,
+  arr.map((element) => dataSource.push({
+    key: `${element.id}_${element.title || element.name}`,
 
-      name: <TitleFile data={element} />,
+    name: <TitleFile data={element} />,
 
-      filterByName: element.name,
+    filterByName: element.name,
 
-      filterRecommended: element.recommended,
+    filterRecommended: element.recommended,
 
-      recommendations: decorIcon("star", {
-        style: {
-          width: '18px',
-          height: '18px',
-          fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`
-        }
-      }),
+    recommendations: decorIcon('star', {
+      style: {
+        width: '18px',
+        height: '18px',
+        fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`,
+      },
+    }),
 
-      favorite: (
-        <CheckBoxFavorite
-          defaultValue={element.is_favourite}
-          onClick={handleFavorite(element, BASE_URL.DOCUMENTS)}
-        />
-      ),
+    favorite: (
+      <CheckBoxFavorite
+        defaultValue={element.is_favourite}
+        onClick={handleFavorite(element, BASE_URL.DOCUMENTS)}
+      />
+    ),
 
-      filterFavorite: element.is_favourite,
+    filterFavorite: element.is_favourite,
 
-      date: element.updated_at || '-',
+    date: element.updated_at || '-',
 
-      control: (
-        <Button
-          type="text"
-          icon={decorIcon('download')}
-          href={element?.file}
-          download
-        />
-      ),
+    control: (
+      <Button
+        type="text"
+        icon={decorIcon('download')}
+        href={element?.file}
+        download
+      />
+    ),
 
-      info: (
-        <DrawerFileInfo
-          data={element}
-          AddToFavorite={
-            <CheckBoxFavorite
-              defaultValue={element.is_favourite}
-              onClick={handleFavorite(element, BASE_URL.DOCUMENTS)}
-            />
-          }
+    info: (
+      <DrawerFileInfo
+        data={element}
+        AddToFavorite={(
+          <CheckBoxFavorite
+            defaultValue={element.is_favourite}
+            onClick={handleFavorite(element, BASE_URL.DOCUMENTS)}
+          />
+          )}
 
-          Recommended={decorIcon("star", {
-            style: {
-              width: '18px',
-              height: '18px',
-              fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`
-            }
-          })}
-        />
-      ),
-    })
-  );
+        Recommended={decorIcon('star', {
+          style: {
+            width: '18px',
+            height: '18px',
+            fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`,
+          },
+        })}
+      />
+    ),
+  }));
   return dataSource;
 };
 

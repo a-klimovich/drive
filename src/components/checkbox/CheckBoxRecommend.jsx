@@ -1,30 +1,30 @@
 import { useState } from 'react';
 // COMPONENTS
-import decorIcon from "components/UI/icons/decors";
+import decorIcon from 'components/UI/icons/decors';
 
-const CheckBoxRecommend = (props) => {
-  const { defaultValue, style } = props;
+function CheckBoxRecommend(props) {
+  const { defaultValue } = props;
   const [val, setVal] = useState(defaultValue || false);
 
   const onChange = () => {
     setVal(!val);
-  }
+  };
 
   return (
+    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label
       className="flex-align-center"
-      style={{...style, width: 'fit-content', cursor: 'pointer'}}
     >
       <input type="checkbox" checked={val} onChange={onChange} />
-      {decorIcon("star", {
+      {decorIcon('star', {
         style: {
           width: '18px',
           height: '18px',
-          fill: `${val ? '#FFC107' : '#B3B5B7'}`
-        }
+          fill: `${val ? '#FFC107' : '#B3B5B7'}`,
+        },
       })}
     </label>
   );
-};
+}
 
 export default CheckBoxRecommend;
