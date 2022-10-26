@@ -22,7 +22,7 @@ const optionList = {
       label: 'USD',
       value: 'usd',
     },
-  ]
+  ],
 };
 
 export default optionList;

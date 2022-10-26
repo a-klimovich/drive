@@ -1,6 +1,6 @@
 const findActiveCheckBox = (list, search) => list.find((val) => val === search);
 
-export default function filterSearchQueries (value, dateRange) {
+export default function filterSearchQueries(value, dateRange) {
   const { checkboxGroup = [], keywords = '', type = '' } = value;
 
   const startDate = dateRange.length > 0 && dateRange[0] !== ''
@@ -16,11 +16,11 @@ export default function filterSearchQueries (value, dateRange) {
     : '';
 
   const isRecommend = findActiveCheckBox(checkboxGroup, 'like') !== undefined
-    ? `&liked=liked`
+    ? '&liked=liked'
     : '';
 
   const isFollow = findActiveCheckBox(checkboxGroup, 'marked') !== undefined
-    ? `&marked=marked`
+    ? '&marked=marked'
     : '';
 
   const fileType = type !== null && type !== ''
@@ -28,4 +28,4 @@ export default function filterSearchQueries (value, dateRange) {
     : '';
 
   return `${keyText}${isRecommend}${isFollow}${fileType}${startDate}${endDate}`;
-};
+}

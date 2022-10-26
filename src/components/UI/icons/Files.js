@@ -1,16 +1,16 @@
 // CONST
-import fileType from '../../../helpers/const/fileType';
+import fileType from 'helpers/const/fileType';
 // FILES TYPE
-import {ReactComponent as DocIcon} from '../../../assets/image/files-icon/doc.svg';
-import {ReactComponent as JpgIcon} from '../../../assets/image/files-icon/jpg.svg';
-import {ReactComponent as MusicIcon} from '../../../assets/image/files-icon/musik.svg';
-import {ReactComponent as ZipIcon} from '../../../assets/image/files-icon/zip.svg';
-import {ReactComponent as XlsIcon} from '../../../assets/image/files-icon/XLS.svg';
-import {ReactComponent as VideoIcon} from '../../../assets/image/files-icon/video.svg';
-import {ReactComponent as TxtIcon} from '../../../assets/image/files-icon/txt.svg';
-import {ReactComponent as RarIcon} from '../../../assets/image/files-icon/rar.svg';
-import {ReactComponent as PointIcon} from '../../../assets/image/files-icon/point.svg';
-import {ReactComponent as PdfIcon} from '../../../assets/image/files-icon/pdf.svg';
+import {ReactComponent as DocIcon} from 'assets/image/files-icon/doc.svg';
+import {ReactComponent as JpgIcon} from 'assets/image/files-icon/jpg.svg';
+import {ReactComponent as MusicIcon} from 'assets/image/files-icon/musik.svg';
+import {ReactComponent as ZipIcon} from 'assets/image/files-icon/zip.svg';
+import {ReactComponent as XlsIcon} from 'assets/image/files-icon/XLS.svg';
+import {ReactComponent as VideoIcon} from 'assets/image/files-icon/video.svg';
+import {ReactComponent as TxtIcon} from 'assets/image/files-icon/txt.svg';
+import {ReactComponent as RarIcon} from 'assets/image/files-icon/rar.svg';
+import {ReactComponent as PointIcon} from 'assets/image/files-icon/point.svg';
+import {ReactComponent as PdfIcon} from 'assets/image/files-icon/pdf.svg';
 
 const fileTypeIcon = (type, props) => {
   switch (type) {

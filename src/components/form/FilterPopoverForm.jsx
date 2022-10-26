@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Form, Select, Checkbox, Input, Space, Button, DatePicker } from 'antd';
+import {
+  Form, Select, Checkbox, Input, Space, Button, DatePicker,
+} from 'antd';
 // URL
 import { BASE_URL } from 'api/url';
 // HELPERS
@@ -41,8 +43,7 @@ const fileTypeOptions = [
   { value: 'ZIP', title: 'Архивы' },
 ];
 
-
-const FilterPopoverForm = () => {
+function FilterPopoverForm() {
   const { state, setState, setLoaded } = useContext(Context);
   const [form] = Form.useForm();
   const [dateRange, setDateRange] = useState([]);
@@ -52,17 +53,20 @@ const FilterPopoverForm = () => {
     const search = filterSearchQueries(value, dateRange);
 
     if (search !== '') {
-
       request
         .get(`${BASE_URL.SEARCH}${search}`)
         .then(setLoaded(true))
         .then((res) => {
-          setState({...state, filtered: {
-            documents: res.data,
-            folders: [],
-          }});
+          setState({
+            ...state,
+            filtered: {
+              documents: res.data,
+              folders: [],
+            },
+          });
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.Error(error);
         })
         .finally(() => setLoaded(false));
@@ -72,7 +76,7 @@ const FilterPopoverForm = () => {
   const handleClearForm = () => {
     form.resetFields();
     setLoaded(false);
-    setState({...state, filtered: null});
+    setState({ ...state, filtered: null });
   };
 
   return (
@@ -88,8 +92,8 @@ const FilterPopoverForm = () => {
     >
       <Item label="Тип" name="type">
         <Select placeholder="Выберите тип файла" allowClear>
-          {fileTypeOptions.map((elem, id) => (
-            <Option key={id + elem.value} value={elem.value}>
+          {fileTypeOptions.map((elem) => (
+            <Option key={elem.value} value={elem.value}>
               <div className="flex-align-center">
                 {fileTypeIcon(elem.value, {
                   style: { marginRight: '10px' },
@@ -136,6 +140,6 @@ const FilterPopoverForm = () => {
       </Space>
     </Form>
   );
-};
+}
 
 export default FilterPopoverForm;

@@ -4,14 +4,13 @@ export const BASE_URL = {
   SEARCH: '/api/search/?',
   DOCUMENTS: '/api/documents',
   FOLDERS: '/api/folders',
-}
+};
 
 export const QUERY = {
-  // QUERY: '/query',
   TITLE: 'title',
   UPDATE_GTE: 'updated_at__gte',
   UPDATE_LT: 'updated_at__lt',
   MARKED: 'marked',
   EXT: 'ext',
   LIKED: 'liked',
-}
+};

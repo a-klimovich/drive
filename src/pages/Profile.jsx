@@ -1,52 +1,52 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 // UTILS
-import Context from "context/Context";
-import normalizeValue from "utils/normalizeFormValue";
+import Context from 'context/Context';
+import normalizeValue from 'utils/normalizeFormValue';
 
 // API
-import { BASE_URL } from "api/url";
-import request from "api/axios";
+import { BASE_URL } from 'api/url';
+import request from 'api/axios';
 
 // COMPONENTS
-import Page from "components/layout/Page";
-import PersonalDate from "./__common/PersonalDate";
-import Membership from "./__common/Membership";
-import WorakPlaces from "./__common/WorakPlaces";
-import Contacts from "./__common/Contacts";
-import Insurance from "./__common/Insurance";
+import Page from 'components/layout/Page';
+import {
+  DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, notification,
+} from 'antd';
+import PersonalDate from './__common/PersonalDate';
+import Membership from './__common/Membership';
+import WorakPlaces from './__common/WorakPlaces';
+import Contacts from './__common/Contacts';
+import Insurance from './__common/Insurance';
 
 // BASE
-import initialValue from "./initial";
-import optionList from "./optionList";
-
-
-import { DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, notification } from "antd";
+import initialValue from './initial';
+import optionList from './optionList';
 
 const { RangePicker } = DatePicker;
 const { Group: CheckboxGroup } = Checkbox;
 
-const foramtDate = "YYYY-MM-DD";
+const foramtDate = 'YYYY-MM-DD';
 
-const dataFormater = (val) => (val ? moment(val).format(foramtDate) : "");
+const dataFormater = (val) => (val ? moment(val).format(foramtDate) : '');
 const formatedDateRange = (val) => val?.map((item) => moment(item).format(foramtDate));
 
 const openNotification = (status) => {
-  if (status === "OK") {
+  if (status === 'OK') {
     notification.success({
-      message: `Данные успешно сохранены! Спасибо`,
+      message: 'Данные успешно сохранены! Спасибо',
       duration: 3.5,
     });
   } else {
     notification.error({
-      message: `Что-то пошло не так...`,
+      message: 'Что-то пошло не так...',
       duration: 2.5,
     });
   }
 };
 
-const Profile = () => {
+function Profile() {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { state, setLoaded, loaded } = useContext(Context);
@@ -54,8 +54,8 @@ const Profile = () => {
 
   const [periodInsuranceStart, setPeriodInsuranceStart] = useState([]);
   const [dataRangeInsurense, setDataRangeInsurense] = useState([]);
-  const [qualification, setQualifications] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [qualification, setQualifications] = useState('');
+  const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
   const [legalEntities, setLegalEntities] = useState([]);
   const [individualEntrepreneurs, setIndividualEntrepreneurs] = useState([]);
@@ -66,11 +66,14 @@ const Profile = () => {
   const handleValueCurrancy = (e, val) => setCurrency(e?.target?.value || val);
   const handlerDataRangeTerm = (arrDate) => setDataRangeInsurense(formatedDateRange(arrDate));
   const handlerDataRangeValidity = (arrDate) => setPeriodInsuranceStart(formatedDateRange(arrDate));
-  const handleProvideServicesTaxConsultant = (checkedValues) =>
+  const handleProvideServicesTaxConsultant = (checkedValues) => {
     setProvideServicesTaxConsultant(checkedValues.target.checked);
+  };
+  const handleChangeIndividualEntrepreneurs = (checkedValues) => {
+    setIndividualEntrepreneurs(checkedValues);
+  };
   const handleChangeEducation = (checkedValues) => setEducation(checkedValues);
   const handleChangeLegalEntities = (checkedValues) => setLegalEntities(checkedValues);
-  const handleChangeIndividualEntrepreneurs = (checkedValues) => setIndividualEntrepreneurs(checkedValues);
   const handleChangeIndividualPerson = (checkedValues) => setIndividualPerson(checkedValues);
 
   useEffect(() => {
@@ -85,8 +88,8 @@ const Profile = () => {
       handleChangeIndividualEntrepreneurs(user?.entrepreneurs_services);
       handleChangeIndividualPerson(user?.personal_services);
       handleChangeEducation(user?.high_education);
-      handlerDataRangeTerm(user?.date_insurance_start)
-      handlerDataRangeValidity(user?.period_insurance_start)
+      handlerDataRangeTerm(user?.date_insurance_start);
+      handlerDataRangeValidity(user?.period_insurance_start);
     }
   }, [user, form]);
 
@@ -96,7 +99,6 @@ const Profile = () => {
     } else {
       setLoaded(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onFinish = (values) => {
@@ -136,11 +138,11 @@ const Profile = () => {
     request
       .patch(`${BASE_URL.USER}`, updateValue)
       .then((response) => {
-        if (response?.statusText === "OK") {
-          openNotification("OK");
+        if (response?.statusText === 'OK') {
+          openNotification('OK');
         }
       })
-      .catch((error) => {
+      .catch(() => {
         openNotification(false);
       });
   };
@@ -149,14 +151,15 @@ const Profile = () => {
     <Page loading={loaded}>
       <Form
         form={form}
-        layout='vertical'
+        layout="vertical"
         onFinish={onFinish}
         initialValues={initialValue}
-        className={"profile-settings-form"}
+        className="profile-settings-form"
         scrollToFirstError
-        validateTrigger='onBlur'>
-        <div className='container'>
-          <Button onClick={() => navigate("/")} className='profile-page-goBack'>
+        validateTrigger="onBlur"
+      >
+        <div className="container">
+          <Button onClick={() => navigate('/')} className="profile-page-goBack">
             Вернуться
           </Button>
 
@@ -166,26 +169,26 @@ const Profile = () => {
 
           <Membership />
 
-          <p className='required-mark'>Квалификация, как в аттестате:</p>
+          <p className="required-mark">Квалификация, как в аттестате:</p>
 
           <Radio.Group
             options={optionList.qualification}
             onChange={handleChangeQualifications}
             value={qualification}
             name={qualification}
-            layout='vertical'
-            className='radio-grup-column'
+            layout="vertical"
+            className="radio-grup-column"
           />
 
-          <p className='required-mark'>Высшее образование:</p>
+          <p className="required-mark">Высшее образование:</p>
 
           <CheckboxGroup value={education} onChange={handleChangeEducation}>
             <Row>
               <Col>
-                <Checkbox value='checked-1'>Экономическое</Checkbox>
+                <Checkbox value="checked-1">Экономическое</Checkbox>
               </Col>
               <Col>
-                <Checkbox value='checked-2'>Юридическое</Checkbox>
+                <Checkbox value="checked-2">Юридическое</Checkbox>
               </Col>
             </Row>
           </CheckboxGroup>
@@ -196,45 +199,68 @@ const Profile = () => {
 
           <Row
             gutter={[
-              { xs: 5, sm: 5, md: 10, lg: 15 },
-              { xs: 4, sm: 6, md: 15, lg: 10 },
-            ]}>
+              {
+                xs: 5,
+                sm: 5,
+                md: 10,
+                lg: 15,
+              },
+              {
+                xs: 4,
+                sm: 6,
+                md: 15,
+                lg: 10,
+              },
+            ]}
+          >
             <Col xs={24} sm={12} md={8} lg={6}>
               <Form.Item
-                name='period_insurance_start'
-                label='Срок действия'
+                name="period_insurance_start"
+                label="Срок действия"
                 rules={[
                   {
                     required: true,
                   },
-                ]}>
+                ]}
+              >
                 <RangePicker onChange={(val) => handlerDataRangeValidity(val)} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={12} md={8} lg={6}>
               <Form.Item
-                name='date_insurance_start'
-                label='Срок страхования'
+                name="date_insurance_start"
+                label="Срок страхования"
                 rules={[
                   {
                     required: true,
                   },
-                ]}>
+                ]}
+              >
                 <RangePicker onChange={(val) => handlerDataRangeTerm(val)} />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={12} md={12} lg={12}>
-              <Row gutter={[{ xs: 5, sm: 5, md: 10, lg: 15 }, 0]}>
+              <Row
+                gutter={[
+                  {
+                    xs: 5,
+                    sm: 5,
+                    md: 10,
+                    lg: 15,
+                  },
+                  0,
+                ]}
+              >
                 <Col span={12}>
-                  <Form.Item name='liability_limit' label='Лимит ответственности'>
-                    <InputNumber  placeholder='Введите сумму' />
+                  <Form.Item name="liability_limit" label="Лимит ответственности">
+                    <InputNumber placeholder="Введите сумму" />
                   </Form.Item>
                 </Col>
 
                 <Col span={12}>
-                  <Form.Item label='Валюта'>
+                  <Form.Item label="Валюта">
                     <Radio.Group
                       options={optionList.currency}
                       onChange={handleValueCurrancy}
@@ -252,130 +278,158 @@ const Profile = () => {
           <WorakPlaces />
         </div>
 
-        <div className='solo-checkbox'>
-          <Form.Item name='is_consultant' valuePropName='checked'>
+        <div className="solo-checkbox">
+          <Form.Item name="is_consultant" valuePropName="checked">
             <Checkbox onChange={handleProvideServicesTaxConsultant}>
               Не оказываю услуги в качестве налогового консультанта
             </Checkbox>
           </Form.Item>
         </div>
 
-        <div className='container'>
+        <div className="container">
           <p>Контактная информация</p>
 
           <Contacts />
 
           <p>Оказываемые услуги</p>
 
-          <p className='subtitle'>ЮРИДИЧЕСКИМ ЛИЦАМ</p>
+          <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
 
           <CheckboxGroup value={legalEntities} onChange={handleChangeLegalEntities}>
             <Row>
               <Col span={24}>
-                <Checkbox value={"checked-1"}>
-                  консультирование по вопросам налогообложения, в том числе в части применения налогового
-                  законодательства в конкретных ситуациях с учетом обстоятельств, имеющихся у консультируемого лица
+                <Checkbox value="checked-1">
+                  консультирование по вопросам налогообложения,
+                  в том числе в части применения налогового
+                  законодательства в конкретных ситуациях с
+                  учетом обстоятельств, имеющихся у консультируемого лица
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-2"}>
-                  подготовка рекомендаций (заключений) по вопросам налогообложения, включая определение оптимальных
+                <Checkbox value="checked-2">
+                  подготовка рекомендаций (заключений) по
+                  вопросам налогообложения, включая определение оптимальных
                   решений
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-3"}>
-                  оказание услуг по ведению бухгалтерского и (или) налогового учета, составлению отчетности, налоговых
-                  деклараций (расчетов) и иных документов, в том числе жалоб
+                <Checkbox value="checked-3">
+                  оказание услуг по ведению бухгалтерского
+                  и (или) налогового учета, составлению отчетности, налоговых
+                  деклараций (расчетов) и иных документов,
+                  в том числе жалоб
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-4"}>
-                  представительство интересов в налоговых правоотношениях в налоговых и иных государственных органах,
-                  организациях на основании договора возмездного оказания услуг по налоговому консультированию
+                <Checkbox value="checked-4">
+                  представительство интересов в налоговых
+                  правоотношениях в налоговых и иных государственных органах,
+                  организациях на основании договора возмездного
+                  оказания услуг по налоговому консультированию
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-5"}>
-                  проведение независимой оценки соблюдения налогового законодательства консультируемыми лицами
+                <Checkbox value="checked-5">
+                  проведение независимой оценки соблюдения
+                  налогового законодательства консультируемыми лицами
                 </Checkbox>
               </Col>
             </Row>
           </CheckboxGroup>
 
-          <p className='subtitle'>ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
+          <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
 
-          <CheckboxGroup value={individualEntrepreneurs} onChange={handleChangeIndividualEntrepreneurs}>
+          <CheckboxGroup
+            value={individualEntrepreneurs}
+            onChange={handleChangeIndividualEntrepreneurs}
+          >
             <Row>
               <Col span={24}>
-                <Checkbox value={"checked-1"}>
-                  консультирование по вопросам налогообложения, в том числе в части применения налогового
-                  законодательства в конкретных ситуациях с учетом обстоятельств, имеющихся у консультируемого лица
+                <Checkbox value="checked-1">
+                  консультирование по вопросам налогообложения,
+                  в том числе в части применения налогового
+                  законодательства в конкретных ситуациях с
+                  учетом обстоятельств, имеющихся у консультируемого лица
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-2"}>
-                  подготовка рекомендаций (заключений) по вопросам налогообложения, включая определение оптимальных
+                <Checkbox value="checked-2">
+                  подготовка рекомендаций (заключений) по
+                  вопросам налогообложения, включая определение оптимальных
                   решений
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-3"}>
-                  оказание услуг по ведению учета доходов и расходов и (или) налогового учета, составлению налоговых
-                  деклараций (расчетов) и иных документов, в том числе жалоб
+                <Checkbox value="checked-3">
+                  оказание услуг по ведению учета доходов
+                  и расходов и (или) налогового учета, составлению налоговых
+                  деклараций (расчетов) и иных документов,
+                  в том числе жалоб
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-4"}>
-                  представительство интересов в налоговых правоотношениях в налоговых и иных государственных органах,
-                  организациях на основании договора возмездного оказания услуг по налоговому консультированию
+                <Checkbox value="checked-4">
+                  представительство интересов в налоговых
+                  правоотношениях в налоговых и иных государственных органах,
+                  организациях на основании договора возмездного
+                  оказания услуг по налоговому консультированию
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-5"}>
-                  проведение независимой оценки соблюдения налогового законодательства консультируемыми лицами
+                <Checkbox value="checked-5">
+                  проведение независимой оценки соблюдения
+                  налогового законодательства консультируемыми лицами
                 </Checkbox>
               </Col>
             </Row>
           </CheckboxGroup>
 
-          <p className='subtitle'>ФИЗИЧЕСКИМ ЛИЦАМ</p>
+          <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
 
           <CheckboxGroup value={individualPerson} onChange={handleChangeIndividualPerson}>
             <Row>
               <Col span={24}>
-                <Checkbox checked value={"checked-1"}>
-                  консультирование по вопросам налогообложения, в том числе в части применения налогового
-                  законодательства в конкретных ситуациях с учетом обстоятельств, имеющихся у консультируемого лица
+                <Checkbox
+                  checked
+                  value="checked-1"
+                >
+                  консультирование по вопросам налогообложения,
+                  в том числе в части применения налогового
+                  законодательства в конкретных ситуациях
+                  с учетом обстоятельств, имеющихся у консультируемого лица
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-2"}>
-                  подготовка рекомендаций (заключений) по вопросам налогообложения, включая определение оптимальных
+                <Checkbox value="checked-2">
+                  подготовка рекомендаций (заключений)
+                  по вопросам налогообложения, включая определение оптимальных
                   решений
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-3"}>
-                  оказание услуг по составлению налоговых деклараций (расчетов) и иных документов, в том числе жалоб
+                <Checkbox value="checked-3">
+                  оказание услуг по составлению налоговых деклараций
+                  (расчетов) и иных документов, в том числе жалоб
                 </Checkbox>
               </Col>
               <Col span={24}>
-                <Checkbox value={"checked-4"}>
-                  представительство интересов в налоговых правоотношениях в налоговых и иных государственных органах,
-                  организациях на основании договора возмездного оказания услуг по налоговому консультированию
+                <Checkbox value="checked-4">
+                  представительство интересов в налоговых
+                  правоотношениях в налоговых и иных государственных органах,
+                  организациях на основании договора возмездного
+                  оказания услуг по налоговому консультированию
                 </Checkbox>
               </Col>
             </Row>
           </CheckboxGroup>
 
-          <Form.Item className='form-profile-btn'>
-            <Button htmlType='primary'>Сохранить</Button>
+          <Form.Item className="form-profile-btn">
+            <Button htmlType="primary">Сохранить</Button>
           </Form.Item>
         </div>
       </Form>
     </Page>
   );
-};
+}
 
 export default Profile;

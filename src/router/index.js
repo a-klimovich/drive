@@ -1,8 +1,8 @@
-import { Routes, Route } from "react-router-dom";
-import Folders from "components/folders";
-import Profile from "../pages/Profile";
+import { Routes, Route } from 'react-router-dom';
+import Folders from 'components/folders';
+import Profile from '../pages/Profile';
 
-const Router = () => {
+function Router() {
   return (
     <Routes>
       <Route path="/" element={<Folders />} />
@@ -10,6 +10,6 @@ const Router = () => {
       <Route path="/user" element={<Profile />} />
     </Routes>
   );
-};
+}
 
 export default Router;

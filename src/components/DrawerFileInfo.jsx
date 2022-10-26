@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Button, Drawer, Row, Col, Typography } from 'antd';
+import {
+  Button, Drawer, Row, Col, Typography,
+} from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+
 // COMPONENT
 import DescriptionItem from './DescriptionItem';
 
 const { Link } = Typography;
- 
-const DrawerFileInfo = ({ data, AddToFavorite, Recommended}) => {
+
+function DrawerFileInfo({ data, AddToFavorite, Recommended }) {
   const [visible, setVisible] = useState(false);
 
   const showDrawer = () => {
@@ -47,16 +50,18 @@ const DrawerFileInfo = ({ data, AddToFavorite, Recommended}) => {
           </Col>
 
           <Col span={24}>
-            <DescriptionItem 
-              title="Ccылка" 
+            <DescriptionItem
+              title="Ccылка"
               spaceBetweenContent
-              content={
-              <Link target='_blank' 
-                href={data.file || '' }
-              >
-                Скачать / Открыть
-              </Link>
-              } />
+              content={(
+                <Link
+                  target="_blank"
+                  href={data.file || ''}
+                >
+                  Скачать / Открыть
+                </Link>
+              )}
+            />
           </Col>
 
           <Col span={24}>
@@ -78,6 +83,6 @@ const DrawerFileInfo = ({ data, AddToFavorite, Recommended}) => {
       </Drawer>
     </>
   );
-};
+}
 
 export default DrawerFileInfo;

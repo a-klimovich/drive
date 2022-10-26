@@ -1,4 +1,3 @@
-
 import moment from 'moment';
 
 const normalizeValue = (data) => {
@@ -21,7 +20,7 @@ const normalizeValue = (data) => {
 
   return {
     ...data,
-    qualification: qualification,
+    qualification,
     date_certificate_renew: date_certificate_renew ? moment(date_certificate_renew) : '',
     date_certificate_start: date_certificate_start ? moment(date_certificate_start) : '',
     date_certificate_stop: date_certificate_stop ? moment(date_certificate_stop) : '',
@@ -32,7 +31,7 @@ const normalizeValue = (data) => {
     date_membership_stop: date_membership_stop ? moment(date_membership_stop) : '',
     entrepreneurs_services: entrepreneurs_services ? moment(entrepreneurs_services) : '',
     period_insurance_stop: period_insurance_stop ? moment(period_insurance_stop) : '',
-    
+
     period_insurance_start: [moment(period_insurance_start[0]), moment(period_insurance_start[1])],
     date_insurance_start: [moment(date_insurance_start[0]), moment(date_insurance_start[1])],
   };

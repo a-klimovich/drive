@@ -24,9 +24,9 @@ const Folders = () => {
   const { state, loaded, setLoaded } = useContext(Context);
   const { folderId } = useParams();
   const [folder, setFolder] = useState({});
-  // paginatoin 
-  const [offset, setOffset] = useState(0)
-  const [limit, setLimit] = useState(10)
+  // paginatoin
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(10);
   const [totalCount] = useState(600); // TODO: add total BACKEND;
 
   const screens = useBreakpoint();
@@ -95,6 +95,7 @@ const Folders = () => {
           ),
         }}
         pagination={{
+          defaultCurrent: 1,
           hideOnSinglePage: true,
           position: ['bottomCenter'],
           defaultPageSize: limit,

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import Context from "./Context";
+import { useEffect, useState } from 'react';
 import { BASE_URL } from 'api/url';
 // AXIOS
 import request from 'api/axios';
+import Context from './Context';
 
-const Provider = ({ children }) => {
+function Provider(props) {
+  const { children } = props;
   const [loaded, setLoaded] = useState(true);
   const [state, setState] = useState({});
 
@@ -18,21 +19,22 @@ const Provider = ({ children }) => {
         });
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.Error(error);
       })
       .finally(() => setLoaded(false));
   }, []);
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    loaded,
-    setLoaded,
-    state,
-    setState
+    loaded, setLoaded, state, setState,
   };
 
-  return <Context.Provider value={value}>
-    {children}
-  </Context.Provider>;
-};
+  return (
+    <Context.Provider value={value}>
+      {children}
+    </Context.Provider>
+  );
+}
 
 export default Provider;

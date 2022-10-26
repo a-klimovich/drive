@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Popover as AntPopover } from 'antd';
 
-const Popover = (props) => {
+function Popover(props) {
   const {
     title,
     content,
@@ -32,7 +32,7 @@ const Popover = (props) => {
     >
       { children }
     </AntPopover>
-  )
-};
+  );
+}
 
 export default Popover;
