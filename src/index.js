@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 // COMPONENTS
-import ErrorBoundary from 'components/error/ErrorBoundary';
+// eslint-disable-next-line import/order
 import App from './App';
+import ErrorBoundary from 'components/error/ErrorBoundary';
 
 import {
-  ConfigProvider
+  ConfigProvider,
 } from 'antd';
 
 import 'moment/locale/ru';
@@ -20,5 +21,5 @@ root.render(
         <App />
       </ConfigProvider>
     </BrowserRouter>
-  </ErrorBoundary>
+  </ErrorBoundary>,
 );
