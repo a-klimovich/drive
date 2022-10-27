@@ -11,17 +11,17 @@ import Context from 'context/Context';
 
 const { Link } = Typography;
 
-export default function Header(props) {
+export default function Header() {
   const navigate = useNavigate();
   const { state } = useContext(Context);
   const handleRedirectProfile = () => {
-    navigate('/user/')
-  }
+    navigate('/user/');
+  };
 
   return (
     <header>
       <Row className="header-content" wrap="none">
-        <Col flex={'1 1 auto'} sm={{ flex: '1 1 250px' }} order={1}>
+        <Col flex="1 1 auto" sm={{ flex: '1 1 250px' }} order={1}>
           <div className="header__user-name">
             {decorIcon('user', {
               style: {
@@ -29,8 +29,9 @@ export default function Header(props) {
               },
             })}
             <Title>
-              {'Здравствуйте!'}{' '}
-              <Link onClick={handleRedirectProfile}>{state?.user?.name}</Link>
+              Здравствуйте!
+              {' '}
+              <button onClick={handleRedirectProfile} type="button">{state?.user?.name}</button>
             </Title>
           </div>
         </Col>

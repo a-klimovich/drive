@@ -17,6 +17,10 @@
             "./src/components"
           ],
           [
+            "layout",
+            "./src/layout"
+          ],
+          [
             "pages",
             "./src/pages"
           ],

@@ -10,7 +10,7 @@ import { BASE_URL } from 'api/url';
 import request from 'api/axios';
 
 // COMPONENTS
-import Page from 'components/layout/Page';
+import Page from 'layout/Page';
 import {
   DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, notification,
 } from 'antd';
