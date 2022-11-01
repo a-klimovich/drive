@@ -9,7 +9,7 @@ const getFolderPath = (data, pathId) => {
   return data?.folders?.reduce((acc, folder) => {
     const path = getFolderPath(folder, pathId);
 
-    if (path !== null) {
+    if (path !== null && path?.length) {
       return [folder, ...path];
     }
 

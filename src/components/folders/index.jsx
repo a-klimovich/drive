@@ -28,7 +28,7 @@ function Folders() {
   // paginatoin
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
-  const [totalCount] = useState(600); // TODO: add total BACKEND;
+  const [totalCount, setTotalCount] = useState(0);
 
   const screens = useBreakpoint();
 
@@ -36,17 +36,20 @@ function Folders() {
   const actualContentRender = state.filtered ? state.filtered : state;
 
   useEffect(() => {
+    setTotalCount(state?.elements_count);
+
     if (folderId) {
       setLoaded(true);
 
       request
         .get(`${BASE_URL.FOLDERS}/${folderId}/?limit=${limit}&offset=${offset}`)
         .then((res) => {
-          setFolder(res?.data);
+          const { data } = res;
+
+          setFolder(data?.elements);
+          setTotalCount(data?.count);
         })
-        .catch((error) => {
-          console.log(error.message);
-        })
+        .catch(() => {})
         .finally(() => setLoaded(false));
     }
 
@@ -56,12 +59,13 @@ function Folders() {
   }, [folderId, setLoaded, actualContentRender, offset, limit]);
 
   const handleChangePagination = (page, pageSize) => {
+    const ofsetNotLastPage = pageSize * (page - 1);
     setLimit(pageSize);
 
     if (page === 1) {
       setOffset(0);
     } else {
-      setOffset(pageSize * page);
+      setOffset(ofsetNotLastPage);
     }
   };
 
@@ -71,9 +75,7 @@ function Folders() {
       .then(() => {
         setLoaded(true);
       })
-      .catch((error) => {
-        console.log(error.message);
-      })
+      .catch(() => {})
       .finally(() => setLoaded(false));
   };
 

@@ -14,7 +14,7 @@ function Provider(props) {
       .then((response) => {
         setLoaded(true);
         setState({
-          ...response.data,
+          ...response.data.elements,
           filtered: null,
         });
       })
