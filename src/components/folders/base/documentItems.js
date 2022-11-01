@@ -57,6 +57,7 @@ const documentItems = (arr, handleFavorite) => {
           />
           )}
 
+        // eslint-disable-next-line react/jsx-props-no-multi-spaces
         Recommended={decorIcon('star', {
           style: {
             width: '18px',

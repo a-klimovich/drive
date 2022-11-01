@@ -1,22 +1,22 @@
-import decorIcon from './icons/decors';
 import { Typography, Space } from 'antd';
+import decorIcon from './icons/decors';
 
 const { Paragraph } = Typography;
 
-const EmptyTable = ({ description }) => {
+function EmptyTable({ description }) {
   return (
     <div
-      className='empty-table flex-center-all'
+      className="empty-table flex-center-all"
     >
       <Space
-        direction='vertical'
+        direction="vertical"
       >
         <div>
           {decorIcon('sadFace')}
         </div>
-        
+
         <Paragraph
-          className='flex-center-all'
+          className="flex-center-all"
           style={{
             height: '100px',
             fontWeight: 700,
@@ -26,7 +26,7 @@ const EmptyTable = ({ description }) => {
         </Paragraph>
       </Space>
     </div>
-  )
+  );
 }
 
 export default EmptyTable;

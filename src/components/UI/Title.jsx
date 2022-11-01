@@ -7,5 +7,5 @@ export default function Title(props) {
     >
       { children }
     </h2>
-  )
+  );
 }

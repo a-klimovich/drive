@@ -12,6 +12,7 @@ export default class ErrorBoundary extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line react/destructuring-assignment
     if (this.state.hasError) {
       return (
         <CenteredContent>
@@ -20,6 +21,7 @@ export default class ErrorBoundary extends React.Component {
       );
     }
 
+    // eslint-disable-next-line react/destructuring-assignment
     return this.props.children;
   }
 }

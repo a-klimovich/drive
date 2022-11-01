@@ -9,42 +9,42 @@ import { ReactComponent as StarIcon } from '../../../assets/image/star.svg';
 import { ReactComponent as UserIcon } from '../../../assets/image/user.svg';
 import { ReactComponent as SadFace } from '../../../assets/image/sad-face.svg';
 
-
+// eslint-disable-next-line consistent-return
 const decorIcon = (fileType, props) => {
   switch (fileType) {
     case 'download':
-      return <DownloadIcon {...props} />
+      return <DownloadIcon {...props} />;
 
     case 'error':
-      return <ErrorIcon {...props} />
+      return <ErrorIcon {...props} />;
 
     case 'eyes':
-      return <EyesIcon {...props} />
+      return <EyesIcon {...props} />;
 
     case 'filterOptions':
-      return <FilterOptionsIcon {...props} />
+      return <FilterOptionsIcon {...props} />;
 
     case 'heart':
-      return <HeartIcon {...props} />
+      return <HeartIcon {...props} />;
 
     case 'logOut':
-      return <LogOutIcon {...props} />
+      return <LogOutIcon {...props} />;
 
     case 'search':
-      return <SearchIcon {...props} />
+      return <SearchIcon {...props} />;
 
     case 'star':
-      return <StarIcon {...props} />
+      return <StarIcon {...props} />;
 
     case 'sadFace':
-      return <SadFace {...props} />
+      return <SadFace {...props} />;
 
     case 'user':
-      return <UserIcon {...props} />
-      
+      return <UserIcon {...props} />;
+
     default:
       break;
   }
-}
+};
 
 export default decorIcon;
