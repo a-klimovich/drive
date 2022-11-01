@@ -13,7 +13,7 @@ function CheckBoxFavorite(props) {
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label
-      className="flex-align-center"
+      className="checkbox-favorite flex-align-center"
     >
       <input
         type="checkbox"

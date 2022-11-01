@@ -35,7 +35,7 @@ function Folders() {
 
   const screens = useBreakpoint();
 
-  const folderPath = getFolderPath(state, folderId);
+  const folderPath = getFolderPath(state.elements, folderId);
 
   useEffect(() => {
     setTotalCount(state?.elements_count);
