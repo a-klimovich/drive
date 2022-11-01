@@ -14,6 +14,7 @@ const { Link } = Typography;
 export default function Header() {
   const navigate = useNavigate();
   const { state } = useContext(Context);
+
   const handleRedirectProfile = () => {
     navigate('/user/');
   };

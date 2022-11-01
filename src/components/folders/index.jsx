@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useState, useMemo,
+  useContext, useEffect, useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
 // ANTD
@@ -22,21 +22,24 @@ import documentItems from './base/documentItems';
 const { useBreakpoint } = Grid;
 
 function Folders() {
-  const { state, loaded, setLoaded } = useContext(Context);
+  const {
+    state, loaded, setLoaded,
+  } = useContext(Context);
   const { folderId } = useParams();
-  const [folder, setFolder] = useState({});
+  const [totalCount, setTotalCount] = useState(0);
+  const [elements, setElements] = useState({});
+  const [breadcrumbsList, setBreadcrumbsList] = useState([]);
   // paginatoin
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
-  const [totalCount, setTotalCount] = useState(0);
 
   const screens = useBreakpoint();
 
-  const folderPath = useMemo(() => getFolderPath(state, folderId), [state, folderId]);
-  const actualContentRender = state.filtered ? state.filtered : state;
+  const folderPath = getFolderPath(state, folderId);
 
   useEffect(() => {
     setTotalCount(state?.elements_count);
+    setElements(state?.elements);
 
     if (folderId) {
       setLoaded(true);
@@ -46,17 +49,17 @@ function Folders() {
         .then((res) => {
           const { data } = res;
 
-          setFolder(data?.elements);
-          setTotalCount(data?.count);
+          setElements(data?.elements);
+          setBreadcrumbsList(data?.breadcrumbs);
+          setTotalCount(data.count);
         })
-        .catch(() => {})
         .finally(() => setLoaded(false));
     }
+  }, [folderId, setLoaded, offset, limit, state]);
 
-    if (folderId === undefined) {
-      setFolder(actualContentRender);
-    }
-  }, [folderId, setLoaded, actualContentRender, offset, limit]);
+  useEffect(() => {
+    setOffset(0);
+  }, [folderId]);
 
   const handleChangePagination = (page, pageSize) => {
     const ofsetNotLastPage = pageSize * (page - 1);
@@ -71,22 +74,30 @@ function Folders() {
 
   const handleFavorite = (val, baseUrl) => () => {
     request
-      .patch(`${baseUrl}/${val?.id}`)
+      .patch(`${baseUrl}/${val?.id}`, {
+        is_favourite: !val.is_favourite,
+      })
       .then(() => {
         setLoaded(true);
       })
-      .catch(() => {})
       .finally(() => setLoaded(false));
   };
 
   const dataSourceTable = [
-    ...folderItems(folder?.folders || [], handleFavorite),
-    ...documentItems(folder?.documents || [], handleFavorite),
+    ...folderItems(elements?.folders || [], handleFavorite),
+    ...documentItems(elements?.documents || [], handleFavorite),
   ];
+
+  const pathRender = breadcrumbsList?.length > 0 ? [{
+    title: breadcrumbsList[0],
+    id: folderId,
+  }] : folderPath;
+
+  console.log(state);
 
   return (
     <>
-      <BreadCrumbs folderPath={folderPath} />
+      <BreadCrumbs folderPath={pathRender || []} currentId={folderId} />
 
       <Table
         loading={loaded}

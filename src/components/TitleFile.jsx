@@ -16,29 +16,20 @@ function TitleFile({ data, isFolderItem = false }) {
   const documentsEmpty = data?.documents?.length === 0;
 
   const navigate = useNavigate();
-  const folderIsEmpty = () => (folderEmpty && documentsEmpty);
+  const folderIsEmpty = () => folderEmpty && documentsEmpty;
 
   const goToFolder = (folderId) => () => {
     navigate(`/${folderId}`);
   };
 
   return isFolderItem ? (
-    <button
-      key={data?.id}
-      className="title-files"
-      onClick={goToFolder(id)}
-      type="button"
-    >
-      {
-                folderIcon(folderIsEmpty(), {
-                  style: {
-                    marginRight: '20px',
-                  },
-                })
-            }
-      <Text>
-        { title }
-      </Text>
+    <button key={data?.id} className="title-files" onClick={goToFolder(id)} type="button">
+      {folderIcon(folderIsEmpty(), {
+        style: {
+          marginRight: '20px',
+        },
+      })}
+      <Text>{title}</Text>
     </button>
   ) : (
     <Link
@@ -47,18 +38,14 @@ function TitleFile({ data, isFolderItem = false }) {
       target="_blank"
       href={file}
     >
-      {
-                fileTypeIcon(fileType, {
-                  style: {
-                    minWidth: '18px',
-                    marginRight: '16px',
-                    marginLeft: '4px',
-                  },
-                })
-            }
-      <Text>
-        { name }
-      </Text>
+      {fileTypeIcon(fileType, {
+        style: {
+          minWidth: '18px',
+          marginRight: '16px',
+          marginLeft: '4px',
+        },
+      })}
+      <Text>{name}</Text>
     </Link>
   );
 }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 
 function BreadCrumbs(props) {
-  const { folderPath } = props;
+  const { folderPath, currentId } = props;
 
   return (
     <Breadcrumb>
@@ -16,15 +16,19 @@ function BreadCrumbs(props) {
         </Link>
       </Breadcrumb.Item>
 
-      {folderPath?.map((item) => (
-        <Breadcrumb.Item key={`i${item?.title}`}>
-          <Link to={`/${item?.id}`}>
-            {
-                            item?.title
-                        }
-          </Link>
-        </Breadcrumb.Item>
-      ))}
+      {
+        currentId && (
+          folderPath?.map((item) => (
+            <Breadcrumb.Item key={`i${item?.title}`}>
+              <Link to={`/${item?.id}`}>
+                {
+                  item?.title
+                }
+              </Link>
+            </Breadcrumb.Item>
+          ))
+        )
+      }
     </Breadcrumb>
   );
 }

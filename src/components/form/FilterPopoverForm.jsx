@@ -59,15 +59,8 @@ function FilterPopoverForm() {
         .then((res) => {
           setState({
             ...state,
-            filtered: {
-              documents: res.data,
-              folders: [],
-            },
+            ...res.data,
           });
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.Error(error);
         })
         .finally(() => setLoaded(false));
     }
@@ -76,7 +69,16 @@ function FilterPopoverForm() {
   const handleClearForm = () => {
     form.resetFields();
     setLoaded(false);
-    setState({ ...state, filtered: null });
+
+    request
+      .get(BASE_URL.API)
+      .then((response) => {
+        setLoaded(true);
+        setState({
+          ...response.data,
+        });
+      })
+      .finally(() => setLoaded(false));
   };
 
   return (
@@ -122,19 +124,11 @@ function FilterPopoverForm() {
       </Item>
 
       <Space>
-        <Button
-          type="text"
-          onClick={handleClearForm}
-          className="filter-popover-form__btn-reset"
-        >
+        <Button type="text" onClick={handleClearForm} className="filter-popover-form__btn-reset">
           Сбросить
         </Button>
 
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="filter-popover-form__btn__submit"
-        >
+        <Button type="primary" htmlType="submit" className="filter-popover-form__btn__submit">
           Поиск
         </Button>
       </Space>
