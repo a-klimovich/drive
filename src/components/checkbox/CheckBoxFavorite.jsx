@@ -6,9 +6,7 @@ function CheckBoxFavorite(props) {
   const { defaultValue, onClick } = props;
   const [val, setVal] = useState(defaultValue);
 
-  const onChange = () => {
-    setVal(!val);
-  };
+  const onChange = () => setVal(!val);
 
   return (
     // eslint-disable-next-line jsx-a11y/label-has-associated-control

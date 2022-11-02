@@ -27,19 +27,22 @@ function Folders() {
   } = useContext(Context);
   const { folderId } = useParams();
   const [totalCount, setTotalCount] = useState(0);
-  const [elements, setElements] = useState({});
-  const [breadcrumbsList, setBreadcrumbsList] = useState([]);
+  const [currentFolderData, setCurrentFolderData] = useState({});
   // paginatoin
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
 
   const screens = useBreakpoint();
 
-  const folderPath = getFolderPath(state.elements, folderId);
+  const { breadcrumbs, elements } = currentFolderData;
+
+  const breadcrumbsPathsToRender = breadcrumbs?.length > 0
+    ? [...breadcrumbs, currentFolderData]
+    : getFolderPath(state.elements, folderId);
 
   useEffect(() => {
     setTotalCount(state?.elements_count);
-    setElements(state?.elements);
+    setCurrentFolderData(state);
 
     if (folderId) {
       setLoaded(true);
@@ -49,8 +52,7 @@ function Folders() {
         .then((res) => {
           const { data } = res;
 
-          setElements(data?.elements);
-          setBreadcrumbsList(data?.breadcrumbs);
+          setCurrentFolderData(data);
           setTotalCount(data.count);
         })
         .finally(() => setLoaded(false));
@@ -74,7 +76,7 @@ function Folders() {
 
   const handleFavorite = (val, baseUrl) => () => {
     request
-      .patch(`${baseUrl}/${val?.id}`, {
+      .patch(`${baseUrl}/${val?.id}/`, {
         is_favourite: !val.is_favourite,
       })
       .then(() => {
@@ -88,16 +90,9 @@ function Folders() {
     ...documentItems(elements?.documents || [], handleFavorite),
   ];
 
-  const pathRender = breadcrumbsList?.length > 0 ? [{
-    title: breadcrumbsList[0],
-    id: folderId,
-  }] : folderPath;
-
-  console.log(state);
-
   return (
     <>
-      <BreadCrumbs folderPath={pathRender || []} currentId={folderId} />
+      <BreadCrumbs folderPath={breadcrumbsPathsToRender || []} currentId={folderId} />
 
       <Table
         loading={loaded}
