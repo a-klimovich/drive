@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 // ANTD
 import { Form } from 'antd';
 // COMPONENTS
@@ -7,61 +8,45 @@ import Popover from 'components/Popover';
 import FilterPopoverForm from 'components/form/FilterPopoverForm';
 // URL
 import { BASE_URL } from 'api/url';
-// AXIOS
-import request from 'api/axios';
 // CONTEXT
 import Context from 'context/Context';
+// UTILS
+import debounce from 'utils/debounce';
 
 const { Item } = Form;
 
-const initialValues = {
-  titleName: '',
-};
-
 function SearchForm() {
-  const { state, setState, setLoaded } = useContext(Context);
+  const {
+    state, setState, setUpdate, update,
+  } = useContext(Context);
+
+  const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const handleClearForm = () => {
-    form.resetFields();
-    setLoaded(false);
-    setState({ ...state, filtered: null });
-  };
-
-  const debounce = (cb, delay = 1000) => {
-    let timeout;
-
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        cb(...args);
-      }, delay);
-    };
-  };
-
   const updateValue = debounce((vel) => {
-    if (vel !== '' && vel !== undefined) {
-      request.get(`${BASE_URL.SEARCH}title=${vel}`)
-        .then(setLoaded(true))
-        .then((res) => {
-          setState({
-            ...state,
-            ...res.data,
-          });
-        })
-        .catch((error) => {
-          console.Error(error);
-        })
-        .finally(() => setLoaded(false));
-    } else handleClearForm();
+    if (vel === '') {
+      setUpdate(!update);
+    }
+
+    if (vel !== undefined && vel !== '') {
+      navigate('/');
+      setState({
+        ...state,
+        request_path: {
+          base: `${BASE_URL.SEARCH}/`,
+          params: `?title=${vel}`,
+        },
+      });
+    }
   }, 300);
 
   return (
     <div className="search-box">
       <Form
         className="search-box__form"
-        initialValues={initialValues}
-        // onFinish={handlerFiltered}
+        initialValues={{
+          titleName: '',
+        }}
         onValuesChange={({ titleName }) => updateValue(titleName)}
         form={form}
       >

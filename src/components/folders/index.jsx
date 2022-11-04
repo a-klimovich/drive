@@ -25,6 +25,7 @@ function Folders() {
   const {
     state, loaded, setLoaded,
   } = useContext(Context);
+  const screens = useBreakpoint();
   const { folderId } = useParams();
   const [totalCount, setTotalCount] = useState(0);
   const [currentFolderData, setCurrentFolderData] = useState({});
@@ -32,9 +33,8 @@ function Folders() {
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
 
-  const screens = useBreakpoint();
-
   const { breadcrumbs, elements } = currentFolderData;
+  const { request_path } = state;
 
   const breadcrumbsPathsToRender = breadcrumbs?.length > 0
     ? [...breadcrumbs, currentFolderData]
@@ -42,13 +42,29 @@ function Folders() {
 
   useEffect(() => {
     setTotalCount(state?.elements_count);
-    setCurrentFolderData(state);
+
+    if (folderId === undefined && request_path?.params === '') {
+      setCurrentFolderData(state);
+    }
+
+    if (request_path && request_path?.base !== BASE_URL.API && folderId === undefined) {
+      setLoaded(true);
+
+      request.get(`${request_path?.base}${request_path?.params}&limit=${limit}&offset=${offset}`)
+        .then((res) => {
+          const { data } = res;
+
+          setCurrentFolderData(data);
+          setTotalCount(data.elements_count);
+        })
+        .finally(() => setLoaded(false));
+    }
 
     if (folderId) {
       setLoaded(true);
 
       request
-        .get(`${BASE_URL.FOLDERS}/${folderId}/?limit=${limit}&offset=${offset}`)
+        .get(`${BASE_URL.FOLDERS}${folderId}/?limit=${limit}&offset=${offset}`)
         .then((res) => {
           const { data } = res;
 
@@ -57,11 +73,9 @@ function Folders() {
         })
         .finally(() => setLoaded(false));
     }
-  }, [folderId, setLoaded, offset, limit, state]);
+  }, [folderId, offset, limit, state]);
 
-  useEffect(() => {
-    setOffset(0);
-  }, [folderId]);
+  useEffect(() => setOffset(0), [folderId]);
 
   const handleChangePagination = (page, pageSize) => {
     const ofsetNotLastPage = pageSize * (page - 1);

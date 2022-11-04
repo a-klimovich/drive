@@ -7,6 +7,7 @@ import Context from './Context';
 function Provider(props) {
   const { children } = props;
   const [loaded, setLoaded] = useState(true);
+  const [update, setUpdate] = useState(true);
   const [state, setState] = useState({});
 
   useEffect(() => {
@@ -15,18 +16,18 @@ function Provider(props) {
         setLoaded(true);
         setState({
           ...response.data,
+          request_path: {
+            base: `${BASE_URL.API}`,
+            params: '',
+          },
         });
       })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.Error(error);
-      })
       .finally(() => setLoaded(false));
-  }, []);
+  }, [update]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
-    loaded, setLoaded, state, setState,
+    loaded, setLoaded, state, setState, update, setUpdate,
   };
 
   return (

@@ -8,9 +8,10 @@ import { BASE_URL } from 'api/url';
 import filterSearchQueries from 'helpers/filterSearchQueries';
 // COMPONENTS
 import fileTypeIcon from 'components/UI/icons/files';
-// AXIOS
-import request from 'api/axios';
+// CONTEXT
 import Context from 'context/Context';
+import { useNavigate } from 'react-router-dom';
+import fileTypeOptions from './fileTypeOptions';
 
 const { Item } = Form;
 const { Option } = Select;
@@ -32,53 +33,35 @@ const initialValues = {
   checkboxGroup: [],
 };
 
-const fileTypeOptions = [
-  { value: 'DOC', title: 'Документы' },
-  { value: 'IMG', title: 'Изображения' },
-  { value: 'MP4', title: 'Видео' },
-  { value: 'PDF', title: 'Файл PDF' },
-  { value: 'PPT', title: 'Презентации' },
-  { value: 'WAV', title: 'Аудио' },
-  { value: 'XLS', title: 'Таблицы' },
-  { value: 'ZIP', title: 'Архивы' },
-];
-
 function FilterPopoverForm() {
-  const { state, setState, setLoaded } = useContext(Context);
+  const {
+    state, setState, setUpdate, update,
+  } = useContext(Context);
   const [form] = Form.useForm();
   const [dateRange, setDateRange] = useState([]);
   const handlerDataRange = (_, dateString) => setDateRange(dateString);
+  const navigate = useNavigate();
 
   const handlerFiltered = (value) => {
     const search = filterSearchQueries(value, dateRange);
 
     if (search !== '') {
-      request
-        .get(`${BASE_URL.SEARCH}${search}`)
-        .then(setLoaded(true))
-        .then((res) => {
-          setState({
-            ...state,
-            ...res.data,
-          });
-        })
-        .finally(() => setLoaded(false));
+      navigate('/');
+
+      setState({
+        ...state,
+        request_path: {
+          base: `${BASE_URL.SEARCH}`,
+          params: `?${search}`,
+        },
+      });
     }
   };
 
   const handleClearForm = () => {
     form.resetFields();
-    setLoaded(false);
 
-    request
-      .get(BASE_URL.API)
-      .then((response) => {
-        setLoaded(true);
-        setState({
-          ...response.data,
-        });
-      })
-      .finally(() => setLoaded(false));
+    setUpdate(!update);
   };
 
   return (

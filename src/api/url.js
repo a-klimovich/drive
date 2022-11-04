@@ -1,9 +1,9 @@
 export const BASE_URL = {
-  API: '/api',
+  API: '/api/',
   USER: '/api/user/',
-  SEARCH: '/api/search/?',
-  DOCUMENTS: '/api/documents',
-  FOLDERS: '/api/folders',
+  SEARCH: '/api/search/',
+  DOCUMENTS: '/api/documents/',
+  FOLDERS: '/api/folders/',
 };
 
 export const QUERY = {
