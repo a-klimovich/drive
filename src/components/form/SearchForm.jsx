@@ -33,7 +33,7 @@ function SearchForm() {
       setState({
         ...state,
         request_path: {
-          base: `${BASE_URL.SEARCH}/`,
+          base: BASE_URL.SEARCH,
           params: `?title=${vel}`,
         },
       });

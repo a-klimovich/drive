@@ -90,7 +90,7 @@ function Folders() {
 
   const handleFavorite = (val, baseUrl) => () => {
     request
-      .patch(`${baseUrl}/${val?.id}/`, {
+      .patch(`${baseUrl}${val?.id}/`, {
         is_favourite: !val.is_favourite,
       })
       .then(() => {
