@@ -55,9 +55,11 @@ function Folders() {
   };
 
   useEffect(() => {
+    const validRequestPathNotFolder = request_path && !folderId;
+
     setTotalCount(state?.elements_count);
 
-    if (folderId === undefined && request_path?.params === '') {
+    if (!folderId && request_path?.params === '') {
       setCurrentFolderData(state);
     }
 
@@ -68,10 +70,17 @@ function Folders() {
       requestGetContent(pathSortEdition);
     }
 
-    if (request_path && request_path?.base !== BASE_URL.API && folderId === undefined) {
+    if (validRequestPathNotFolder && request_path?.base !== BASE_URL.API) {
       setLoaded(true);
 
-      const pathSortEdition = `${request_path?.base}${request_path?.params}&limit=${limit}&offset=${offset}`;
+      const pathSortEdition = `${request_path?.base}${request_path?.params}&limit=${limit}&offset=${offset}${sortQueryParametr}`;
+
+      requestGetContent(pathSortEdition);
+    }
+
+    if (validRequestPathNotFolder && request_path?.base === BASE_URL.API) {
+      setLoaded(true);
+      const pathSortEdition = `${BASE_URL.API}?limit=${limit}&offset=${offset}${sortQueryParametr}`;
 
       requestGetContent(pathSortEdition);
     }
