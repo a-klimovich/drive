@@ -159,7 +159,11 @@ function Profile() {
         validateTrigger="onBlur"
       >
         <div className="container">
-          <Button onClick={() => navigate('/')} className="profile-page-goBack">
+          <Button
+            type="primary"
+            onClick={() => navigate('/')}
+            className="profile-page-goBack"
+          >
             Вернуться
           </Button>
 

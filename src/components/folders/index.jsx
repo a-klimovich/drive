@@ -13,7 +13,7 @@ import Context from 'context/Context';
 import getFolderPath from 'helpers/getFolderPath';
 // COMPONENTS
 import EmptyTable from 'components/UI/EmptyTable';
-import BreadCrumbs from 'components/BredCrumbs';
+import BreadCrumbs from 'components/Bredcrumbs';
 // BASE
 import { columns, columnsMobile } from './base/columns';
 import folderItems from './base/folderItems';
@@ -32,6 +32,8 @@ function Folders() {
   // paginatoin
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
+  // sorter
+  const [sortQueryParametr, setSortQueryParametr] = useState('');
 
   const { breadcrumbs, elements } = currentFolderData;
   const { request_path } = state;
@@ -40,6 +42,18 @@ function Folders() {
     ? [...breadcrumbs, currentFolderData]
     : getFolderPath(state.elements, folderId);
 
+  const requestGetContent = (path) => {
+    request
+      .get(path)
+      .then((res) => {
+        const { data } = res;
+
+        setCurrentFolderData(data);
+        setTotalCount(data.count || data.elements_count);
+      })
+      .finally(() => setLoaded(false));
+  };
+
   useEffect(() => {
     setTotalCount(state?.elements_count);
 
@@ -47,33 +61,24 @@ function Folders() {
       setCurrentFolderData(state);
     }
 
-    if (request_path && request_path?.base !== BASE_URL.API && folderId === undefined) {
-      setLoaded(true);
-
-      request.get(`${request_path?.base}${request_path?.params}&limit=${limit}&offset=${offset}`)
-        .then((res) => {
-          const { data } = res;
-
-          setCurrentFolderData(data);
-          setTotalCount(data.elements_count);
-        })
-        .finally(() => setLoaded(false));
-    }
-
     if (folderId) {
       setLoaded(true);
 
-      request
-        .get(`${BASE_URL.FOLDERS}${folderId}/?limit=${limit}&offset=${offset}`)
-        .then((res) => {
-          const { data } = res;
+      const pathSortEdition = sortQueryParametr !== ''
+        ? `${BASE_URL.FOLDERS}${folderId}${sortQueryParametr}`
+        : `${BASE_URL.FOLDERS}${folderId}/?limit=${limit}&offset=${offset}`;
 
-          setCurrentFolderData(data);
-          setTotalCount(data.count);
-        })
-        .finally(() => setLoaded(false));
+      requestGetContent(pathSortEdition);
     }
-  }, [folderId, offset, limit, state]);
+
+    if (request_path && request_path?.base !== BASE_URL.API && folderId === undefined) {
+      setLoaded(true);
+
+      const pathSortEdition = `${request_path?.base}${request_path?.params}&limit=${limit}&offset=${offset}`;
+
+      requestGetContent(pathSortEdition);
+    }
+  }, [sortQueryParametr, folderId, offset, limit, state]);
 
   useEffect(() => setOffset(0), [folderId]);
 
@@ -104,6 +109,22 @@ function Folders() {
     ...documentItems(elements?.documents || [], handleFavorite),
   ];
 
+  const handleChanges = (pagination, filters, sorter) => {
+    switch (sorter.field) {
+      case 'favorite':
+        return sorter.order ? setSortQueryParametr('/?ordering=-liked') : setSortQueryParametr('');
+
+      case 'recommendations':
+        return sorter.order ? setSortQueryParametr('/?ordering=-marked') : setSortQueryParametr('');
+
+      case 'name':
+        return sorter.order ? setSortQueryParametr('/?ordering=-title') : setSortQueryParametr('');
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <BreadCrumbs folderPath={breadcrumbsPathsToRender || []} currentId={folderId} />
@@ -115,6 +136,7 @@ function Folders() {
         locale={{
           emptyText: <EmptyTable description="По вашему запросу не найдено ни одного объекта" />,
         }}
+        onChange={handleChanges}
         pagination={{
           defaultCurrent: 1,
           hideOnSinglePage: true,
