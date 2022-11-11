@@ -63,10 +63,7 @@ function Folders() {
 
     if (folderId) {
       setLoaded(true);
-
-      const pathSortEdition = sortQueryParametr !== ''
-        ? `${BASE_URL.FOLDERS}${folderId}${sortQueryParametr}`
-        : `${BASE_URL.FOLDERS}${folderId}/?limit=${limit}&offset=${offset}`;
+      const pathSortEdition = `${BASE_URL.FOLDERS}${folderId}/?limit=${limit}&offset=${offset}${sortQueryParametr}`;
 
       requestGetContent(pathSortEdition);
     }
@@ -113,7 +110,7 @@ function Folders() {
     switch (sorter.field) {
       case 'favorite':
         if (sorter.order === 'ascend') {
-          setSortQueryParametr('/?ordering=-liked');
+          setSortQueryParametr('&ordering=-liked');
         }
         if (!sorter.order) {
           setSortQueryParametr('');
@@ -123,7 +120,7 @@ function Folders() {
 
       case 'recommendations':
         if (sorter.order === 'ascend') {
-          setSortQueryParametr('/?ordering=-marked');
+          setSortQueryParametr('&ordering=-marked');
         }
         if (!sorter.order) {
           setSortQueryParametr('');
@@ -133,10 +130,10 @@ function Folders() {
 
       case 'name':
         if (sorter.order === 'ascend') {
-          setSortQueryParametr('/?ordering=-title');
+          setSortQueryParametr('&ordering=-title');
         }
         if (sorter.order === 'descend') {
-          setSortQueryParametr('/?ordering=title');
+          setSortQueryParametr('&ordering=title');
         }
         if (!sorter.order) {
           setSortQueryParametr('');
