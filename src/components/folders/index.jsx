@@ -112,17 +112,43 @@ function Folders() {
   const handleChanges = (pagination, filters, sorter) => {
     switch (sorter.field) {
       case 'favorite':
-        return sorter.order ? setSortQueryParametr('/?ordering=-liked') : setSortQueryParametr('');
+        if (sorter.order === 'ascend') {
+          setSortQueryParametr('/?ordering=-liked');
+        }
+        if (!sorter.order) {
+          setSortQueryParametr('');
+        }
+
+        break;
 
       case 'recommendations':
-        return sorter.order ? setSortQueryParametr('/?ordering=-marked') : setSortQueryParametr('');
+        if (sorter.order === 'ascend') {
+          setSortQueryParametr('/?ordering=-marked');
+        }
+        if (!sorter.order) {
+          setSortQueryParametr('');
+        }
+
+        break;
 
       case 'name':
-        return sorter.order ? setSortQueryParametr('/?ordering=-title') : setSortQueryParametr('');
+        if (sorter.order === 'ascend') {
+          setSortQueryParametr('/?ordering=-title');
+        }
+        if (sorter.order === 'descend') {
+          setSortQueryParametr('/?ordering=title');
+        }
+        if (!sorter.order) {
+          setSortQueryParametr('');
+        }
+
+        break;
 
       default:
         return null;
     }
+
+    return null;
   };
 
   return (
