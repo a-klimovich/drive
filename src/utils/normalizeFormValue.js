@@ -32,8 +32,14 @@ const normalizeValue = (data) => {
     entrepreneurs_services: entrepreneurs_services ? moment(entrepreneurs_services) : '',
     period_insurance_stop: period_insurance_stop ? moment(period_insurance_stop) : '',
 
-    period_insurance_start: [moment(period_insurance_start[0]), moment(period_insurance_start[1])],
-    date_insurance_start: [moment(date_insurance_start[0]), moment(date_insurance_start[1])],
+    period_insurance_start: period_insurance_start[0] !== null && [
+      moment(period_insurance_start[0]),
+      moment(period_insurance_start[1]),
+    ],
+    date_insurance_start: date_insurance_start[0] !== null && [
+      moment(date_insurance_start[0]),
+      moment(date_insurance_start[1]),
+    ],
   };
 };
 
