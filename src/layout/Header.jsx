@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 // ANTD
-import { Row, Col, Typography } from 'antd';
+import {
+  Row, Col, Typography, Button,
+} from 'antd';
+import { FormOutlined } from '@ant-design/icons';
 // COMPONENTS
 import decorIcon from 'components/UI/icons/decors';
-import Title from 'components/UI/Title';
+// import Title from 'components/UI/Title';
 import SearchForm from 'components/form/SearchForm';
+import ModalFeedback from 'components/ModalFeedback';
+
 // CONTEXT
 import Context from 'context/Context';
 
-const { Link } = Typography;
+const { Link, Title } = Typography;
 
 export default function Header() {
   const navigate = useNavigate();
@@ -29,11 +34,28 @@ export default function Header() {
                 marginRight: '12px',
               },
             })}
-            <Title>
+            <Title
+              className="title"
+              level={5}
+            >
               Здравствуйте!
               {' '}
-              <button onClick={handleRedirectProfile} type="button">{state?.user?.name}</button>
+              { state?.user?.name }
             </Title>
+
+            <Button
+              type="text"
+              htmlType="button"
+              onClick={handleRedirectProfile}
+            >
+              <FormOutlined
+                style={{
+                  fontSize: '20px',
+                }}
+              />
+            </Button>
+
+            <ModalFeedback />
           </div>
         </Col>
 

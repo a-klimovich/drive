@@ -4,6 +4,7 @@ export const BASE_URL = {
   SEARCH: '/api/search/',
   DOCUMENTS: '/api/documents/',
   FOLDERS: '/api/folders/',
+  APIAL: '/api/send_appeal/',
 };
 
 export const QUERY = {

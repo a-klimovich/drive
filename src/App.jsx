@@ -1,5 +1,4 @@
 // STYLES
-import 'antd/dist/antd.min.css';
 import './scss/index.scss';
 // ROUTER
 import { BackTop } from 'antd';
