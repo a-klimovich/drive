@@ -1,23 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+
+// ANTD
+import { ConfigProvider } from 'antd';
+import ruRU from 'antd/locale/ru_RU';
+
 // COMPONENTS
-// eslint-disable-next-line import/order
-import App from './App';
 import ErrorBoundary from 'components/error/ErrorBoundary';
-
-import {
-  ConfigProvider,
-} from 'antd';
-
-import 'moment/locale/ru';
-import locale from 'antd/lib/locale/ru_RU';
+import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <ErrorBoundary>
     <BrowserRouter>
-      <ConfigProvider locale={locale}>
+      <ConfigProvider locale={ruRU}>
         <App />
       </ConfigProvider>
     </BrowserRouter>

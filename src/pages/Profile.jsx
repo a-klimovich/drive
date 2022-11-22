@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import moment from 'moment';
+import dayjs from 'dayjs';
+
 // UTILS
 import Context from 'context/Context';
 import normalizeValue from 'utils/normalizeFormValue';
@@ -29,8 +30,8 @@ const { Group: CheckboxGroup } = Checkbox;
 
 const foramtDate = 'YYYY-MM-DD';
 
-const dataFormater = (val) => (val ? moment(val).format(foramtDate) : '');
-const formatedDateRange = (val) => val?.map((item) => moment(item).format(foramtDate));
+const dataFormater = (val) => (val ? dayjs(val).format(foramtDate) : '');
+const formatedDateRange = (val) => val?.map((item) => dayjs(item).format(foramtDate));
 
 const openNotification = (status) => {
   if (status === 'OK') {
@@ -169,7 +170,7 @@ function Profile() {
 
           <PersonalDate />
 
-          <p>Член ПНК</p>
+          <p className="centered mb-3">Член ПНК</p>
 
           <Membership />
 
@@ -180,8 +181,8 @@ function Profile() {
             onChange={handleChangeQualifications}
             value={qualification}
             name={qualification}
-            layout="vertical"
             className="radio-grup-column"
+            direction="vertical"
           />
 
           <p className="required-mark">Высшее образование:</p>
@@ -197,7 +198,7 @@ function Profile() {
             </Row>
           </CheckboxGroup>
 
-          <p>Договор страхования ответственности</p>
+          <p className="centered mb-3">Договор страхования ответственности</p>
 
           <Insurance />
 
@@ -227,7 +228,7 @@ function Profile() {
                   },
                 ]}
               >
-                <RangePicker onChange={(val) => handlerDataRangeValidity(val)} />
+                <RangePicker onChange={handlerDataRangeTerm} />
               </Form.Item>
             </Col>
 
@@ -241,7 +242,7 @@ function Profile() {
                   },
                 ]}
               >
-                <RangePicker onChange={(val) => handlerDataRangeTerm(val)} />
+                <RangePicker onChange={handlerDataRangeTerm} />
               </Form.Item>
             </Col>
 
@@ -277,7 +278,7 @@ function Profile() {
             </Col>
           </Row>
 
-          <p>Место работы в качестве налогового консультанта </p>
+          <p className="centered mb-3">Место работы в качестве налогового консультанта </p>
 
           <WorakPlaces />
         </div>
@@ -291,11 +292,11 @@ function Profile() {
         </div>
 
         <div className="container">
-          <p>Контактная информация</p>
+          <p className="centered mb-3">Контактная информация</p>
 
           <Contacts />
 
-          <p>Оказываемые услуги</p>
+          <p className="centered mb-3">Оказываемые услуги</p>
 
           <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
 
