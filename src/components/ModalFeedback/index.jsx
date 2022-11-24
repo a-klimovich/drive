@@ -8,8 +8,12 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { BASE_URL } from 'api/url';
 import request from 'api/axios';
 
+// COMPONENTS
+import Title from './Title';
+
 // COMMON
 import FormFields from './__common/FormFields';
+import styles from './styles.module.scss';
 
 const openNotification = (status) => {
   if (status === 'OK') {
@@ -45,7 +49,7 @@ function ModalFeedback() {
 
   const onFinish = (value) => {
     request
-      .patch(`${BASE_URL.APIAL}`, value)
+      .post(`${BASE_URL.APIAL}`, value)
       .then((response) => {
         if (response?.statusText === 'OK') {
           setTimeout(() => {
@@ -71,12 +75,17 @@ function ModalFeedback() {
       </Button>
 
       <Modal
-        title="Свяжитесь с нами"
+        title={(
+          <Title
+            title="Форма обращения налогового консультанта в ПНК по вопросам применения отдельных норм налогового законодательства"
+          />
+        )}
         open={open}
         onOk={handleOk}
         onCancel={handleCancel}
         loading={loading}
-        width={950}
+        width={1000}
+        className={styles.modal}
         footer={[
           <Button key="back" onClick={handleCancel}>
             Свернуть/Закрыть

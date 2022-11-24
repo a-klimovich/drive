@@ -40,13 +40,13 @@ function FormFields() {
           },
         ]}
         name="title"
-        label="Подробное описание вопроса."
+        label="Подробное описание вопроса, ситуации с указанием норм действующего законодательства"
       >
         <TextArea
           showCount
           maxLength={1000}
           autoSize={{ minRows: 2, maxRows: 10 }}
-          placeholder="Подробное описание вопроса, ситуации с указанием норм действующего законодательства"
+          placeholder="Поле недолжно быть пустым поставте '-'!"
         />
       </Item>
       <Item
@@ -56,13 +56,13 @@ function FormFields() {
           },
         ]}
         name="common_or_not"
-        label="Как часто?"
+        label="Ситуация распространенная или единичный случай"
       >
         <TextArea
           showCount
           maxLength={1000}
           autoSize={{ minRows: 2, maxRows: 10 }}
-          placeholder="Ситуация распространенная или единичный случай"
+          placeholder="Поле недолжно быть пустым поставте '-'!"
         />
       </Item>
       <Item
@@ -72,21 +72,21 @@ function FormFields() {
           },
         ]}
         name="suggestions"
-        label="Ваши предложения."
+        label="Ваши предложения о возможном порядке применения указанной нормы законодательства или ее корректировки для урегулирования вопроса, ситуации"
       >
         <TextArea
           showCount
           maxLength={1000}
           autoSize={{ minRows: 2, maxRows: 10 }}
-          placeholder="Ваши предложения о возможном порядке применения указанной нормы законодательства или ее корректировки для урегулирования вопроса, ситуации"
+          placeholder="Поле недолжно быть пустым поставте '-'!"
         />
       </Item>
-      <Item name="appeal" label="Ваш вариант текста обращения.">
+      <Item name="appeal" label="Ваш вариант текста обращения от ПНК в государственные органы за разъяснением и урегулированием сложившейся ситуации">
         <TextArea
           showCount
           maxLength={1000}
           autoSize={{ minRows: 2, maxRows: 10 }}
-          placeholder="Ваш вариант текста обращения от ПНК в государственные органы за разъяснением и урегулированием сложившейся ситуации"
+          placeholder="Поле недолжно быть пустым поставте '-'!"
         />
       </Item>
 
@@ -95,8 +95,8 @@ function FormFields() {
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-          <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+          <p className="ant-upload-text">Нажмите или перетащите файл в эту область, чтобы загрузить</p>
+          <p className="ant-upload-hint">Поддержка одиночной или массовой загрузки.</p>
         </Upload.Dragger>
       </Item>
     </>

@@ -25,7 +25,7 @@ export default function Membership() {
         </Form.Item>
       </Col>
       <Col xs={24} sm={12} md={12} lg={8}>
-        <Form.Item name="date_membership_exclusion" label="Дата исключения">
+        <Form.Item name="date_membership_exclusion" label="Дата возобновления членства">
           <DatePicker placeholder="Выберите дату" />
         </Form.Item>
       </Col>

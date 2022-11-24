@@ -106,7 +106,7 @@ export default function PersonalDate() {
         </Col>
 
         <Col xs={24} sm={12} md={12} lg={8}>
-          <Form.Item name="date_certificate_stop" label="Дата аннулирования">
+          <Form.Item name="date_certificate_stop" label="Дата приостановления действий">
             <DatePicker placeholder="Выберите дату" />
           </Form.Item>
         </Col>
