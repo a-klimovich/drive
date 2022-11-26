@@ -90,8 +90,11 @@ function FormFields() {
         />
       </Item>
 
-      <Item name="docs" valuePropName="fileList" getValueFromEvent={normFile} noStyle maxCount={1}>
-        <Upload.Dragger name="files" {...uploadProps}>
+      <Item name="docs" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+        <Upload.Dragger
+          name="files"
+          {...uploadProps}
+        >
           <p className="ant-upload-drag-icon">
             <InboxOutlined />
           </p>

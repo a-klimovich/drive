@@ -49,7 +49,11 @@ function ModalFeedback() {
 
   const onFinish = (value) => {
     request
-      .post(`${BASE_URL.APIAL}`, value)
+      .post(`${BASE_URL.APIAL}`, value, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((response) => {
         if (response?.statusText === 'OK') {
           setTimeout(() => {
