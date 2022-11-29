@@ -18,7 +18,7 @@ const { TextArea } = Input;
 const { Item } = Form;
 
 const openNotification = (status) => {
-  if (status === 'OK') {
+  if (status) {
     notification.success({
       message: 'Данные успешно отправлены! Спасибо',
       duration: 3.5,
@@ -70,34 +70,32 @@ function ModalFeedback() {
     return e.fileList;
   };
 
-  const onFinish = (value) => {
-    const formData = new FormData();
+  const onFinish = async (value) => {
+    try {
+      const formData = new FormData();
 
-    fileList.forEach((file) => {
-      formData.append('docs', file);
-    });
+      fileList.forEach((file) => {
+        formData.append('docs', file);
+      });
 
-    Object.entries(value).forEach(([key, val]) => formData.append(key, val));
+      Object.entries(value).forEach(([key, val]) => formData.append(key, val));
 
-    request
-      .post(`${BASE_URL.APIAL}`, formData, {
+      const res = await request.post(`${BASE_URL.APIAL}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      })
-      .then((response) => {
-        if (response.statusText === 'OK') {
-          openNotification('OK');
-        }
-      })
-      .catch(() => {
-        openNotification(false);
-      })
-      .finally(() => {
+      });
+
+      if (res?.status >= 200 && res?.status < 300) {
+        openNotification(true);
         form.resetFields();
         setFileList([]);
-        setLoading(false);
-      });
+      }
+      setLoading(false);
+    } catch (error) {
+      openNotification(false);
+      setLoading(false);
+    }
   };
 
   return (
@@ -150,7 +148,7 @@ function ModalFeedback() {
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставте '-'!"
+              placeholder="Поле недолжно быть пустым поставьте '-'!"
             />
           </Item>
           <Item
@@ -166,7 +164,7 @@ function ModalFeedback() {
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставте '-'!"
+              placeholder="Поле недолжно быть пустым поставьте '-'!"
             />
           </Item>
           <Item
@@ -182,7 +180,7 @@ function ModalFeedback() {
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставте '-'!"
+              placeholder="Поле недолжно быть пустым поставьте '-'!"
             />
           </Item>
           <Item name="appeal" label="Ваш вариант текста обращения от ПНК в государственные органы за разъяснением и урегулированием сложившейся ситуации">
@@ -190,7 +188,7 @@ function ModalFeedback() {
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставте '-'!"
+              placeholder="Поле недолжно быть пустым поставьте '-'!"
             />
           </Item>
 
