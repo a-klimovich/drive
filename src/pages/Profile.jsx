@@ -13,8 +13,9 @@ import request from 'api/axios';
 // COMPONENTS
 import Page from 'layout/Page';
 import {
-  DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, notification,
+  DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, notification, Typography,
 } from 'antd';
+
 import PersonalDate from './__common/PersonalDate';
 import Membership from './__common/Membership';
 import WorakPlaces from './__common/WorakPlaces';
@@ -24,6 +25,8 @@ import Insurance from './__common/Insurance';
 // BASE
 import initialValue from './initial';
 import optionList from './optionList';
+
+const { Text, Paragraph } = Typography;
 
 const { RangePicker } = DatePicker;
 const { Group: CheckboxGroup } = Checkbox;
@@ -135,8 +138,6 @@ function Profile() {
       date_certificate_renew: dataFormater(date_certificate_renew),
     };
 
-    console.log(updateValue);
-
     // REQUEST
     request
       .patch(`${BASE_URL.USER}`, updateValue)
@@ -169,6 +170,12 @@ function Profile() {
           >
             Вернуться
           </Button>
+
+          <Paragraph>
+            <Text type="danger">*</Text>
+            {' '}
+            - отмечены поля обязательные для заполнения
+          </Paragraph>
 
           <PersonalDate />
 
