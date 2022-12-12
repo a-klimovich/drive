@@ -1,5 +1,5 @@
 import {
-  InputNumber, DatePicker, Input, Row, Col, Form,
+  DatePicker, Input, Row, Col, Form,
 } from 'antd';
 
 export default function Insurance() {
@@ -24,7 +24,7 @@ export default function Insurance() {
             },
           ]}
         >
-          <InputNumber controls={false} placeholder="Введите номер" />
+          <Input placeholder="Введите номер" />
         </Form.Item>
       </Col>
       <Col xs={24} sm={12} md={12} lg={8}>
