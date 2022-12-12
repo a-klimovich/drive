@@ -78,7 +78,7 @@ function ModalFeedback() {
         formData.append('docs', file);
       });
 
-      Object.entries(value).forEach(([key, val]) => formData.append(key, val));
+      Object.entries(value).forEach(([key, val]) => formData.append(key, val === undefined ? '-' : val));
 
       const res = await request.post(`${BASE_URL.APIAL}`, formData, {
         headers: {
@@ -91,6 +91,7 @@ function ModalFeedback() {
         form.resetFields();
         setFileList([]);
       }
+
       setLoading(false);
     } catch (error) {
       openNotification(false);
@@ -148,7 +149,7 @@ function ModalFeedback() {
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставьте '-'!"
+              placeholder="Поле недолжно быть пустым, поставьте '-'!"
             />
           </Item>
           <Item
@@ -164,7 +165,7 @@ function ModalFeedback() {
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставьте '-'!"
+              placeholder="Поле недолжно быть пустым, поставьте '-'!"
             />
           </Item>
           <Item
@@ -180,15 +181,18 @@ function ModalFeedback() {
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставьте '-'!"
+              placeholder="Поле недолжно быть пустым, поставьте '-'!"
             />
           </Item>
-          <Item name="appeal" label="Ваш вариант текста обращения от ПНК в государственные органы за разъяснением и урегулированием сложившейся ситуации">
+          <Item
+            name="appeal"
+            label="Ваш вариант текста обращения от ПНК в государственные органы за разъяснением и урегулированием сложившейся ситуации"
+          >
             <TextArea
               showCount
               maxLength={1000}
               autoSize={{ minRows: 2, maxRows: 10 }}
-              placeholder="Поле недолжно быть пустым поставьте '-'!"
+              defaultValue="-"
             />
           </Item>
 

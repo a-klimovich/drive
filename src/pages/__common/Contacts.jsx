@@ -47,11 +47,6 @@ export default function Contacts() {
         <Form.Item
           name="url"
           label="Адрес официального сайта"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
         >
           <Input placeholder="Введите адрес" />
         </Form.Item>

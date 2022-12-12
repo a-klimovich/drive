@@ -32,14 +32,14 @@ const normalizeValue = (data) => {
     entrepreneurs_services: entrepreneurs_services ? dayjs(entrepreneurs_services) : '',
     period_insurance_stop: period_insurance_stop ? dayjs(period_insurance_stop) : '',
 
-    period_insurance_start: period_insurance_start[0] !== null && [
+    period_insurance_start: period_insurance_start[0] !== null ? [
       dayjs(period_insurance_start[0]),
       dayjs(period_insurance_start[1]),
-    ],
-    date_insurance_start: date_insurance_start[0] !== null && [
+    ] : [],
+    date_insurance_start: date_insurance_start[0] !== null ? [
       dayjs(date_insurance_start[0]),
       dayjs(date_insurance_start[1]),
-    ],
+    ] : [],
   };
 };
 

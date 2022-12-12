@@ -53,8 +53,8 @@ function Profile() {
   const { state, setLoaded, loaded } = useContext(Context);
   const { user } = state;
 
-  const [periodInsuranceStart, setPeriodInsuranceStart] = useState([]);
   const [dataRangeInsurense, setDataRangeInsurense] = useState([]);
+  const [periodInsuranceStart, setPeriodInsuranceStart] = useState([]);
   const [qualification, setQualifications] = useState('');
   const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
@@ -134,6 +134,8 @@ function Profile() {
       date_membership_stop: dataFormater(date_membership_stop),
       date_certificate_renew: dataFormater(date_certificate_renew),
     };
+
+    console.log(updateValue);
 
     // REQUEST
     request
@@ -228,7 +230,7 @@ function Profile() {
                   },
                 ]}
               >
-                <RangePicker onChange={handlerDataRangeTerm} />
+                <RangePicker onChange={handlerDataRangeValidity} />
               </Form.Item>
             </Col>
 

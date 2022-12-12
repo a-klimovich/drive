@@ -28,7 +28,7 @@ export default function WorakPlaces() {
       </Col>
       <Col xs={24} sm={12} md={12} lg={8}>
         <Form.Item name="registration_region" label="Место регистрации область">
-          <Select placeholder="Введите город">
+          <Select placeholder="Выберите область">
             <Option value="0">Не выбрано</Option>
             <Option value="1">Брестская</Option>
             <Option value="2">Гомельская</Option>
