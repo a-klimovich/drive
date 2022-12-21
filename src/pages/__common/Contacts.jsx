@@ -31,7 +31,7 @@ export default function Contacts() {
       <Col xs={24} sm={12} md={12} lg={8}>
         <Form.Item
           name="email"
-          label="e-mail"
+          label="E-mail"
           rules={[
             {
               required: true,

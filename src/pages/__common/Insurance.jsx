@@ -31,7 +31,7 @@ export default function Insurance(props) {
       <Col xs={24} sm={12} md={12} lg={8}>
         <Form.Item
           name="insurance_serial_num"
-          label="серия"
+          label="Серия"
           rules={[
             {
               required: !provideServicesTaxConsultant,
@@ -44,7 +44,7 @@ export default function Insurance(props) {
       <Col xs={24} sm={12} md={12} lg={8}>
         <Form.Item
           name="date_insurance_from"
-          label="от"
+          label="От"
           rules={[
             {
               required: !provideServicesTaxConsultant,
