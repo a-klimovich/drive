@@ -21,3 +21,18 @@
   display: flex;
   justify-content: space-between;
 }
+
+.bg-gray {
+  background-color: $gray-light-2;
+}
+
+.py-2 {
+  padding-top: 24px;
+  padding-bottom: 1px;
+  margin-bottom: 0.42rem;
+}
+
+.mb-2 {
+  margin-bottom: 1.5rem;
+}
+

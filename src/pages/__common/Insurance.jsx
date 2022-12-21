@@ -2,7 +2,8 @@ import {
   DatePicker, Input, Row, Col, Form,
 } from 'antd';
 
-export default function Insurance() {
+export default function Insurance(props) {
+  const { provideServicesTaxConsultant } = props;
   return (
     <Row
       gutter={[
@@ -20,7 +21,7 @@ export default function Insurance() {
           label="Страховой полис №"
           rules={[
             {
-              required: true,
+              required: !provideServicesTaxConsultant,
             },
           ]}
         >
@@ -33,7 +34,7 @@ export default function Insurance() {
           label="серия"
           rules={[
             {
-              required: true,
+              required: !provideServicesTaxConsultant,
             },
           ]}
         >
@@ -46,7 +47,7 @@ export default function Insurance() {
           label="от"
           rules={[
             {
-              required: true,
+              required: !provideServicesTaxConsultant,
             },
           ]}
         >
