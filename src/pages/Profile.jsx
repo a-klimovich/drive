@@ -35,9 +35,10 @@ const { Group: CheckboxGroup } = Checkbox;
 const foramtDate = 'YYYY-MM-DD';
 
 const dataFormater = (val) => (val ? dayjs(val).format(foramtDate) : '');
+
 const dateToStringFormater = (val) => {
-  if (val?.length > 1) {
-    return val?.map((e) => dayjs(e, foramtDate).toJSON());
+  if (val?.length > 1 && val[0] !== null && val[1] !== null) {
+    return val?.map((d) => dayjs(d).format(foramtDate));
   }
 
   return null;
@@ -99,6 +100,7 @@ function Profile() {
       handleChangeIndividualEntrepreneurs(user?.entrepreneurs_services);
       handleChangeIndividualPerson(user?.personal_services);
       handleChangeEducation(user?.high_education);
+      setProvideServicesTaxConsultant(user?.is_consultant);
 
       // date range
       setDataRangeInsurense(user?.date_insurance_start);
@@ -147,6 +149,12 @@ function Profile() {
       date_membership_stop: dataFormater(date_membership_stop),
       date_certificate_renew: dataFormater(date_certificate_renew),
     };
+
+    console.log(values);
+
+    if (education.length <= 0) {
+      console.log('cb');
+    }
 
     // REQUEST
     request
@@ -202,16 +210,28 @@ function Profile() {
 
           <p className="required-mark">Высшее образование:</p>
 
-          <CheckboxGroup value={education} onChange={handleChangeEducation}>
-            <Row>
-              <Col>
-                <Checkbox value="checked-1">Экономическое</Checkbox>
-              </Col>
-              <Col>
-                <Checkbox value="checked-2">Юридическое</Checkbox>
-              </Col>
-            </Row>
-          </CheckboxGroup>
+          <Form.Item
+            name="high_education"
+            rules={[
+              {
+                required: true,
+                message: 'Пожалуйста, выберите Высшее образование',
+              },
+            ]}
+            value={education}
+            onChange={handleChangeEducation}
+          >
+            <CheckboxGroup>
+              <Row>
+                <Col>
+                  <Checkbox value="checked-1">Экономическое</Checkbox>
+                </Col>
+                <Col>
+                  <Checkbox value="checked-2">Юридическое</Checkbox>
+                </Col>
+              </Row>
+            </CheckboxGroup>
+          </Form.Item>
         </div>
 
         <div className="solo-checkbox bg-gray py-2 mb-2">
