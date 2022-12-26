@@ -35,7 +35,13 @@ const { Group: CheckboxGroup } = Checkbox;
 const foramtDate = 'YYYY-MM-DD';
 
 const dataFormater = (val) => (val ? dayjs(val).format(foramtDate) : '');
-const formatedDateRange = (val) => val?.map((item) => dayjs(item).format(foramtDate));
+const dateToStringFormater = (val) => {
+  if (val?.length > 1) {
+    return val?.map((e) => dayjs(e, foramtDate).toJSON());
+  }
+
+  return null;
+};
 
 const openNotification = (status) => {
   if (status === 'OK') {
@@ -57,8 +63,9 @@ function Profile() {
   const { state, setLoaded, loaded } = useContext(Context);
   const { user } = state;
 
-  const [dataRangeInsurense, setDataRangeInsurense] = useState([]);
-  const [periodInsuranceStart, setPeriodInsuranceStart] = useState([]);
+  const [dataRangeInsurense, setDataRangeInsurense] = useState(null);
+  const [periodInsuranceStart, setPeriodInsuranceStart] = useState(null);
+
   const [qualification, setQualifications] = useState('');
   const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
@@ -69,8 +76,7 @@ function Profile() {
 
   const handleChangeQualifications = (e, val) => setQualifications(e?.target?.value || val);
   const handleValueCurrancy = (e, val) => setCurrency(e?.target?.value || val);
-  const handlerDataRangeTerm = (arrDate) => setDataRangeInsurense(formatedDateRange(arrDate));
-  const handlerDataRangeValidity = (arrDate) => setPeriodInsuranceStart(formatedDateRange(arrDate));
+
   const handleProvideServicesTaxConsultant = (checkedValues) => {
     setProvideServicesTaxConsultant(checkedValues.target.checked);
   };
@@ -93,8 +99,10 @@ function Profile() {
       handleChangeIndividualEntrepreneurs(user?.entrepreneurs_services);
       handleChangeIndividualPerson(user?.personal_services);
       handleChangeEducation(user?.high_education);
-      handlerDataRangeTerm(user?.date_insurance_start);
-      handlerDataRangeValidity(user?.period_insurance_start);
+
+      // date range
+      setDataRangeInsurense(user?.date_insurance_start);
+      setPeriodInsuranceStart(user?.period_insurance_start);
     }
   }, [user, form]);
 
@@ -127,8 +135,9 @@ function Profile() {
       legal_entity_services: legalEntities,
       entrepreneurs_services: individualEntrepreneurs,
       personal_services: individualPerson,
-      date_insurance_start: dataRangeInsurense,
-      period_insurance_start: periodInsuranceStart,
+
+      date_insurance_start: dateToStringFormater(dataRangeInsurense),
+      period_insurance_start: dateToStringFormater(periodInsuranceStart),
 
       date_insurance_from: dataFormater(date_insurance_from),
       date_certificate_stop: dataFormater(date_certificate_stop),
@@ -161,7 +170,7 @@ function Profile() {
         initialValues={initialValue}
         className="profile-settings-form"
         scrollToFirstError
-        validateTrigger="onBlur"
+        validateTrigger="onSubmit"
       >
         <div className="container mb-3">
           <Button type="primary" onClick={() => navigate('/')} className="profile-page-goBack">
@@ -236,7 +245,7 @@ function Profile() {
           >
             <Col xs={24} sm={12} md={8} lg={6}>
               <Form.Item
-                name="period_insurance_start"
+                name="date_insurance_start"
                 label="Срок действия"
                 rules={[
                   {
@@ -244,13 +253,15 @@ function Profile() {
                   },
                 ]}
               >
-                <RangePicker onChange={handlerDataRangeValidity} />
+                <RangePicker
+                  onChange={(val) => setDataRangeInsurense(val)}
+                />
               </Form.Item>
             </Col>
 
             <Col xs={24} sm={12} md={8} lg={6}>
               <Form.Item
-                name="date_insurance_start"
+                name="period_insurance_start"
                 label="Срок страхования"
                 rules={[
                   {
@@ -258,7 +269,9 @@ function Profile() {
                   },
                 ]}
               >
-                <RangePicker onChange={handlerDataRangeTerm} />
+                <RangePicker
+                  onChange={(val) => setPeriodInsuranceStart(val)}
+                />
               </Form.Item>
             </Col>
 

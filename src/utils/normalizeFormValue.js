@@ -1,4 +1,15 @@
+/* eslint-disable max-len */
 import dayjs from 'dayjs';
+
+const foramtDate = 'YYYY-MM-DD';
+
+const formater = (field) => {
+  if (field !== null && field[0] !== null && field[1] !== null) {
+    return [dayjs(field[0], foramtDate), dayjs(field[1], foramtDate)];
+  }
+
+  return null;
+};
 
 const normalizeValue = (data) => {
   const {
@@ -13,9 +24,9 @@ const normalizeValue = (data) => {
     date_membership_stop,
     entrepreneurs_services,
     period_insurance_stop,
-    // array
-    period_insurance_start,
+
     date_insurance_start,
+    period_insurance_start,
   } = data;
 
   return {
@@ -32,14 +43,8 @@ const normalizeValue = (data) => {
     entrepreneurs_services: entrepreneurs_services ? dayjs(entrepreneurs_services) : '',
     period_insurance_stop: period_insurance_stop ? dayjs(period_insurance_stop) : '',
 
-    period_insurance_start: period_insurance_start[0] !== null ? [
-      dayjs(period_insurance_start[0]),
-      dayjs(period_insurance_start[1]),
-    ] : [],
-    date_insurance_start: date_insurance_start[0] !== null ? [
-      dayjs(date_insurance_start[0]),
-      dayjs(date_insurance_start[1]),
-    ] : [],
+    date_insurance_start: formater(date_insurance_start),
+    period_insurance_start: formater(period_insurance_start),
   };
 };
 

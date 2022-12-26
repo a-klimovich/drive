@@ -15,8 +15,10 @@ const initialValue = {
   insurance: null,
   insurance_serial_num: null,
   date_insurance_from: null,
-  date_insurance_start: [],
-  period_insurance_start: [],
+
+  date_insurance_start: null,
+  period_insurance_start: null,
+
   liability_limit: null,
   currency: '',
   organization: null,
