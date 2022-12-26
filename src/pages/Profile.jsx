@@ -150,12 +150,6 @@ function Profile() {
       date_certificate_renew: dataFormater(date_certificate_renew),
     };
 
-    console.log(values);
-
-    if (education.length <= 0) {
-      console.log('cb');
-    }
-
     // REQUEST
     request
       .patch(`${BASE_URL.USER}`, updateValue)
