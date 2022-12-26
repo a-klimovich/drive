@@ -212,10 +212,11 @@ function Profile() {
                 message: 'Пожалуйста, выберите Высшее образование',
               },
             ]}
-            value={education}
-            onChange={handleChangeEducation}
           >
-            <CheckboxGroup>
+            <CheckboxGroup
+              value={education}
+              onChange={handleChangeEducation}
+            >
               <Row>
                 <Col>
                   <Checkbox value="checked-1">Экономическое</Checkbox>
