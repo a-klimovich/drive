@@ -1,5 +1,6 @@
-/* eslint-disable max-len */
-import React, { useState, useEffect, useContext } from 'react';
+import {
+  useState, useEffect, useContext, useCallback,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, Typography,
@@ -15,14 +16,10 @@ import Membership from './__common/Membership';
 import WorakPlaces from './__common/WorakPlaces';
 import Contacts from './__common/Contacts';
 import Insurance from './__common/Insurance';
-
-// BASE
 import initialValue from './initial';
 import config from './config';
 
 const { Text, Paragraph } = Typography;
-
-const { RangePicker } = DatePicker;
 const { Group: CheckboxGroup } = Checkbox;
 
 const Profile = () => {
@@ -31,10 +28,10 @@ const Profile = () => {
   const { state, setLoaded, loaded } = useContext(Context);
   const { user } = state;
 
-  const [dataRangeInsurense, setDataRangeInsurense] = useState(null);
+  const [dataRangeInsurance, setDataRangeInsurance] = useState(null);
   const [periodInsuranceStart, setPeriodInsuranceStart] = useState(null);
 
-  const [qualification, setQualifications] = useState('');
+  const [qualification, setQualification] = useState('');
   const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
   const [legalEntities, setLegalEntities] = useState([]);
@@ -42,8 +39,8 @@ const Profile = () => {
   const [individualPerson, setIndividualPerson] = useState([]);
   const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] = useState(false);
 
-  const handleChangeQualifications = (e, val) => setQualifications(e?.target?.value || val);
-  const handleValueCurrancy = (e, val) => setCurrency(e?.target?.value || val);
+  const handleChangeQualification = (e, val) => setQualification(e?.target?.value || val);
+  const handleCurrencyValue = (e, val) => setCurrency(e?.target?.value || val);
 
   const handleProvideServicesTaxConsultant = (checkedValues) => {
     setProvideServicesTaxConsultant(checkedValues.target.checked);
@@ -59,15 +56,15 @@ const Profile = () => {
     if (user) {
       form.setFieldsValue(normalizeValue(user));
 
-      handleChangeQualifications({}, user?.qualification);
-      handleValueCurrancy({}, user?.currency);
+      handleChangeQualification({}, user?.qualification);
+      handleCurrencyValue({}, user?.currency);
       handleChangeLegalEntities(user?.legal_entity_services);
       handleChangeIndividualEntrepreneurs(user?.entrepreneurs_services);
       handleChangeIndividualPerson(user?.personal_services);
       handleChangeEducation(user?.high_education);
       setProvideServicesTaxConsultant(user?.is_consultant);
 
-      setDataRangeInsurense(user?.date_insurance_start);
+      setDataRangeInsurance(user?.date_insurance_start);
       setPeriodInsuranceStart(user?.period_insurance_start);
     }
   }, [user, form]);
@@ -78,9 +75,9 @@ const Profile = () => {
     } else {
       setLoaded(false);
     }
-  }, []);
+  }, [user]);
 
-  const onFinish = (values) => {
+  const onFinish = useCallback((values) => {
     const {
       date_insurance_from,
       date_certificate_start,
@@ -102,7 +99,7 @@ const Profile = () => {
       entrepreneurs_services: individualEntrepreneurs,
       personal_services: individualPerson,
 
-      date_insurance_start: dateToStringFormater(dataRangeInsurense),
+      date_insurance_start: dateToStringFormater(dataRangeInsurance),
       period_insurance_start: dateToStringFormater(periodInsuranceStart),
 
       date_insurance_from: dataFormater(date_insurance_from),
@@ -125,7 +122,7 @@ const Profile = () => {
       .catch(() => {
         openNotification(false);
       });
-  };
+  }, []);
 
   return (
     <Page loading={loaded}>
@@ -159,7 +156,7 @@ const Profile = () => {
 
           <Radio.Group
             options={config.qualification}
-            onChange={handleChangeQualifications}
+            onChange={handleChangeQualification}
             value={qualification}
             name={qualification}
             className="radio-grup-column"
@@ -232,8 +229,8 @@ const Profile = () => {
                   },
                 ]}
               >
-                <RangePicker
-                  onChange={(val) => setDataRangeInsurense(val)}
+                <DatePicker.RangePicker
+                  onChange={(val) => setDataRangeInsurance(val)}
                 />
               </Form.Item>
             </Col>
@@ -248,7 +245,7 @@ const Profile = () => {
                   },
                 ]}
               >
-                <RangePicker
+                <DatePicker.RangePicker
                   onChange={(val) => setPeriodInsuranceStart(val)}
                 />
               </Form.Item>
@@ -276,7 +273,7 @@ const Profile = () => {
                   <Form.Item label="Валюта">
                     <Radio.Group
                       options={config.currency}
-                      onChange={handleValueCurrancy}
+                      onChange={handleCurrencyValue}
                       value={currency}
                       name={currency}
                     />
@@ -314,7 +311,10 @@ const Profile = () => {
 
           <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
 
-          <CheckboxGroup value={individualEntrepreneurs} onChange={handleChangeIndividualEntrepreneurs}>
+          <CheckboxGroup
+            value={individualEntrepreneurs}
+            onChange={handleChangeIndividualEntrepreneurs}
+          >
             <Row>
               {
                 config.individualEntrepreneurs.map((item, index) => (
