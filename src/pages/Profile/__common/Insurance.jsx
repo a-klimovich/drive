@@ -1,8 +1,8 @@
 import {
-  Input, Row, Col, Form,
+  DatePicker, Input, Row, Col, Form,
 } from 'antd';
 
-const Contacts = () => (
+const Insurance = () => (
   <Row
     gutter={[
       {
@@ -15,42 +15,44 @@ const Contacts = () => (
   >
     <Col xs={24} sm={12} md={12} lg={8}>
       <Form.Item
-        name="phone"
-        label="Номер телефона"
+        name="insurance"
+        label="Страховой полис №"
         rules={[
           {
             required: true,
           },
         ]}
       >
-        <Input placeholder="801642345678" />
+        <Input placeholder="Введите номер" />
       </Form.Item>
     </Col>
-
     <Col xs={24} sm={12} md={12} lg={8}>
       <Form.Item
-        name="email"
-        label="E-mail"
+        name="insurance_serial_num"
+        label="Серия"
         rules={[
           {
             required: true,
-            type: 'email',
           },
         ]}
       >
-        <Input placeholder="Введите e-mail" />
+        <Input placeholder="Введите серию" />
       </Form.Item>
     </Col>
-
     <Col xs={24} sm={12} md={12} lg={8}>
       <Form.Item
-        name="url"
-        label="Адрес официального сайта"
+        name="date_insurance_from"
+        label="От"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
-        <Input placeholder="Введите адрес" />
+        <DatePicker placeholder="Выберите дату" />
       </Form.Item>
     </Col>
   </Row>
 );
 
-export default Contacts;
+export default Insurance;

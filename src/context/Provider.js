@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BASE_URL } from 'api/url';
 import request from 'api/axios';
 import Context from './Context';
@@ -24,9 +24,15 @@ const Provider = (props) => {
       .finally(() => setLoaded(false));
   }, [update]);
 
-  const value = useMemo(() => ({
-    loaded, setLoaded, state, setState, update, setUpdate,
-  }), []);
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  const value = {
+    loaded,
+    setLoaded,
+    state,
+    setState,
+    update,
+    setUpdate,
+  };
 
   return (
     <Context.Provider value={value}>

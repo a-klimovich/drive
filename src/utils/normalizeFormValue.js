@@ -3,6 +3,16 @@ import dayjs from 'dayjs';
 
 const foramtDate = 'YYYY-MM-DD';
 
+export const dataFormater = (val) => (val ? dayjs(val).format(foramtDate) : '');
+
+export const dateToStringFormater = (val) => {
+  if (val?.length > 1 && val[0] !== null && val[1] !== null) {
+    return val?.map((d) => dayjs(d).format(foramtDate));
+  }
+
+  return null;
+};
+
 const formater = (field) => {
   if (field !== null && field[0] !== null && field[1] !== null) {
     return [dayjs(field[0], foramtDate), dayjs(field[1], foramtDate)];
@@ -11,7 +21,7 @@ const formater = (field) => {
   return null;
 };
 
-const normalizeValue = (data) => {
+export const normalizeValue = (data) => {
   const {
     qualification,
     date_certificate_renew,
@@ -22,8 +32,6 @@ const normalizeValue = (data) => {
     date_membership_exclusion,
     date_membership_start,
     date_membership_stop,
-    entrepreneurs_services,
-    period_insurance_stop,
 
     date_insurance_start,
     period_insurance_start,
@@ -40,12 +48,8 @@ const normalizeValue = (data) => {
     date_membership_exclusion: date_membership_exclusion ? dayjs(date_membership_exclusion) : '',
     date_membership_start: date_membership_start ? dayjs(date_membership_start) : '',
     date_membership_stop: date_membership_stop ? dayjs(date_membership_stop) : '',
-    entrepreneurs_services: entrepreneurs_services ? dayjs(entrepreneurs_services) : '',
-    period_insurance_stop: period_insurance_stop ? dayjs(period_insurance_stop) : '',
 
     date_insurance_start: formater(date_insurance_start),
     period_insurance_start: formater(period_insurance_start),
   };
 };
-
-export default normalizeValue;

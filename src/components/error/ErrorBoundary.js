@@ -1,5 +1,5 @@
 import React from 'react';
-import CenteredContent from 'components/CenteredContent';
+import { Link } from 'react-router-dom';
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -12,16 +12,21 @@ export default class ErrorBoundary extends React.Component {
   }
 
   render() {
-    // eslint-disable-next-line react/destructuring-assignment
-    if (this.state.hasError) {
+    const { hasError } = this.state;
+    const { children } = this.props;
+
+    if (hasError) {
       return (
-        <CenteredContent>
-          <h1>Something went wrong.</h1>
-        </CenteredContent>
+        <div
+          className="flex-center-all w-100 h-100"
+          style={{ height: '100vh' }}
+        >
+          <h1>Что-то пошло не так</h1>
+          <Link to="/">Вернуться домой</Link>
+        </div>
       );
     }
 
-    // eslint-disable-next-line react/destructuring-assignment
-    return this.props.children;
+    return children;
   }
 }

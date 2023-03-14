@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-// ANTD
 import { Typography } from 'antd';
-// COMPONENTS
 import folderIcon from 'components/UI/icons/folder';
 import fileTypeIcon from 'components/UI/icons/files';
 
@@ -34,7 +32,11 @@ const TitleFile = ({ data, isFolderItem = false }) => {
   ) : (
     <Link
       key={data?.id}
-      style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
+      }}
       target="_blank"
       href={file}
     >

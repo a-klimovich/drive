@@ -3,7 +3,7 @@ import {
   Button, Drawer, Row, Col, Typography,
 } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import DescriptionItem from './DescriptionItem';
+import DescriptionItem from 'components/DescriptionItem';
 
 const { Link } = Typography;
 

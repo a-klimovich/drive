@@ -1,22 +1,15 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import dayjs from 'dayjs';
-
-// UTILS
+import {
+  DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, Typography,
+} from 'antd';
 import Context from 'context/Context';
-import normalizeValue from 'utils/normalizeFormValue';
-
-// API
+import { dataFormater, dateToStringFormater, normalizeValue } from 'utils/normalizeFormValue';
 import { BASE_URL } from 'api/url';
 import request from 'api/axios';
-
-// COMPONENTS
 import Page from 'layout/Page';
-import {
-  DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, notification, Typography,
-} from 'antd';
-
+import openNotification from 'components/Toasts';
 import PersonalDate from './__common/PersonalDate';
 import Membership from './__common/Membership';
 import WorakPlaces from './__common/WorakPlaces';
@@ -31,32 +24,6 @@ const { Text, Paragraph } = Typography;
 
 const { RangePicker } = DatePicker;
 const { Group: CheckboxGroup } = Checkbox;
-
-const foramtDate = 'YYYY-MM-DD';
-
-const dataFormater = (val) => (val ? dayjs(val).format(foramtDate) : '');
-
-const dateToStringFormater = (val) => {
-  if (val?.length > 1 && val[0] !== null && val[1] !== null) {
-    return val?.map((d) => dayjs(d).format(foramtDate));
-  }
-
-  return null;
-};
-
-const openNotification = (status) => {
-  if (status === 'OK') {
-    notification.success({
-      message: 'Данные успешно сохранены! Спасибо',
-      duration: 3.5,
-    });
-  } else {
-    notification.error({
-      message: 'Что-то пошло не так...',
-      duration: 2.5,
-    });
-  }
-};
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -90,9 +57,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (user) {
-      form.setFieldsValue({
-        ...normalizeValue(user),
-      });
+      form.setFieldsValue(normalizeValue(user));
 
       handleChangeQualifications({}, user?.qualification);
       handleValueCurrancy({}, user?.currency);
@@ -102,7 +67,6 @@ const Profile = () => {
       handleChangeEducation(user?.high_education);
       setProvideServicesTaxConsultant(user?.is_consultant);
 
-      // date range
       setDataRangeInsurense(user?.date_insurance_start);
       setPeriodInsuranceStart(user?.period_insurance_start);
     }
@@ -338,35 +302,13 @@ const Profile = () => {
 
           <CheckboxGroup value={legalEntities} onChange={handleChangeLegalEntities}>
             <Row>
-              <Col span={24}>
-                <Checkbox value="checked-1">
-                  Консультирование по вопросам налогообложения, в том числе в части применения налогового
-                  законодательства в конкретных ситуациях с учетом обстоятельств, имеющихся у консультируемого лица
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-2">
-                  Подготовка рекомендаций (заключений) по вопросам налогообложения, включая определение оптимальных
-                  решений
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-3">
-                  Оказание услуг по ведению бухгалтерского и (или) налогового учета, составлению отчетности, налоговых
-                  деклараций (расчетов) и иных документов, в том числе жалоб
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-4">
-                  Представительство интересов в налоговых правоотношениях в налоговых и иных государственных органах,
-                  организациях на основании договора возмездного оказания услуг по налоговому консультированию
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-5">
-                  Проведение независимой оценки соблюдения налогового законодательства консультируемыми лицами
-                </Checkbox>
-              </Col>
+              {
+                config.legalEntities.map((item, index) => (
+                  <Col span={24} key={item.id}>
+                    <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
+                  </Col>
+                ))
+              }
             </Row>
           </CheckboxGroup>
 
@@ -374,35 +316,13 @@ const Profile = () => {
 
           <CheckboxGroup value={individualEntrepreneurs} onChange={handleChangeIndividualEntrepreneurs}>
             <Row>
-              <Col span={24}>
-                <Checkbox value="checked-1">
-                  Консультирование по вопросам налогообложения, в том числе в части применения налогового
-                  законодательства в конкретных ситуациях с учетом обстоятельств, имеющихся у консультируемого лица
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-2">
-                  Подготовка рекомендаций (заключений) по вопросам налогообложения, включая определение оптимальных
-                  решений
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-3">
-                  Оказание услуг по ведению учета доходов и расходов и (или) налогового учета, составлению налоговых
-                  деклараций (расчетов) и иных документов, в том числе жалоб
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-4">
-                  Представительство интересов в налоговых правоотношениях в налоговых и иных государственных органах,
-                  организациях на основании договора возмездного оказания услуг по налоговому консультированию
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-5">
-                  Проведение независимой оценки соблюдения налогового законодательства консультируемыми лицами
-                </Checkbox>
-              </Col>
+              {
+                config.individualEntrepreneurs.map((item, index) => (
+                  <Col span={24} key={item.id}>
+                    <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
+                  </Col>
+                ))
+              }
             </Row>
           </CheckboxGroup>
 
@@ -410,29 +330,13 @@ const Profile = () => {
 
           <CheckboxGroup value={individualPerson} onChange={handleChangeIndividualPerson}>
             <Row>
-              <Col span={24}>
-                <Checkbox checked value="checked-1">
-                  Консультирование по вопросам налогообложения, в том числе в части применения налогового
-                  законодательства в конкретных ситуациях с учетом обстоятельств, имеющихся у консультируемого лица
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-2">
-                  Подготовка рекомендаций (заключений) по вопросам налогообложения, включая определение оптимальных
-                  решений
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-3">
-                  Оказание услуг по составлению налоговых деклараций (расчетов) и иных документов, в том числе жалоб
-                </Checkbox>
-              </Col>
-              <Col span={24}>
-                <Checkbox value="checked-4">
-                  Представительство интересов в налоговых правоотношениях в налоговых и иных государственных органах,
-                  организациях на основании договора возмездного оказания услуг по налоговому консультированию
-                </Checkbox>
-              </Col>
+              {
+                config.individualPerson.map((item, index) => (
+                  <Col span={24} key={item.id}>
+                    <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
+                  </Col>
+                ))
+              }
             </Row>
           </CheckboxGroup>
 
