@@ -2,7 +2,7 @@ import {
   DatePicker, Input, Row, Col, Form,
 } from 'antd';
 
-export default function Insurance(props) {
+const Insurance = (props) => {
   const { provideServicesTaxConsultant } = props;
   return (
     <Row
@@ -56,4 +56,6 @@ export default function Insurance(props) {
       </Col>
     </Row>
   );
-}
+};
+
+export default Insurance;

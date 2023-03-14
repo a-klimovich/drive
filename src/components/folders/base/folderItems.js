@@ -1,10 +1,7 @@
-import React from 'react';
-// COMPONENTS
-import decorIcon from '../../UI/icons/decors';
-import CheckBoxFavorite from '../../checkbox/CheckBoxFavorite';
-import TitleFile from '../../TitleFile';
-// URL
-import { BASE_URL } from '../../../api/url';
+import { BASE_URL } from 'api/url';
+import decorIcon from 'components/UI/icons/decors';
+import CheckBoxFavorite from 'components/checkbox/CheckBoxFavorite';
+import TitleFile from 'components/TitleFile';
 
 const folderItems = (arr, handleFavorite) => {
   const dataSource = [];

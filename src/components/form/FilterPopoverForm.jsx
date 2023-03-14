@@ -2,13 +2,9 @@ import React, { useState, useContext } from 'react';
 import {
   Form, Select, Checkbox, Input, Space, Button, DatePicker,
 } from 'antd';
-// URL
 import { BASE_URL } from 'api/url';
-// HELPERS
 import filterSearchQueries from 'helpers/filterSearchQueries';
-// COMPONENTS
 import fileTypeIcon from 'components/UI/icons/files';
-// CONTEXT
 import Context from 'context/Context';
 import { useNavigate } from 'react-router-dom';
 import fileTypeOptions from './fileTypeOptions';
@@ -33,7 +29,7 @@ const initialValues = {
   checkboxGroup: [],
 };
 
-function FilterPopoverForm() {
+const FilterPopoverForm = () => {
   const {
     state, setState, setUpdate, update,
   } = useContext(Context);
@@ -117,6 +113,6 @@ function FilterPopoverForm() {
       </Space>
     </Form>
   );
-}
+};
 
 export default FilterPopoverForm;

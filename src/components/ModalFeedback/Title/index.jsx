@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 
-function Title(props) {
+const Title = (props) => {
   const { title } = props;
 
   return (
@@ -10,6 +10,6 @@ function Title(props) {
       <h2>{title}</h2>
     </div>
   );
-}
+};
 
 export default Title;

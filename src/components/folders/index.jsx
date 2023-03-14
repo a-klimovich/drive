@@ -1,38 +1,28 @@
-import React, {
-  useContext, useEffect, useState,
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-// ANTD
 import { Table, Grid } from 'antd';
-// URL
 import { BASE_URL } from 'api/url';
-// AXIOS
 import request from 'api/axios';
-// HELPERS
 import Context from 'context/Context';
 import getFolderPath from 'helpers/getFolderPath';
-// COMPONENTS
 import EmptyTable from 'components/UI/EmptyTable';
 import BreadCrumbs from 'components/Bredcrumbs';
-// BASE
-import { columns, columnsMobile } from './base/columns';
+import { columns, columnsMobile } from './base/config';
 import folderItems from './base/folderItems';
 import documentItems from './base/documentItems';
 
 const { useBreakpoint } = Grid;
 
-function Folders() {
-  const {
-    state, loaded, setLoaded,
-  } = useContext(Context);
+const Folders = () => {
   const screens = useBreakpoint();
+  const { state, loaded, setLoaded } = useContext(Context);
   const { folderId } = useParams();
   const [totalCount, setTotalCount] = useState(0);
   const [currentFolderData, setCurrentFolderData] = useState({});
-  // paginatoin
+
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
-  // sorter
+
   const [sortQueryParametr, setSortQueryParametr] = useState('');
 
   const { breadcrumbs, elements } = currentFolderData;
@@ -115,7 +105,7 @@ function Folders() {
     ...documentItems(elements?.documents || [], handleFavorite),
   ];
 
-  const handleChanges = (pagination, filters, sorter) => {
+  const handleChanges = (sorter) => {
     switch (sorter.field) {
       case 'favorite':
         if (sorter.order === 'ascend') {
@@ -180,6 +170,6 @@ function Folders() {
       />
     </>
   );
-}
+};
 
 export default Folders;

@@ -8,22 +8,20 @@ import Header from 'layout/Header';
 import Router from './router';
 import Provider from './context/Provider';
 
-function App() {
-  return (
-    <Layout className="App">
-      <Provider>
-        <Header />
+const App = () => (
+  <Layout className="App">
+    <Provider>
+      <Header />
 
-        <Content>
-          <Router />
-        </Content>
+      <Content>
+        <Router />
+      </Content>
 
-        <FloatButton.BackTop
-          type="primary"
-        />
-      </Provider>
-    </Layout>
-  );
-}
+      <FloatButton.BackTop
+        type="primary"
+      />
+    </Provider>
+  </Layout>
+);
 
 export default App;

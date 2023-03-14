@@ -77,10 +77,20 @@
     "react"
   ],
   "rules": {
+    "import/prefer-default-export": [
+      "off",
+      { "target": "any" }
+    ],
     "import/no-extraneous-dependencies": [
       "error",
       {
         "devDependencies": true
+      }
+    ],
+    "import/no-unresolved": [
+      2,
+      {
+        "caseSensitive": false
       }
     ],
     "react/jsx-uses-react": "error",
@@ -88,6 +98,9 @@
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+    "arrow-body-style": ["error", "as-needed"],
     "react/jsx-filename-extension":[
       1,
       {
@@ -134,8 +147,8 @@
     "no-new-wrappers": 2,
     "no-octal": 2,
     "no-octal-escape": 2,
-    "no-param-reassign": 2,
-    "no-process-env": 2,
+    "no-param-reassign": 0,
+    "no-process-env": 0,
     "no-proto": 2,
     "no-redeclare": 2,
     "no-return-assign": 2,
@@ -145,6 +158,7 @@
     "no-throw-literal": 2,
     "no-unused-expressions": 2,
     "no-void": 2,
+    "no-unused-vars": 1,
     "no-warning-comments": [
       0,
       {

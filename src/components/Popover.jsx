@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Popover as AntPopover } from 'antd';
 
-function Popover(props) {
+const Popover = (props) => {
   const {
     title,
     content,
@@ -11,11 +11,6 @@ function Popover(props) {
   } = props;
 
   const [visible, setVisible] = useState(false);
-
-  // TODO: сделать крестик шоб закрывать модалку
-  // const hide = () => {
-  //   setVisible(false);
-  // };
 
   const handleVisibleChange = (newVisible) => {
     setVisible(newVisible);
@@ -27,12 +22,12 @@ function Popover(props) {
       title={title}
       content={content}
       trigger={trigger}
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
+      open={visible}
+      onOpenChange={handleVisibleChange}
     >
       { children }
     </AntPopover>
   );
-}
+};
 
 export default Popover;

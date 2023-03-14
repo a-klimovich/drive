@@ -25,7 +25,7 @@ import Insurance from './__common/Insurance';
 
 // BASE
 import initialValue from './initial';
-import optionList from './optionList';
+import config from './config';
 
 const { Text, Paragraph } = Typography;
 
@@ -58,7 +58,7 @@ const openNotification = (status) => {
   }
 };
 
-function Profile() {
+const Profile = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { state, setLoaded, loaded } = useContext(Context);
@@ -194,7 +194,7 @@ function Profile() {
           <p className="required-mark">Квалификация, как в аттестате:</p>
 
           <Radio.Group
-            options={optionList.qualification}
+            options={config.qualification}
             onChange={handleChangeQualifications}
             value={qualification}
             name={qualification}
@@ -311,7 +311,7 @@ function Profile() {
                 <Col span={12}>
                   <Form.Item label="Валюта">
                     <Radio.Group
-                      options={optionList.currency}
+                      options={config.currency}
                       onChange={handleValueCurrancy}
                       value={currency}
                       name={currency}
@@ -443,6 +443,6 @@ function Profile() {
       </Form>
     </Page>
   );
-}
+};
 
 export default Profile;

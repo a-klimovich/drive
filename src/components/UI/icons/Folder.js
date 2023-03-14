@@ -1,7 +1,6 @@
-// FOLDER Icons
-import { ReactComponent as EmptyFileIcon } from '../../../assets/image/files-icon/empty-file.svg';
-import { ReactComponent as FileIcon } from '../../../assets/image/files-icon/file.svg';
-import styles from './Icone.module.scss';
+import { ReactComponent as EmptyFileIcon } from 'assets/image/files-icon/empty-file.svg';
+import { ReactComponent as FileIcon } from 'assets/image/files-icon/file.svg';
+import styles from './styles.module.scss';
 
 const folderIcon = (isEmpty, props) => (isEmpty
   ? <EmptyFileIcon className={styles.folder} {...props} />

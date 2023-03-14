@@ -1,4 +1,4 @@
-const optionList = {
+export default {
   qualification: [
     {
       label: 'Налоговое консультирование организаций, индивидуальных предпринимателей и физических лиц',
@@ -24,5 +24,3 @@ const optionList = {
     },
   ],
 };
-
-export default optionList;

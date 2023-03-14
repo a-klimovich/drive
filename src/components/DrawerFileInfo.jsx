@@ -3,13 +3,11 @@ import {
   Button, Drawer, Row, Col, Typography,
 } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-
-// COMPONENT
 import DescriptionItem from './DescriptionItem';
 
 const { Link } = Typography;
 
-function DrawerFileInfo({ data, AddToFavorite, Recommended }) {
+const DrawerFileInfo = ({ data, AddToFavorite, Recommended }) => {
   const [visible, setVisible] = useState(false);
 
   const showDrawer = () => {
@@ -27,7 +25,7 @@ function DrawerFileInfo({ data, AddToFavorite, Recommended }) {
         title="Информация о файле:"
         placement="right"
         onClose={onClose}
-        visible={visible}
+        open={visible}
       >
         <Row>
           <Col span={24}>
@@ -83,6 +81,6 @@ function DrawerFileInfo({ data, AddToFavorite, Recommended }) {
       </Drawer>
     </>
   );
-}
+};
 
 export default DrawerFileInfo;

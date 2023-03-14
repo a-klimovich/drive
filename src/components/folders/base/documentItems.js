@@ -1,24 +1,18 @@
 import { Button } from 'antd';
-// COMPONENTS
-import decorIcon from '../../UI/icons/decors';
-import CheckBoxFavorite from '../../checkbox/CheckBoxFavorite';
-import TitleFile from '../../TitleFile';
-import DrawerFileInfo from '../../DrawerFileInfo';
-// URL
-import { BASE_URL } from '../../../api/url';
+import { BASE_URL } from 'api/url';
+import decorIcon from 'components/UI/icons/decors';
+import TitleFile from 'components/TitleFile';
+import CheckBoxFavorite from 'components/checkbox/CheckBoxFavorite';
+import DrawerFileInfo from 'components/DrawerFileInfo';
 
 const documentItems = (arr, handleFavorite) => {
   const dataSource = [];
 
   arr.map((element) => dataSource.push({
     key: `${element.id}_${element.title || element.name}`,
-
     name: <TitleFile data={element} />,
-
     filterByName: element.name,
-
     filterRecommended: element.recommended,
-
     recommendations: decorIcon('star', {
       style: {
         width: '18px',
@@ -26,7 +20,6 @@ const documentItems = (arr, handleFavorite) => {
         fill: `${element.recommended ? '#FFC107' : '#B3B5B7'}`,
       },
     }),
-
     favorite: (
       <CheckBoxFavorite
         defaultValue={element.is_favourite}
@@ -35,9 +28,7 @@ const documentItems = (arr, handleFavorite) => {
     ),
 
     filterFavorite: element.is_favourite,
-
     date: element.updated_at || '-',
-
     control: (
       <Button
         type="text"
@@ -56,8 +47,6 @@ const documentItems = (arr, handleFavorite) => {
             onClick={handleFavorite(element, BASE_URL.DOCUMENTS)}
           />
           )}
-
-        // eslint-disable-next-line react/jsx-props-no-multi-spaces
         Recommended={decorIcon('star', {
           style: {
             width: '18px',

@@ -1,22 +1,18 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-// ANTD
 import {
   Row, Col, Typography, Button,
 } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
-// COMPONENTS
 import decorIcon from 'components/UI/icons/decors';
-// import Title from 'components/UI/Title';
 import SearchForm from 'components/form/SearchForm';
 import ModalFeedback from 'components/ModalFeedback';
 
-// CONTEXT
 import Context from 'context/Context';
 
 const { Link, Title } = Typography;
 
-export default function Header() {
+const Header = () => {
   const navigate = useNavigate();
   const { state } = useContext(Context);
 
@@ -75,4 +71,6 @@ export default function Header() {
       </Row>
     </header>
   );
-}
+};
+
+export default Header;

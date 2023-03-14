@@ -7,7 +7,7 @@ import fileTypeIcon from 'components/UI/icons/files';
 
 const { Link, Text } = Typography;
 
-function TitleFile({ data, isFolderItem = false }) {
+const TitleFile = ({ data, isFolderItem = false }) => {
   const {
     id, title, name, extension: fileType, file,
   } = data;
@@ -48,6 +48,6 @@ function TitleFile({ data, isFolderItem = false }) {
       <Text>{name}</Text>
     </Link>
   );
-}
+};
 
 export default TitleFile;

@@ -1,9 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-
 import { Breadcrumb, Button } from 'antd';
 import styels from './styles.module.scss';
 
-function BreadCrumbs(props) {
+const BreadCrumbs = (props) => {
   const { folderPath, currentId } = props;
   const navigate = useNavigate();
 
@@ -11,10 +10,7 @@ function BreadCrumbs(props) {
     <div className={styels.bredcrumbsWrapper}>
       <Breadcrumb>
         <Breadcrumb.Item>
-          <Link
-            to="/"
-            separator="/"
-          >
+          <Link to="/" separator="/">
             Moй кабинет
           </Link>
         </Breadcrumb.Item>
@@ -43,6 +39,6 @@ function BreadCrumbs(props) {
       </Button>
     </div>
   );
-}
+};
 
 export default BreadCrumbs;

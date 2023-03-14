@@ -31,7 +31,7 @@ const openNotification = (status) => {
   }
 };
 
-function ModalFeedback() {
+const ModalFeedback = () => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -216,6 +216,6 @@ function ModalFeedback() {
       </Modal>
     </>
   );
-}
+};
 
 export default ModalFeedback;

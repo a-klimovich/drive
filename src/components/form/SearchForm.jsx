@@ -1,21 +1,16 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-// ANTD
 import { Form } from 'antd';
-// COMPONENTS
+import { BASE_URL } from 'api/url';
+import Context from 'context/Context';
+import debounce from 'utils/debounce';
 import decorIcon from 'components/UI/icons/decors';
 import Popover from 'components/Popover';
 import FilterPopoverForm from 'components/form/FilterPopoverForm';
-// URL
-import { BASE_URL } from 'api/url';
-// CONTEXT
-import Context from 'context/Context';
-// UTILS
-import debounce from 'utils/debounce';
 
 const { Item } = Form;
 
-function SearchForm() {
+const SearchForm = () => {
   const {
     state, setState, setUpdate, update,
   } = useContext(Context);
@@ -83,6 +78,6 @@ function SearchForm() {
       </Popover>
     </div>
   );
-}
+};
 
 export default SearchForm;
