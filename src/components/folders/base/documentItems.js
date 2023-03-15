@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import { BASE_URL } from 'api/url';
-import decorIcon from 'components/UI/icons/decors';
+import decorIcon from 'components/Icons/decors';
 import TitleFile from 'components/TitleFile';
-import CheckBoxFavorite from 'components/checkbox/CheckBoxFavorite';
+import CheckBoxFavorite from 'components/Checkbox/CheckBoxFavorite';
 import DrawerFileInfo from 'components/DrawerFileInfo';
 
 const documentItems = (arr, handleFavorite) => {

@@ -4,8 +4,8 @@ import {
   Row, Col, Typography, Button,
 } from 'antd';
 import { FormOutlined } from '@ant-design/icons';
-import decorIcon from 'components/UI/icons/decors';
-import SearchForm from 'components/form/SearchForm';
+import decorIcon from 'components/Icons/decors';
+import SearchForm from 'components/Form/SearchForm';
 import ModalFeedback from 'components/ModalFeedback';
 
 import Context from 'context/Context';

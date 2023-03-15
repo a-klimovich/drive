@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import decorIcon from 'components/UI/icons/decors';
+import decorIcon from 'components/Icons/decors';
 
 const CheckBoxFavorite = (props) => {
   const { defaultValue, onClick } = props;

@@ -4,9 +4,9 @@ import { Form } from 'antd';
 import { BASE_URL } from 'api/url';
 import Context from 'context/Context';
 import debounce from 'utils/debounce';
-import decorIcon from 'components/UI/icons/decors';
+import decorIcon from 'components/Icons/decors';
 import Popover from 'components/Popover';
-import FilterPopoverForm from 'components/form/FilterPopoverForm';
+import FilterPopoverForm from 'components/Form/FilterPopoverForm';
 
 const { Item } = Form;
 

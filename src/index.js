@@ -7,7 +7,7 @@ import { ConfigProvider } from 'antd';
 import ruRU from 'antd/locale/ru_RU';
 
 // COMPONENTS
-import ErrorBoundary from 'components/error/ErrorBoundary';
+import ErrorBoundary from 'components/Error/ErrorBoundary';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

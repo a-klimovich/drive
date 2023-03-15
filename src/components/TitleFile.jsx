@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Typography } from 'antd';
-import folderIcon from 'components/UI/icons/folder';
-import fileTypeIcon from 'components/UI/icons/files';
+import folderIcon from 'components/Icons/folder';
+import fileTypeIcon from 'components/Icons/files';
 
 const { Link, Text } = Typography;
 

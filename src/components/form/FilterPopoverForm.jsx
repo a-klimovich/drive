@@ -4,7 +4,7 @@ import {
 } from 'antd';
 import { BASE_URL } from 'api/url';
 import filterSearchQueries from 'helpers/filterSearchQueries';
-import fileTypeIcon from 'components/UI/icons/files';
+import fileTypeIcon from 'components/Icons/files';
 import Context from 'context/Context';
 import { useNavigate } from 'react-router-dom';
 import fileTypeOptions from './fileTypeOptions';

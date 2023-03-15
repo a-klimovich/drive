@@ -1,8 +1,7 @@
 import { useState } from 'react';
-// COMPONENTS
-import decorIcon from 'components/UI/icons/decors';
+import decorIcon from 'components/Icons/decors';
 
-function CheckBoxRecommend(props) {
+const CheckBoxRecommend = (props) => {
   const { defaultValue } = props;
   const [val, setVal] = useState(defaultValue || false);
 
@@ -25,6 +24,6 @@ function CheckBoxRecommend(props) {
       })}
     </label>
   );
-}
+};
 
 export default CheckBoxRecommend;

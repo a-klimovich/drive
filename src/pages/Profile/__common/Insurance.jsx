@@ -2,7 +2,7 @@ import {
   DatePicker, Input, Row, Col, Form,
 } from 'antd';
 
-const Insurance = () => (
+const Insurance = ({ provideServicesTaxConsultant }) => (
   <Row
     gutter={[
       {
@@ -19,7 +19,7 @@ const Insurance = () => (
         label="Страховой полис №"
         rules={[
           {
-            required: true,
+            required: !provideServicesTaxConsultant,
           },
         ]}
       >
@@ -32,7 +32,7 @@ const Insurance = () => (
         label="Серия"
         rules={[
           {
-            required: true,
+            required: !provideServicesTaxConsultant,
           },
         ]}
       >
@@ -45,7 +45,7 @@ const Insurance = () => (
         label="От"
         rules={[
           {
-            required: true,
+            required: !provideServicesTaxConsultant,
           },
         ]}
       >

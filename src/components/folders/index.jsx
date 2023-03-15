@@ -5,7 +5,7 @@ import { BASE_URL } from 'api/url';
 import request from 'api/axios';
 import Context from 'context/Context';
 import getFolderPath from 'helpers/getFolderPath';
-import EmptyTable from 'components/UI/EmptyTable';
+import EmptyTable from 'components/EmptyTable';
 import BreadCrumbs from 'components/Bredcrumbs';
 import { columns, columnsMobile } from './base/config';
 import folderItems from './base/folderItems';

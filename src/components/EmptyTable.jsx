@@ -1,5 +1,5 @@
 import { Typography, Space } from 'antd';
-import decorIcon from './icons/decors';
+import decorIcon from './Icons/decors';
 
 const { Paragraph } = Typography;
 

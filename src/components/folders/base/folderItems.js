@@ -1,6 +1,6 @@
 import { BASE_URL } from 'api/url';
-import decorIcon from 'components/UI/icons/decors';
-import CheckBoxFavorite from 'components/checkbox/CheckBoxFavorite';
+import decorIcon from 'components/Icons/decors';
+import CheckBoxFavorite from 'components/Checkbox/CheckBoxFavorite';
 import TitleFile from 'components/TitleFile';
 
 const folderItems = (arr, handleFavorite) => {
