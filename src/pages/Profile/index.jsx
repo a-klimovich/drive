@@ -77,7 +77,7 @@ const Profile = () => {
     }
   }, [user]);
 
-  const onFinish = useCallback((values) => {
+  const onFinish = (values) => {
     const {
       date_insurance_from,
       date_certificate_start,
@@ -122,7 +122,7 @@ const Profile = () => {
       .catch(() => {
         openNotification(false);
       });
-  }, []);
+  };
 
   return (
     <Page loading={loaded}>
@@ -154,14 +154,17 @@ const Profile = () => {
 
           <p className="required-mark">Квалификация, как в аттестате:</p>
 
-          <Radio.Group
-            options={config.qualification}
-            onChange={handleChangeQualification}
-            value={qualification}
-            name={qualification}
-            className="radio-grup-column"
-            direction="vertical"
-          />
+          <Form.Item
+            name="qualification"
+          >
+            <Radio.Group
+              options={config.qualification}
+              onChange={handleChangeQualification}
+              // value={qualification}
+              className="radio-grup-column"
+              direction="vertical"
+            />
+          </Form.Item>
 
           <p className="required-mark">Высшее образование:</p>
 
@@ -175,7 +178,7 @@ const Profile = () => {
             ]}
           >
             <CheckboxGroup
-              value={education}
+              // value={education}
               onChange={handleChangeEducation}
             >
               <Row>
