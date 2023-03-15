@@ -60,7 +60,7 @@ const ModalFeedback = () => {
 
       Object.entries(value).forEach(([key, val]) => formData.append(key, val === undefined ? '-' : val));
 
-      const res = await request.post(`${BASE_URL.APIAL}`, formData, {
+      const res = await request.post(`${BASE_URL.APIALS}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

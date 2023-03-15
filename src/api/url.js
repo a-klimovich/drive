@@ -5,6 +5,7 @@ export const BASE_URL = {
   DOCUMENTS: '/api/documents/',
   FOLDERS: '/api/folders/',
   APIAL: '/api/send_appeal/',
+  APIALS: '/api/appeals/',
   REPORTS: '/api/reports/',
 };
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Row, Col, Typography, Button,
 } from 'antd';
-import { FormOutlined } from '@ant-design/icons';
+import { FormOutlined, SnippetsOutlined, ReconciliationOutlined } from '@ant-design/icons';
 import decorIcon from 'components/Icons/decors';
 import SearchForm from 'components/Form/SearchForm';
 import ModalFeedback from 'components/ModalFeedback';
@@ -18,6 +18,12 @@ const Header = () => {
 
   const handleRedirectProfile = () => {
     navigate('/user/');
+  };
+  const handleRedirectApeals = () => {
+    navigate('/appeals/');
+  };
+  const handleRedirectReports = () => {
+    navigate('/reports/');
   };
 
   return (
@@ -52,6 +58,29 @@ const Header = () => {
             </Button>
 
             <ModalFeedback />
+
+            <Button
+              type="text"
+              htmlType="button"
+              onClick={handleRedirectApeals}
+            >
+              <SnippetsOutlined
+                style={{
+                  fontSize: '20px',
+                }}
+              />
+            </Button>
+            <Button
+              type="text"
+              htmlType="button"
+              onClick={handleRedirectReports}
+            >
+              <ReconciliationOutlined
+                style={{
+                  fontSize: '20px',
+                }}
+              />
+            </Button>
           </div>
         </Col>
 

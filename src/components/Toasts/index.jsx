@@ -1,14 +1,14 @@
 import { notification } from 'antd';
 
-const openNotification = (status) => {
+const openNotification = (status, message) => {
   if (status === 'OK') {
     notification.success({
-      message: 'Данные успешно сохранены! Спасибо',
+      message: message || 'Данные успешно сохранены! Спасибо',
       duration: 3.5,
     });
   } else {
     notification.error({
-      message: 'Что-то пошло не так...',
+      message: message || 'Что-то пошло не так...',
       duration: 2.5,
     });
   }
