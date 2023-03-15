@@ -21,8 +21,8 @@
             "./src/components"
           ],
           [
-            "layout",
-            "./src/layout"
+            "templates",
+            "./src/templates"
           ],
           [
             "pages",

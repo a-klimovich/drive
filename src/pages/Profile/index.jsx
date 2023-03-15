@@ -9,7 +9,8 @@ import Context from 'context/Context';
 import { dataFormater, dateToStringFormater, normalizeValue } from 'utils/normalizeFormValue';
 import { BASE_URL } from 'api/url';
 import request from 'api/axios';
-import Page from 'layout/Page';
+import BaseTemplate from 'templates';
+import Loader from 'components/Loader';
 import openNotification from 'components/Toasts';
 import PersonalDate from './__common/PersonalDate';
 import Membership from './__common/Membership';
@@ -126,230 +127,232 @@ const Profile = () => {
   };
 
   return (
-    <Page loading={loaded}>
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        initialValues={initialValue}
-        className="profile-settings-form"
-        scrollToFirstError
-        validateTrigger="onSubmit"
-      >
-        <div className="container mb-3">
-          <Button type="primary" onClick={() => navigate('/')} className="profile-page-goBack">
-            Вернуться
-          </Button>
+    <BaseTemplate>
+      <Loader loading={loaded}>
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onFinish}
+          initialValues={initialValue}
+          className="profile-settings-form"
+          scrollToFirstError
+          validateTrigger="onSubmit"
+        >
+          <div className="container mb-3">
+            <Button type="primary" onClick={() => navigate('/')} className="profile-page-goBack">
+              Вернуться
+            </Button>
 
-          <Paragraph>
-            <Text type="danger">*</Text>
-            {' '}
-            - отмечены поля обязательные для заполнения
-          </Paragraph>
+            <Paragraph>
+              <Text type="danger">*</Text>
+              {' '}
+              - отмечены поля обязательные для заполнения
+            </Paragraph>
 
-          <PersonalDate />
+            <PersonalDate />
 
-          <p className="centered mb-3">Член ПНК</p>
+            <p className="centered mb-3">Член ПНК</p>
 
-          <Membership />
+            <Membership />
 
-          <p className="required-mark">Квалификация, как в аттестате:</p>
+            <p className="required-mark">Квалификация, как в аттестате:</p>
 
-          <Form.Item
-            name="qualification"
-          >
-            <Radio.Group
-              options={config.qualification}
-              onChange={handleChangeQualification}
-              // value={qualification}
-              className="radio-grup-column"
-              direction="vertical"
-            />
-          </Form.Item>
-
-          <p className="required-mark">Высшее образование:</p>
-
-          <Form.Item
-            name="high_education"
-            rules={[
-              {
-                required: true,
-                message: 'Пожалуйста, выберите Высшее образование',
-              },
-            ]}
-          >
-            <CheckboxGroup
-              // value={education}
-              onChange={handleChangeEducation}
+            <Form.Item
+              name="qualification"
             >
+              <Radio.Group
+                options={config.qualification}
+                onChange={handleChangeQualification}
+                // value={qualification}
+                className="radio-grup-column"
+                direction="vertical"
+              />
+            </Form.Item>
+
+            <p className="required-mark">Высшее образование:</p>
+
+            <Form.Item
+              name="high_education"
+              rules={[
+                {
+                  required: true,
+                  message: 'Пожалуйста, выберите Высшее образование',
+                },
+              ]}
+            >
+              <CheckboxGroup
+                // value={education}
+                onChange={handleChangeEducation}
+              >
+                <Row>
+                  <Col>
+                    <Checkbox value="checked-1">Экономическое</Checkbox>
+                  </Col>
+                  <Col>
+                    <Checkbox value="checked-2">Юридическое</Checkbox>
+                  </Col>
+                </Row>
+              </CheckboxGroup>
+            </Form.Item>
+          </div>
+
+          <div className="solo-checkbox bg-gray py-2 mb-2">
+            <Form.Item name="is_consultant" valuePropName="checked">
+              <Checkbox onChange={handleProvideServicesTaxConsultant}>
+                Не оказываю услуги в качестве налогового консультанта
+              </Checkbox>
+            </Form.Item>
+          </div>
+
+          <div className="container">
+            <p className="centered mb-3">Договор страхования ответственности</p>
+
+            <Insurance provideServicesTaxConsultant={provideServicesTaxConsultant} />
+
+            <Row
+              gutter={[
+                {
+                  xs: 5,
+                  sm: 5,
+                  md: 10,
+                  lg: 15,
+                },
+                {
+                  xs: 4,
+                  sm: 6,
+                  md: 15,
+                  lg: 10,
+                },
+              ]}
+            >
+              <Col xs={24} sm={12} md={8} lg={6}>
+                <Form.Item
+                  name="date_insurance_start"
+                  label="Срок действия"
+                  rules={[
+                    {
+                      required: !provideServicesTaxConsultant,
+                    },
+                  ]}
+                >
+                  <DatePicker.RangePicker
+                    onChange={(val) => setDataRangeInsurance(val)}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12} md={8} lg={6}>
+                <Form.Item
+                  name="period_insurance_start"
+                  label="Срок страхования"
+                  rules={[
+                    {
+                      required: !provideServicesTaxConsultant,
+                    },
+                  ]}
+                >
+                  <DatePicker.RangePicker
+                    onChange={(val) => setPeriodInsuranceStart(val)}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col xs={24} sm={12} md={12} lg={12}>
+                <Row
+                  gutter={[
+                    {
+                      xs: 5,
+                      sm: 5,
+                      md: 10,
+                      lg: 15,
+                    },
+                    0,
+                  ]}
+                >
+                  <Col span={12}>
+                    <Form.Item name="liability_limit" label="Лимит ответственности">
+                      <InputNumber placeholder="Введите сумму" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={12}>
+                    <Form.Item label="Валюта">
+                      <Radio.Group
+                        options={config.currency}
+                        onChange={handleCurrencyValue}
+                        value={currency}
+                        name={currency}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+
+            <p className="centered mb-3">Место работы в качестве налогового консультанта </p>
+
+            <WorakPlaces />
+          </div>
+
+          <div className="container">
+            <p className="centered mb-3">Контактная информация</p>
+
+            <Contacts />
+
+            <p className="centered mb-3">Оказываемые услуги</p>
+
+            <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
+
+            <CheckboxGroup value={legalEntities} onChange={handleChangeLegalEntities}>
               <Row>
-                <Col>
-                  <Checkbox value="checked-1">Экономическое</Checkbox>
-                </Col>
-                <Col>
-                  <Checkbox value="checked-2">Юридическое</Checkbox>
-                </Col>
+                {
+                  config.legalEntities.map((item, index) => (
+                    <Col span={24} key={item.id}>
+                      <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
+                    </Col>
+                  ))
+                }
               </Row>
             </CheckboxGroup>
-          </Form.Item>
-        </div>
 
-        <div className="solo-checkbox bg-gray py-2 mb-2">
-          <Form.Item name="is_consultant" valuePropName="checked">
-            <Checkbox onChange={handleProvideServicesTaxConsultant}>
-              Не оказываю услуги в качестве налогового консультанта
-            </Checkbox>
-          </Form.Item>
-        </div>
+            <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
 
-        <div className="container">
-          <p className="centered mb-3">Договор страхования ответственности</p>
-
-          <Insurance provideServicesTaxConsultant={provideServicesTaxConsultant} />
-
-          <Row
-            gutter={[
-              {
-                xs: 5,
-                sm: 5,
-                md: 10,
-                lg: 15,
-              },
-              {
-                xs: 4,
-                sm: 6,
-                md: 15,
-                lg: 10,
-              },
-            ]}
-          >
-            <Col xs={24} sm={12} md={8} lg={6}>
-              <Form.Item
-                name="date_insurance_start"
-                label="Срок действия"
-                rules={[
-                  {
-                    required: !provideServicesTaxConsultant,
-                  },
-                ]}
-              >
-                <DatePicker.RangePicker
-                  onChange={(val) => setDataRangeInsurance(val)}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} sm={12} md={8} lg={6}>
-              <Form.Item
-                name="period_insurance_start"
-                label="Срок страхования"
-                rules={[
-                  {
-                    required: !provideServicesTaxConsultant,
-                  },
-                ]}
-              >
-                <DatePicker.RangePicker
-                  onChange={(val) => setPeriodInsuranceStart(val)}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col xs={24} sm={12} md={12} lg={12}>
-              <Row
-                gutter={[
-                  {
-                    xs: 5,
-                    sm: 5,
-                    md: 10,
-                    lg: 15,
-                  },
-                  0,
-                ]}
-              >
-                <Col span={12}>
-                  <Form.Item name="liability_limit" label="Лимит ответственности">
-                    <InputNumber placeholder="Введите сумму" />
-                  </Form.Item>
-                </Col>
-
-                <Col span={12}>
-                  <Form.Item label="Валюта">
-                    <Radio.Group
-                      options={config.currency}
-                      onChange={handleCurrencyValue}
-                      value={currency}
-                      name={currency}
-                    />
-                  </Form.Item>
-                </Col>
+            <CheckboxGroup
+              value={individualEntrepreneurs}
+              onChange={handleChangeIndividualEntrepreneurs}
+            >
+              <Row>
+                {
+                  config.individualEntrepreneurs.map((item, index) => (
+                    <Col span={24} key={item.id}>
+                      <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
+                    </Col>
+                  ))
+                }
               </Row>
-            </Col>
-          </Row>
+            </CheckboxGroup>
 
-          <p className="centered mb-3">Место работы в качестве налогового консультанта </p>
+            <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
 
-          <WorakPlaces />
-        </div>
+            <CheckboxGroup value={individualPerson} onChange={handleChangeIndividualPerson}>
+              <Row>
+                {
+                  config.individualPerson.map((item, index) => (
+                    <Col span={24} key={item.id}>
+                      <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
+                    </Col>
+                  ))
+                }
+              </Row>
+            </CheckboxGroup>
 
-        <div className="container">
-          <p className="centered mb-3">Контактная информация</p>
-
-          <Contacts />
-
-          <p className="centered mb-3">Оказываемые услуги</p>
-
-          <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
-
-          <CheckboxGroup value={legalEntities} onChange={handleChangeLegalEntities}>
-            <Row>
-              {
-                config.legalEntities.map((item, index) => (
-                  <Col span={24} key={item.id}>
-                    <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
-                  </Col>
-                ))
-              }
-            </Row>
-          </CheckboxGroup>
-
-          <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
-
-          <CheckboxGroup
-            value={individualEntrepreneurs}
-            onChange={handleChangeIndividualEntrepreneurs}
-          >
-            <Row>
-              {
-                config.individualEntrepreneurs.map((item, index) => (
-                  <Col span={24} key={item.id}>
-                    <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
-                  </Col>
-                ))
-              }
-            </Row>
-          </CheckboxGroup>
-
-          <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
-
-          <CheckboxGroup value={individualPerson} onChange={handleChangeIndividualPerson}>
-            <Row>
-              {
-                config.individualPerson.map((item, index) => (
-                  <Col span={24} key={item.id}>
-                    <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
-                  </Col>
-                ))
-              }
-            </Row>
-          </CheckboxGroup>
-
-          <Form.Item className="form-profile-btn">
-            <Button htmlType="primary">Сохранить</Button>
-          </Form.Item>
-        </div>
-      </Form>
-    </Page>
+            <Form.Item className="form-profile-btn">
+              <Button htmlType="primary">Сохранить</Button>
+            </Form.Item>
+          </div>
+        </Form>
+      </Loader>
+    </BaseTemplate>
   );
 };
 
