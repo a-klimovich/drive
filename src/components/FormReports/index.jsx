@@ -12,14 +12,13 @@ const FormWithFileUpload = () => {
   const [fileList, setFileList] = useState([]);
 
   const uploadProps = {
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-    },
+    onRemove: () => setFileList([]),
     beforeUpload: (file) => {
-      setFileList([...fileList, file]);
+      setFileList([file]);
+      if (fileList.length > 0) {
+        openNotification('warning', 'Можно загрузить только 1 файл');
+        return false;
+      }
       return false;
     },
     fileList,
@@ -73,6 +72,7 @@ const FormWithFileUpload = () => {
           >
             <Upload.Dragger
               name="files"
+              maxCount={1}
               {...uploadProps}
             >
               <p className="ant-upload-drag-icon">

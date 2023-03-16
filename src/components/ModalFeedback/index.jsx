@@ -57,7 +57,7 @@ const ModalFeedback = () => {
       const formData = new FormData();
 
       fileList.forEach((file) => {
-        formData.append('file', file);
+        formData.append('docs', file);
       });
 
       Object.entries(value).forEach(([key, val]) => formData.append(key, val === undefined ? '-' : val));
