@@ -8,8 +8,8 @@ const { Paragraph, Link } = Typography;
 
 const TableAppeals = ({ data, loading }) => {
   const ExtendContent = useCallback((record) => {
-    const fileList = record?.docs?.map(({ file, id }) => (
-      <Link key={`link_${id}`} href={file}>{`file: ${id}`}</Link>
+    const fileList = record?.docs?.map(({ file, id, name }) => (
+      <Link key={`link_${id}`} href={file}>{name}</Link>
     ));
 
     return (

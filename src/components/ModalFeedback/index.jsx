@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-  Button, Modal, Form, Upload, Input,
+  Button, Modal, Form, Upload, Input, Tooltip,
 } from 'antd';
 import {
   QuestionCircleOutlined, InboxOutlined,
@@ -83,13 +83,15 @@ const ModalFeedback = () => {
 
   return (
     <>
-      <Button type="text" onClick={showModal}>
-        <QuestionCircleOutlined
-          style={{
-            fontSize: '20px',
-          }}
-        />
-      </Button>
+      <Tooltip placement="bottomLeft" title="Форма обращения налогового консультанта">
+        <Button type="text" onClick={showModal}>
+          <QuestionCircleOutlined
+            style={{
+              fontSize: '20px',
+            }}
+          />
+        </Button>
+      </Tooltip>
 
       <Modal
         title={(

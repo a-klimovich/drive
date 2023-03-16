@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Row, Col, Typography, Button,
+  Row, Col, Typography, Button, Tooltip,
 } from 'antd';
 import { FormOutlined, SnippetsOutlined, ReconciliationOutlined } from '@ant-design/icons';
 import decorIcon from 'components/Icons/decors';
@@ -45,42 +45,43 @@ const Header = () => {
               { state?.user?.name }
             </Title>
 
-            <Button
-              type="text"
-              htmlType="button"
-              onClick={handleRedirectProfile}
-            >
-              <FormOutlined
-                style={{
-                  fontSize: '20px',
-                }}
-              />
-            </Button>
+            <Tooltip placement="bottomLeft" title="Анкета">
+              <Button
+                type="text"
+                htmlType="button"
+                onClick={handleRedirectProfile}
+              >
+                <FormOutlined
+                  style={{ fontSize: '20px' }}
+                />
+              </Button>
+            </Tooltip>
 
             <ModalFeedback />
 
-            <Button
-              type="text"
-              htmlType="button"
-              onClick={handleRedirectApeals}
-            >
-              <SnippetsOutlined
-                style={{
-                  fontSize: '20px',
-                }}
-              />
-            </Button>
-            <Button
-              type="text"
-              htmlType="button"
-              onClick={handleRedirectReports}
-            >
-              <ReconciliationOutlined
-                style={{
-                  fontSize: '20px',
-                }}
-              />
-            </Button>
+            <Tooltip placement="bottom" title="Обращения налоговых консультантов">
+              <Button
+                type="text"
+                htmlType="button"
+                onClick={handleRedirectApeals}
+              >
+                <SnippetsOutlined
+                  style={{ fontSize: '20px' }}
+                />
+              </Button>
+            </Tooltip>
+
+            <Tooltip placement="bottom" title="Отчеты о заключенных договорах">
+              <Button
+                type="text"
+                htmlType="button"
+                onClick={handleRedirectReports}
+              >
+                <ReconciliationOutlined
+                  style={{ fontSize: '20px' }}
+                />
+              </Button>
+            </Tooltip>
           </div>
         </Col>
 

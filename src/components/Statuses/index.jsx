@@ -8,21 +8,21 @@ const Statuses = memo(({ status }) => {
   switch (status) {
     case 'sent':
       return (
-        <Tag icon={<SyncOutlined spin />} color="processing">
-          Обрабатка
+        <Tag icon={<CheckCircleOutlined />} color="success">
+          Отправлен
         </Tag>
       );
 
-    case 'success':
+    case 'accepted':
       return (
-        <Tag icon={<CheckCircleOutlined />} color="success">
-          Подтверждено
+        <Tag icon={<SyncOutlined spin />} color="processing">
+          Принят
         </Tag>
       );
     default:
       return (
         <Tag icon={<ClockCircleOutlined />} color="default">
-          Ожидание
+          Исправить
         </Tag>
       );
   }

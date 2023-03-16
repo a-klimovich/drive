@@ -5,11 +5,6 @@ const { Link } = Typography;
 
 export const columns = [
   {
-    title: 'Комментарий',
-    dataIndex: 'comment',
-    key: 'comment',
-  },
-  {
     title: 'Название',
     render: (record) => (<Link target="_blank" href={record.file}>{record.name}</Link>),
   },
