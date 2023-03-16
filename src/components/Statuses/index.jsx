@@ -1,28 +1,36 @@
 import { memo } from 'react';
 import { Tag } from 'antd';
 import {
-  SyncOutlined, CheckCircleOutlined, ClockCircleOutlined,
+  SyncOutlined, CheckCircleOutlined, ClockCircleOutlined, QuestionOutlined,
 } from '@ant-design/icons';
 
 const Statuses = memo(({ status }) => {
   switch (status) {
-    case 'sent':
+    case 'Отправлен':
       return (
         <Tag icon={<CheckCircleOutlined />} color="success">
           Отправлен
         </Tag>
       );
 
-    case 'accepted':
+    case 'Принят':
       return (
         <Tag icon={<SyncOutlined spin />} color="processing">
           Принят
         </Tag>
       );
+
+    case 'Исправить':
+      return (
+        <Tag icon={<ClockCircleOutlined />} color="warning">
+          Исправить
+        </Tag>
+      );
+
     default:
       return (
-        <Tag icon={<ClockCircleOutlined />} color="default">
-          Исправить
+        <Tag icon={<QuestionOutlined />} color="default">
+          {status}
         </Tag>
       );
   }
