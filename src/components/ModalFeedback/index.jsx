@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import {
   Button, Modal, Form, Upload, Input,
 } from 'antd';
-import { QuestionCircleOutlined, InboxOutlined } from '@ant-design/icons';
+import {
+  QuestionCircleOutlined, InboxOutlined,
+} from '@ant-design/icons';
 import { BASE_URL } from 'api/url';
 import request from 'api/axios';
 import openNotification from 'components/Toasts';
@@ -55,7 +57,7 @@ const ModalFeedback = () => {
       const formData = new FormData();
 
       fileList.forEach((file) => {
-        formData.append('docs', file);
+        formData.append('file', file);
       });
 
       Object.entries(value).forEach(([key, val]) => formData.append(key, val === undefined ? '-' : val));

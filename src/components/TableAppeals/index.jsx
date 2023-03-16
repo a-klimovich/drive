@@ -6,7 +6,7 @@ import { columns } from './config';
 
 const { Paragraph, Link } = Typography;
 
-const TableAppeals = ({ data }) => {
+const TableAppeals = ({ data, loading }) => {
   const ExtendContent = useCallback((record) => {
     const fileList = record?.docs?.map(({ file, id }) => (
       <Link key={`link_${id}`} href={file}>{`file: ${id}`}</Link>
@@ -31,12 +31,12 @@ const TableAppeals = ({ data }) => {
           justify="space-between"
         >
           <Col>
-            <Paragraph strong>Дата отправки:</Paragraph>
-            <Paragraph>{record.created_at}</Paragraph>
-          </Col>
-          <Col>
             <Paragraph strong>Файлы:</Paragraph>
             <Paragraph>{fileList}</Paragraph>
+          </Col>
+          <Col>
+            <Paragraph strong>Дата отправки:</Paragraph>
+            <Paragraph>{record.created_at}</Paragraph>
           </Col>
         </Row>
       </>
@@ -47,6 +47,7 @@ const TableAppeals = ({ data }) => {
     <Table
       dataSource={data}
       columns={columns}
+      loading={loading}
       expandable={{
         expandedRowRender: (record) => ExtendContent(record),
       }}

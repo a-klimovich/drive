@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Form, Input, Button, Upload, Space,
+  Form, Input, Button, Upload, Space, Row, Col,
 } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { BASE_URL } from 'api/url';
@@ -37,8 +37,7 @@ const FormWithFileUpload = () => {
       const formData = new FormData();
 
       fileList.forEach((file) => {
-        // TODO: change name files to ? (wait bacck-end)
-        formData.append('files', file);
+        formData.append('file', file);
       });
 
       Object.entries(value).forEach(([key, val]) => formData.append(key, val === undefined ? '-' : val));
@@ -60,18 +59,17 @@ const FormWithFileUpload = () => {
   };
 
   return (
-    <Form form={form} onFinish={onFinish} layout="vertical">
-      <Space
-        size={24}
-        direction="vertical"
-      >
-        <Form.Item
-          valuePropName="fileList"
-          getValueFromEvent={getFileValueFromEvent}
-          noStyle
-        >
-          <Space
-            size={20}
+    <Form
+      form={form}
+      onFinish={onFinish}
+      layout="vertical"
+    >
+      <Row gutter={20} align="top">
+        <Col span={12}>
+          <Form.Item
+            valuePropName="fileList"
+            getValueFromEvent={getFileValueFromEvent}
+            noStyle
           >
             <Upload.Dragger
               name="files"
@@ -83,28 +81,37 @@ const FormWithFileUpload = () => {
               <p className="ant-upload-text">Нажмите или перетащите файл в эту область, чтобы загрузить</p>
               <p className="ant-upload-hint">Поддержка одиночной или массовой загрузки.</p>
             </Upload.Dragger>
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Space style={{ width: '100%' }} direction="vertical">
+            <Form.Item
+              name="comment"
+              label="Комментарий"
+            >
+              <Input.TextArea
+                autoSize={{
+                  minRows: 5,
+                  maxRows: 5,
+                }}
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{
+                  marginLeft: 'auto',
+                  display: 'inherit',
+                }}
+              >
+                Отправить
+              </Button>
+            </Form.Item>
           </Space>
-        </Form.Item>
-
-        <Form.Item
-          name="comment"
-          label="Комментарий"
-          direction="vertical"
-        >
-          <Input.TextArea
-            autoSize={{
-              minRows: 2,
-              maxRows: 6,
-            }}
-          />
-        </Form.Item>
-      </Space>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Отправить
-        </Button>
-      </Form.Item>
+        </Col>
+      </Row>
     </Form>
   );
 };

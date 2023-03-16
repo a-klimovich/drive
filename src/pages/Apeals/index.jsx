@@ -8,8 +8,10 @@ import Title from 'components/Title';
 
 const Appeals = () => {
   const [response, setResponse] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     request
       .get(`${BASE_URL.APIALS}`)
       .then((resp) => {
@@ -21,17 +23,16 @@ const Appeals = () => {
       })
       .catch((err) => {
         openNotification(false, err);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
-
-  // список всех заявок из формы с модалки которая уже есть по кнопке (?)
 
   return (
     <BaseTemplate>
       <div className="container">
         <Title>Обращения налоговых консультантов в госорганы</Title>
 
-        <TableAppeals data={response} />
+        <TableAppeals data={response} loading={loading} />
       </div>
     </BaseTemplate>
   );
