@@ -30,7 +30,10 @@ const Appeals = () => {
   return (
     <BaseTemplate>
       <div className="container">
-        <Title>Обращения налоговых консультантов в госорганы</Title>
+        <Title>
+          Обращения налоговых консультантов по вопросам
+          применения отдельных норм налогового законодательства
+        </Title>
 
         <TableAppeals data={response} loading={loading} />
       </div>

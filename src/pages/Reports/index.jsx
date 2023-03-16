@@ -32,7 +32,7 @@ const Reports = () => {
   return (
     <BaseTemplate>
       <div className="container">
-        <Title>Репорты</Title>
+        <Title>Отчет о заключенных договорах по налоговому консультированию</Title>
 
         <Space
           direction="vertical"
