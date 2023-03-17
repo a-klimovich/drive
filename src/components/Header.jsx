@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import {
   Row, Col, Typography, Button, Tooltip,
 } from 'antd';
-import { FormOutlined, SnippetsOutlined, ReconciliationOutlined } from '@ant-design/icons';
+import {
+  FormOutlined, SnippetsOutlined, ReconciliationOutlined, HomeOutlined,
+} from '@ant-design/icons';
 import decorIcon from 'components/Icons/decors';
 import SearchForm from 'components/Form/SearchForm';
 import ModalFeedback from 'components/ModalFeedback';
@@ -15,6 +17,10 @@ const { Link, Title } = Typography;
 const Header = () => {
   const navigate = useNavigate();
   const { state } = useContext(Context);
+
+  const handleRedirectHome = () => {
+    navigate('/');
+  };
 
   const handleRedirectProfile = () => {
     navigate('/user/');
@@ -44,6 +50,18 @@ const Header = () => {
               {' '}
               { state?.user?.name }
             </Title>
+
+            <Tooltip placement="bottomLeft" title="Хранилище">
+              <Button
+                type="text"
+                htmlType="button"
+                onClick={handleRedirectHome}
+              >
+                <HomeOutlined
+                  style={{ fontSize: '20px' }}
+                />
+              </Button>
+            </Tooltip>
 
             <Tooltip placement="bottomLeft" title="Анкета">
               <Button

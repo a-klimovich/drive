@@ -1,7 +1,6 @@
 import {
   useState, useEffect, useContext,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, Typography,
 } from 'antd';
@@ -25,7 +24,6 @@ const { Group: CheckboxGroup } = Checkbox;
 
 // ! ПЕРЕПИСАТЬ ВСЮ ФОРМУ
 const Profile = () => {
-  const navigate = useNavigate();
   const [form] = Form.useForm();
   const { state, setLoaded, loaded } = useContext(Context);
   const { user } = state;
@@ -139,10 +137,6 @@ const Profile = () => {
           validateTrigger="onSubmit"
         >
           <div className="container mb-3">
-            <Button type="primary" onClick={() => navigate('/')} className="profile-page-goBack">
-              Вернуться
-            </Button>
-
             <Paragraph>
               <Text type="danger">*</Text>
               {' '}
