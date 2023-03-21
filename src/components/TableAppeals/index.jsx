@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import {
   Table, Typography, Row, Col,
 } from 'antd';
+import dayjs from 'dayjs';
+import config from 'config';
 import { columns } from './config';
 
 const { Paragraph, Link } = Typography;
@@ -37,7 +39,7 @@ const TableAppeals = ({ data, loading }) => {
           <Row gutter={20}>
             <Col>
               <Paragraph strong>Дата отправки:</Paragraph>
-              <Paragraph>{record.created_at}</Paragraph>
+              <Paragraph>{dayjs(record.created_at).format(config.dateFormat)}</Paragraph>
             </Col>
             <Col>
               <Paragraph strong>Автор:</Paragraph>

@@ -1,5 +1,7 @@
 import { Typography } from 'antd';
 import Statuses from 'components/Statuses';
+import config from 'config';
+import dayjs from 'dayjs';
 
 const { Link } = Typography;
 
@@ -16,6 +18,7 @@ export const columns = [
   },
   {
     title: 'Дата отправки',
+    render: (date) => dayjs(date, config.dateFormat),
     dataIndex: 'created_at',
     key: 'created_at',
   },
