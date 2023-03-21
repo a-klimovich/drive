@@ -6,6 +6,7 @@ import {
   Col,
   Form,
 } from 'antd';
+import config from 'config';
 
 const PersonalDate = () => (
   <>
@@ -100,13 +101,13 @@ const PersonalDate = () => (
             },
           ]}
         >
-          <DatePicker placeholder="Выберите дату" />
+          <DatePicker placeholder="Выберите дату" format={config.dateFormat} />
         </Form.Item>
       </Col>
 
       <Col xs={24} sm={12} md={12} lg={8}>
         <Form.Item name="date_certificate_stop" label="Дата приостановления действий">
-          <DatePicker placeholder="Выберите дату" />
+          <DatePicker placeholder="Выберите дату" format={config.dateFormat} />
         </Form.Item>
       </Col>
 
@@ -115,7 +116,7 @@ const PersonalDate = () => (
           name="date_certificate_renew"
           label="Дата возобновления действия"
         >
-          <DatePicker placeholder="Выберите дату" />
+          <DatePicker placeholder="Выберите дату" format={config.dateFormat} />
         </Form.Item>
       </Col>
     </Row>

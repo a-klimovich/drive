@@ -11,6 +11,8 @@ import request from 'api/axios';
 import BaseTemplate from 'templates';
 import Loader from 'components/Loader';
 import openNotification from 'components/Toasts';
+import baseConfig from 'config';
+
 import PersonalDate from './__common/PersonalDate';
 import Membership from './__common/Membership';
 import WorakPlaces from './__common/WorakPlaces';
@@ -157,7 +159,6 @@ const Profile = () => {
               <Radio.Group
                 options={config.qualification}
                 onChange={handleChangeQualification}
-                // value={qualification}
                 className="radio-grup-column"
                 direction="vertical"
               />
@@ -175,7 +176,6 @@ const Profile = () => {
               ]}
             >
               <CheckboxGroup
-                // value={education}
                 onChange={handleChangeEducation}
               >
                 <Row>
@@ -206,16 +206,10 @@ const Profile = () => {
             <Row
               gutter={[
                 {
-                  xs: 5,
-                  sm: 5,
-                  md: 10,
-                  lg: 15,
+                  xs: 5, sm: 5, md: 10, lg: 15,
                 },
                 {
-                  xs: 4,
-                  sm: 6,
-                  md: 15,
-                  lg: 10,
+                  xs: 4, sm: 6, md: 15, lg: 10,
                 },
               ]}
             >
@@ -231,6 +225,7 @@ const Profile = () => {
                 >
                   <DatePicker.RangePicker
                     onChange={(val) => setDataRangeInsurance(val)}
+                    format={baseConfig.dateFormat}
                   />
                 </Form.Item>
               </Col>
@@ -247,6 +242,7 @@ const Profile = () => {
                 >
                   <DatePicker.RangePicker
                     onChange={(val) => setPeriodInsuranceStart(val)}
+                    format={baseConfig.dateFormat}
                   />
                 </Form.Item>
               </Col>
@@ -255,10 +251,7 @@ const Profile = () => {
                 <Row
                   gutter={[
                     {
-                      xs: 5,
-                      sm: 5,
-                      md: 10,
-                      lg: 15,
+                      xs: 5, sm: 5, md: 10, lg: 15,
                     },
                     0,
                   ]}

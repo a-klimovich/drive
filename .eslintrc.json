@@ -33,6 +33,10 @@
             "./src/context"
           ],
           [
+            "config",
+            "./src/config"
+          ],
+          [
             "utils",
             "./src/utils"
           ],

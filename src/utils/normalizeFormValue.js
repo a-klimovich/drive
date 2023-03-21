@@ -1,21 +1,19 @@
-/* eslint-disable max-len */
 import dayjs from 'dayjs';
+import config from 'config';
 
-const foramtDate = 'YYYY-MM-DD';
-
-export const dataFormater = (val) => (val ? dayjs(val).format(foramtDate) : '');
+export const dataFormater = (val) => (val ? dayjs(val).format(config.dateFormat) : '');
 
 export const dateToStringFormater = (val) => {
-  if (val?.length > 1 && val[0] !== null && val[1] !== null) {
-    return val?.map((d) => dayjs(d).format(foramtDate));
+  if (val?.length > 1 && !val.includes(null)) {
+    return val?.map((d) => dayjs(d).format(config.dateFormat));
   }
 
   return null;
 };
 
 const formater = (field) => {
-  if (field !== null && field[0] !== null && field[1] !== null) {
-    return [dayjs(field[0], foramtDate), dayjs(field[1], foramtDate)];
+  if (!field.includes(null)) {
+    return field.map((date) => dayjs(date));
   }
 
   return null;

@@ -1,6 +1,7 @@
 import {
   DatePicker, Input, Row, Col, Form,
 } from 'antd';
+import config from 'config';
 
 const Insurance = ({ provideServicesTaxConsultant }) => (
   <Row
@@ -49,7 +50,7 @@ const Insurance = ({ provideServicesTaxConsultant }) => (
           },
         ]}
       >
-        <DatePicker placeholder="Выберите дату" />
+        <DatePicker placeholder="Выберите дату" format={config.dateFormat} />
       </Form.Item>
     </Col>
   </Row>
