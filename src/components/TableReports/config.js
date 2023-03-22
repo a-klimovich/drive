@@ -18,7 +18,7 @@ export const columns = [
   },
   {
     title: 'Дата отправки',
-    render: (date) => dayjs(date, config.dateFormat),
+    render: (date) => dayjs(date).format(config.dateFormat),
     dataIndex: 'created_at',
     key: 'created_at',
   },
