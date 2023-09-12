@@ -1,11 +1,21 @@
+import { useState, useEffect, useContext } from 'react';
 import {
-  useState, useEffect, useContext,
-} from 'react';
-import {
-  DatePicker, Radio, Checkbox, InputNumber, Row, Col, Form, Button, Typography,
+  DatePicker,
+  Radio,
+  Checkbox,
+  InputNumber,
+  Row,
+  Col,
+  Form,
+  Button,
+  Typography,
 } from 'antd';
 import Context from 'context/Context';
-import { dataFormater, dateToStringFormater, normalizeValue } from 'utils/normalizeFormValue';
+import {
+  dataFormater,
+  dateToStringFormater,
+  normalizeValue,
+} from 'utils/normalizeFormValue';
 import { BASE_URL } from 'api/url';
 import request from 'api/axios';
 import BaseTemplate from 'templates';
@@ -142,7 +152,8 @@ const Profile = () => {
             <Paragraph>
               <Text type="danger">*</Text>
               {' '}
-              - отмечены поля обязательные для заполнения
+              - отмечены поля обязательные для
+              заполнения
             </Paragraph>
 
             <PersonalDate />
@@ -153,9 +164,7 @@ const Profile = () => {
 
             <p className="required-mark">Квалификация, как в аттестате:</p>
 
-            <Form.Item
-              name="qualification"
-            >
+            <Form.Item name="qualification">
               <Radio.Group
                 options={config.qualification}
                 onChange={handleChangeQualification}
@@ -175,9 +184,7 @@ const Profile = () => {
                 },
               ]}
             >
-              <CheckboxGroup
-                onChange={handleChangeEducation}
-              >
+              <CheckboxGroup onChange={handleChangeEducation}>
                 <Row>
                   <Col>
                     <Checkbox value="checked-1">Экономическое</Checkbox>
@@ -201,15 +208,23 @@ const Profile = () => {
           <div className="container">
             <p className="centered mb-3">Договор страхования ответственности</p>
 
-            <Insurance provideServicesTaxConsultant={provideServicesTaxConsultant} />
+            <Insurance
+              provideServicesTaxConsultant={provideServicesTaxConsultant}
+            />
 
             <Row
               gutter={[
                 {
-                  xs: 5, sm: 5, md: 10, lg: 15,
+                  xs: 5,
+                  sm: 5,
+                  md: 10,
+                  lg: 15,
                 },
                 {
-                  xs: 4, sm: 6, md: 15, lg: 10,
+                  xs: 4,
+                  sm: 6,
+                  md: 15,
+                  lg: 10,
                 },
               ]}
             >
@@ -251,13 +266,19 @@ const Profile = () => {
                 <Row
                   gutter={[
                     {
-                      xs: 5, sm: 5, md: 10, lg: 15,
+                      xs: 5,
+                      sm: 5,
+                      md: 10,
+                      lg: 15,
                     },
                     0,
                   ]}
                 >
                   <Col span={12}>
-                    <Form.Item name="liability_limit" label="Лимит ответственности">
+                    <Form.Item
+                      name="liability_limit"
+                      label="Лимит ответственности"
+                    >
                       <InputNumber placeholder="Введите сумму" />
                     </Form.Item>
                   </Col>
@@ -276,7 +297,10 @@ const Profile = () => {
               </Col>
             </Row>
 
-            <p className="centered mb-3">Место работы в качестве налогового консультанта </p>
+            <p className="centered mb-3">
+              Место работы в качестве налогового консультанта
+              {' '}
+            </p>
 
             <WorakPlaces />
           </div>
@@ -290,15 +314,18 @@ const Profile = () => {
 
             <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
 
-            <CheckboxGroup value={legalEntities} onChange={handleChangeLegalEntities}>
+            <CheckboxGroup
+              value={legalEntities}
+              onChange={handleChangeLegalEntities}
+            >
               <Row>
-                {
-                  config.legalEntities.map((item, index) => (
-                    <Col span={24} key={item.id}>
-                      <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
-                    </Col>
-                  ))
-                }
+                {config.legalEntities.map((item, index) => (
+                  <Col span={24} key={item.id}>
+                    <Checkbox value={`checked-${index + 1}`}>
+                      {item.text}
+                    </Checkbox>
+                  </Col>
+                ))}
               </Row>
             </CheckboxGroup>
 
@@ -309,27 +336,30 @@ const Profile = () => {
               onChange={handleChangeIndividualEntrepreneurs}
             >
               <Row>
-                {
-                  config.individualEntrepreneurs.map((item, index) => (
-                    <Col span={24} key={item.id}>
-                      <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
-                    </Col>
-                  ))
-                }
+                {config.individualEntrepreneurs.map((item, index) => (
+                  <Col span={24} key={item.id}>
+                    <Checkbox value={`checked-${index + 1}`}>
+                      {item.text}
+                    </Checkbox>
+                  </Col>
+                ))}
               </Row>
             </CheckboxGroup>
 
             <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
 
-            <CheckboxGroup value={individualPerson} onChange={handleChangeIndividualPerson}>
+            <CheckboxGroup
+              value={individualPerson}
+              onChange={handleChangeIndividualPerson}
+            >
               <Row>
-                {
-                  config.individualPerson.map((item, index) => (
-                    <Col span={24} key={item.id}>
-                      <Checkbox value={`checked-${index + 1}`}>{item.text}</Checkbox>
-                    </Col>
-                  ))
-                }
+                {config.individualPerson.map((item, index) => (
+                  <Col span={24} key={item.id}>
+                    <Checkbox value={`checked-${index + 1}`}>
+                      {item.text}
+                    </Checkbox>
+                  </Col>
+                ))}
               </Row>
             </CheckboxGroup>
 

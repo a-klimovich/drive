@@ -22,6 +22,10 @@ export default {
       label: 'USD',
       value: 'usd',
     },
+    {
+      label: 'EUR',
+      value: 'eur',
+    },
   ],
   legalEntities: [
     {
