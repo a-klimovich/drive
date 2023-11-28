@@ -37,6 +37,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 1rem;
 
     margin-top: 20px;
 
@@ -54,6 +55,16 @@
         border-color: #404952;
       }
     }
+  }
+}
+
+.checkbox-hide-me__wrapper {
+  background-color: $gray-light-2;
+  padding: 1rem;
+  margin-top: 0.6rem;
+  > div {
+    max-width: fit-content;
+    margin: 0 auto;
   }
 }
 

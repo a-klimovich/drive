@@ -34,7 +34,6 @@ import config from './config';
 const { Text, Paragraph } = Typography;
 const { Group: CheckboxGroup } = Checkbox;
 
-// ! ПЕРЕПИСАТЬ ВСЮ ФОРМУ
 const Profile = () => {
   const [form] = Form.useForm();
   const { state, setLoaded, loaded } = useContext(Context);
@@ -362,7 +361,19 @@ const Profile = () => {
                 ))}
               </Row>
             </CheckboxGroup>
+          </div>
 
+          <div className="checkbox-hide-me__wrapper">
+            <Form.Item name="is_hidden" valuePropName="checked">
+              <Checkbox>
+                <b>HE</b>
+                {' '}
+                отображать мои данные на сайте ПНК
+              </Checkbox>
+            </Form.Item>
+          </div>
+
+          <div className="container">
             <Form.Item className="form-profile-btn">
               <Button htmlType="primary">Сохранить</Button>
             </Form.Item>

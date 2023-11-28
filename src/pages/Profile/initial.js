@@ -32,6 +32,7 @@ const initialValue = {
   legal_entity_services: [],
   entrepreneurs_services: [],
   personal_services: [],
+  is_hidden: false,
 };
 
 export default initialValue;
