@@ -22,6 +22,17 @@ const Contacts = () => {
   const [isWarning, setIsWarning] = useState(null);
   const [helpMessage, setHelpMessage] = useState(null);
 
+  const validateUrl = (_, value, callback) => {
+    if (
+      value
+      && !/^(http|https):\/\/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/\S*)?$/.test(value)
+    ) {
+      callback('Ожидаемый формат https://сайт.доменная_зона или http://сайт.доменная_зона');
+    } else {
+      callback();
+    }
+  };
+
   return (
     <Row gutter={gutter}>
       <Col xs={24} sm={12} md={12} lg={8}>
@@ -84,7 +95,18 @@ const Contacts = () => {
       </Col>
 
       <Col xs={24} sm={12} md={12} lg={8}>
-        <Form.Item name="url" label="Адрес официального сайта">
+        <Form.Item
+          name="url"
+          label="Сайт (блог)"
+          rules={[
+            {
+              required: true,
+              message: 'Пожалуйста, введите Сайт (блог)',
+              validateStatus: 'error',
+            },
+            { validator: validateUrl },
+          ]}
+        >
           <Input placeholder="Введите адрес" />
         </Form.Item>
       </Col>
