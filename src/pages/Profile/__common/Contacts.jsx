@@ -100,7 +100,7 @@ const Contacts = () => {
           label="Сайт (блог)"
           rules={[
             {
-              required: true,
+              required: false,
               message: 'Пожалуйста, введите Сайт (блог)',
               validateStatus: 'error',
             },
