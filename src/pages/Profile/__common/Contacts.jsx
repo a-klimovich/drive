@@ -107,7 +107,7 @@ const Contacts = () => {
             { validator: validateUrl },
           ]}
         >
-          <Input placeholder="Введите адрес" />
+          <Input placeholder="Введите сайт(блог)" />
         </Form.Item>
       </Col>
     </Row>
