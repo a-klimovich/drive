@@ -17,17 +17,17 @@ const TableAppeals = ({ data, loading }) => {
     return (
       <>
         <Paragraph strong>Ситуация распространенная или единичный случай</Paragraph>
-        <Paragraph>{record.appeal}</Paragraph>
+        <Paragraph>{record.common_or_not}</Paragraph>
         <Paragraph strong>
           Ваши предложения о возможном порядке применения указанной нормы
           законодательства или ее корректировки для урегулирования вопроса, ситуации
         </Paragraph>
-        <Paragraph>{record.common_or_not}</Paragraph>
+        <Paragraph>{record.suggestions}</Paragraph>
         <Paragraph strong>
           Ваш вариант текста обращения от ПНК в государственные органы за
           разъяснением и урегулированием сложившейся ситуации
         </Paragraph>
-        <Paragraph>{record.suggestions}</Paragraph>
+        <Paragraph>{record.appeal}</Paragraph>
 
         <Row
           justify="space-between"
