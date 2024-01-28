@@ -27,6 +27,14 @@ const Appeals = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleStatus = (val, id) => {
+    request
+      .post(`${BASE_URL.APIALS}/${id}`, { status: val })
+      .catch((err) => {
+        openNotification(false, err);
+      });
+  };
+
   return (
     <BaseTemplate>
       <div className="container">
@@ -35,7 +43,7 @@ const Appeals = () => {
           применения отдельных норм налогового законодательства
         </Title>
 
-        <TableAppeals data={response} loading={loading} />
+        <TableAppeals data={response} loading={loading} handleStatus={handleStatus} />
       </div>
     </BaseTemplate>
   );

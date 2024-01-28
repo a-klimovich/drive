@@ -1,14 +1,18 @@
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import {
   Table, Typography, Row, Col,
 } from 'antd';
 import dayjs from 'dayjs';
 import config from 'config';
+import Context from 'context/Context';
 import { columns } from './config';
 
 const { Paragraph, Link } = Typography;
 
-const TableAppeals = ({ data, loading }) => {
+const TableAppeals = ({ data, loading, handleStatus }) => {
+  const { state } = useContext(Context);
+  const isUserCanChangeStatus = state?.user?.appeal_status;
+
   const ExtendContent = useCallback((record) => {
     const fileList = record?.docs?.map(({ file, id, name }) => (
       <Link key={`link_${id}`} href={file}>{name}</Link>
@@ -54,7 +58,7 @@ const TableAppeals = ({ data, loading }) => {
   return (
     <Table
       dataSource={data}
-      columns={columns}
+      columns={columns(handleStatus, isUserCanChangeStatus)}
       loading={loading}
       expandable={{
         expandedRowRender: (record) => ExtendContent(record),
