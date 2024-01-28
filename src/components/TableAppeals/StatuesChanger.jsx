@@ -20,7 +20,7 @@ const StatuesChanger = ({
 
   const handleStatus = (val, appealId) => {
     request
-      .patch(`${BASE_URL.APIALS}/${appealId}`, { status: val })
+      .patch(`${BASE_URL.APIALS}${appealId}`, { status: val })
       .then(() => {
         setCurrentStatus(statusesList[val]);
       })
@@ -30,7 +30,7 @@ const StatuesChanger = ({
   };
 
   return (
-    <Space>
+    <Space wrap>
       <Statuses
         status={currentStatus}
       />
