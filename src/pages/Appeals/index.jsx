@@ -22,18 +22,10 @@ const Appeals = () => {
         setResponse(newData);
       })
       .catch((err) => {
-        openNotification(false, err);
+        openNotification(false, err.message);
       })
       .finally(() => setLoading(false));
   }, []);
-
-  const handleStatus = (val, id) => {
-    request
-      .post(`${BASE_URL.APIALS}/${id}`, { status: val })
-      .catch((err) => {
-        openNotification(false, err);
-      });
-  };
 
   return (
     <BaseTemplate>
@@ -43,7 +35,7 @@ const Appeals = () => {
           применения отдельных норм налогового законодательства
         </Title>
 
-        <TableAppeals data={response} loading={loading} handleStatus={handleStatus} />
+        <TableAppeals data={response} loading={loading} />
       </div>
     </BaseTemplate>
   );

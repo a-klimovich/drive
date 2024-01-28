@@ -9,7 +9,7 @@ import { columns } from './config';
 
 const { Paragraph, Link } = Typography;
 
-const TableAppeals = ({ data, loading, handleStatus }) => {
+const TableAppeals = ({ data, loading }) => {
   const { state } = useContext(Context);
   const isUserCanChangeStatus = state?.user?.appeal_status;
 
@@ -58,7 +58,7 @@ const TableAppeals = ({ data, loading, handleStatus }) => {
   return (
     <Table
       dataSource={data}
-      columns={columns(handleStatus, isUserCanChangeStatus)}
+      columns={columns(isUserCanChangeStatus)}
       loading={loading}
       expandable={{
         expandedRowRender: (record) => ExtendContent(record),

@@ -1,9 +1,12 @@
 import Statuses from 'components/Statuses';
 import { Space, Select } from 'antd';
 import { useState } from 'react';
+import request from 'api/axios';
+import { BASE_URL } from 'api/url';
+import openNotification from 'components/Toasts';
 
 const StatuesChanger = ({
-  status, id, handleStatus, isUserCanChangeStatus,
+  status, id, isUserCanChangeStatus,
 }) => {
   const [currentStatus, setCurrentStatus] = useState(status);
 
@@ -15,22 +18,28 @@ const StatuesChanger = ({
     in_job: 'В разработке',
   };
 
-  console.log(currentStatus);
+  const handleStatus = (val, appealId) => {
+    request
+      .patch(`${BASE_URL.APIALS}/${appealId}`, { status: val })
+      .then(() => {
+        setCurrentStatus(statusesList[val]);
+      })
+      .catch((err) => {
+        openNotification(false, err.message);
+      });
+  };
 
   return (
     <Space>
       <Statuses
-        status={currentStatus}
+        status={status}
       />
 
-      {true && (
+      {isUserCanChangeStatus && (
       <Select
         size="small"
         defaultValue={currentStatus}
-        onChange={(value) => {
-          setCurrentStatus(statusesList[value]);
-          handleStatus(value, id);
-        }}
+        onChange={(value) => handleStatus(value, id)}
         options={[
           { value: 'sent', label: 'Отправлено' },
           { value: 'accepted', label: 'Принято' },
