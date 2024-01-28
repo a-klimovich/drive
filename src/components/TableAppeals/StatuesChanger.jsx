@@ -32,7 +32,7 @@ const StatuesChanger = ({
   return (
     <Space>
       <Statuses
-        status={status}
+        status={currentStatus}
       />
 
       {isUserCanChangeStatus && (
