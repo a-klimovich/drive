@@ -3,12 +3,14 @@ import {
   DatePicker,
   Radio,
   Checkbox,
+  Input,
   InputNumber,
   Row,
   Col,
   Form,
   Button,
   Typography,
+  Upload,
 } from 'antd';
 import Context from 'context/Context';
 import {
@@ -34,6 +36,48 @@ import config from './config';
 const { Text, Paragraph } = Typography;
 const { Group: CheckboxGroup } = Checkbox;
 
+const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png'];
+const MAX_PHOTO_SIZE = 512 * 1024;
+const PHOTO_ASPECT_RATIO = 3 / 4;
+const PHOTO_ASPECT_RATIO_TOLERANCE = 0.02;
+
+const getImageAspectRatio = (file) => new Promise((resolve) => {
+  const image = new Image();
+  const url = URL.createObjectURL(file);
+
+  image.onload = () => {
+    URL.revokeObjectURL(url);
+    resolve(image.width / image.height);
+  };
+  image.onerror = () => {
+    URL.revokeObjectURL(url);
+    resolve(null);
+  };
+  image.src = url;
+});
+
+const beforePhotoUpload = async (file) => {
+  if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
+    openNotification('warning', 'Можно загрузить только файлы JPG или PNG');
+    return Upload.LIST_IGNORE;
+  }
+
+  if (file.size > MAX_PHOTO_SIZE) {
+    openNotification('warning', 'Размер файла не должен превышать 512 КБ');
+    return Upload.LIST_IGNORE;
+  }
+
+  const aspectRatio = await getImageAspectRatio(file);
+  if (!aspectRatio || Math.abs(aspectRatio - PHOTO_ASPECT_RATIO) > PHOTO_ASPECT_RATIO_TOLERANCE) {
+    openNotification('warning', 'Фото должно иметь соотношение сторон 3:4');
+    return Upload.LIST_IGNORE;
+  }
+
+  return false;
+};
+
+const getPhotoFromEvent = (e) => (Array.isArray(e) ? e : e?.fileList);
+
 const Profile = () => {
   const [form] = Form.useForm();
   const { state, setLoaded, loaded } = useContext(Context);
@@ -46,6 +90,7 @@ const Profile = () => {
   const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
   const [services, setServices] = useState([]);
+  const [photoFileList, setPhotoFileList] = useState([]);
   const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] = useState(false);
 
   const handleChangeQualification = (e, val) => setQualification(e?.target?.value || val);
@@ -90,10 +135,12 @@ const Profile = () => {
       date_membership_stop,
       date_certificate_renew,
       date_course,
+      photo,
+      ...restValues
     } = values;
 
     const updateValue = {
-      ...values,
+      ...restValues,
       currency,
       qualification,
 
@@ -114,9 +161,25 @@ const Profile = () => {
       date_course: dataFormatter(date_course),
     };
 
+    const photoFile = photo?.[0]?.originFileObj;
+
+    let payload = updateValue;
+    let requestConfig;
+
+    if (photoFile) {
+      const formData = new FormData();
+      formData.append('photo', photoFile);
+      Object.entries(updateValue).forEach(([key, val]) => {
+        const isPlainValue = val === null || typeof val !== 'object';
+        formData.append(key, isPlainValue ? val ?? '' : JSON.stringify(val));
+      });
+      payload = formData;
+      requestConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    }
+
     // REQUEST
     request
-      .patch(`${BASE_URL.USER}`, updateValue)
+      .patch(`${BASE_URL.USER}`, payload, requestConfig)
       .then((response) => {
         if (response?.statusText === 'OK') {
           openNotification('OK');
@@ -157,7 +220,36 @@ const Profile = () => {
               - отмечены поля обязательные для
               заполнения
             </Paragraph>
+          </div>
 
+          <div className="container mb-3">
+            <Row>
+              <Col xs={24}>
+                <Form.Item
+                  name="photo"
+                  label="Загрузить фото"
+                  valuePropName="fileList"
+                  getValueFromEvent={getPhotoFromEvent}
+                >
+                  <Paragraph>
+                    Добавить ваше изображение в формате 3:4 с максимальным
+                    размером файла до 512 КБ
+                  </Paragraph>
+                  <Upload
+                    accept=".jpg,.jpeg,.png"
+                    maxCount={1}
+                    beforeUpload={beforePhotoUpload}
+                    fileList={photoFileList}
+                    onChange={({ fileList }) => setPhotoFileList(fileList)}
+                  >
+                    <Button>Выбрать файл</Button>
+                  </Upload>
+                </Form.Item>
+              </Col>
+            </Row>
+          </div>
+
+          <div className="container mb-3">
             <PersonalDate />
 
             <p className="centered mb-3">Член ПНК</p>
@@ -196,6 +288,21 @@ const Profile = () => {
                   </Col>
                 </Row>
               </CheckboxGroup>
+            </Form.Item>
+          </div>
+
+          <div className="container">
+            <Form.Item>
+              <Row>
+                <Col xs={24} sm={12} md={12} lg={8}>
+                  <Form.Item
+                    name="experience"
+                    label="Стаж работы:"
+                  >
+                    <Input placeholder="30 лет" />
+                  </Form.Item>
+                </Col>
+              </Row>
             </Form.Item>
           </div>
 
@@ -320,7 +427,24 @@ const Profile = () => {
           <div className="container">
             <p className="centered mb-3">Контактная информация</p>
 
-            <Contacts />
+            <div className="mb-3">
+              <Contacts />
+            </div>
+
+            <p className="centered mb-3">Колличество заключенныйх договоров</p>
+
+            <p className="centered mb-3">
+              <Row>
+                <Col xs={24} sm={12} md={12} lg={8}>
+                  <Form.Item
+                    name="contracts_count"
+                    label="Колличество договоров"
+                  >
+                    <InputNumber placeholder="3" />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </p>
 
             <p className="centered mb-3">
               Сферы деятельности консультируемого лица
@@ -328,9 +452,9 @@ const Profile = () => {
 
             <CheckboxGroup value={services} onChange={handleChangeServices}>
               <Row>
-                {config.services.map((item, index) => (
-                  <Col span={24} key={item.id}>
-                    <Checkbox value={`checked-${index + 1}`}>
+                {config.services.map((item) => (
+                  <Col span={24} key={item.value}>
+                    <Checkbox value={item.value}>
                       {item.text}
                     </Checkbox>
                   </Col>

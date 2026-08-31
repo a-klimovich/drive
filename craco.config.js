@@ -6,12 +6,6 @@ module.exports = {
     port: 3030,
   },
 
-  webpack: {
-    plugins: {
-      remove: ['CaseSensitivePathsPlugin'],
-    },
-  },
-
   plugins: [
     {
       plugin: cracoAlias,
