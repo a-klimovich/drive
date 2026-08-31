@@ -7,6 +7,7 @@ const initialValue = {
   date_certificate_start: null,
   date_certificate_stop: null,
   date_certificate_renew: null,
+  date_course: null,
   qualification: null,
   high_education: [],
   date_membership_start: null,

@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import Context from 'context/Context';
 import {
-  dataFormater,
+  dataFormatter,
   dateToStringFormater,
   normalizeValue,
 } from 'utils/normalizeFormValue';
@@ -45,9 +45,7 @@ const Profile = () => {
   const [qualification, setQualification] = useState('');
   const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
-  const [legalEntities, setLegalEntities] = useState([]);
-  const [individualEntrepreneurs, setIndividualEntrepreneurs] = useState([]);
-  const [individualPerson, setIndividualPerson] = useState([]);
+  const [services, setServices] = useState([]);
   const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] = useState(false);
 
   const handleChangeQualification = (e, val) => setQualification(e?.target?.value || val);
@@ -56,12 +54,8 @@ const Profile = () => {
   const handleProvideServicesTaxConsultant = (checkedValues) => {
     setProvideServicesTaxConsultant(checkedValues.target.checked);
   };
-  const handleChangeIndividualEntrepreneurs = (checkedValues) => {
-    setIndividualEntrepreneurs(checkedValues);
-  };
   const handleChangeEducation = (checkedValues) => setEducation(checkedValues);
-  const handleChangeLegalEntities = (checkedValues) => setLegalEntities(checkedValues);
-  const handleChangeIndividualPerson = (checkedValues) => setIndividualPerson(checkedValues);
+  const handleChangeServices = (checkedValues) => setServices(checkedValues);
 
   useEffect(() => {
     if (user) {
@@ -69,9 +63,7 @@ const Profile = () => {
 
       handleChangeQualification({}, user?.qualification);
       handleCurrencyValue({}, user?.currency);
-      handleChangeLegalEntities(user?.legal_entity_services);
-      handleChangeIndividualEntrepreneurs(user?.entrepreneurs_services);
-      handleChangeIndividualPerson(user?.personal_services);
+      handleChangeServices(user?.services);
       handleChangeEducation(user?.high_education);
       setProvideServicesTaxConsultant(user?.is_consultant);
 
@@ -97,6 +89,7 @@ const Profile = () => {
       date_membership_start,
       date_membership_stop,
       date_certificate_renew,
+      date_course,
     } = values;
 
     const updateValue = {
@@ -106,20 +99,19 @@ const Profile = () => {
 
       high_education: education,
       is_consultant: provideServicesTaxConsultant,
-      legal_entity_services: legalEntities,
-      entrepreneurs_services: individualEntrepreneurs,
-      personal_services: individualPerson,
+      services,
 
       date_insurance_start: dateToStringFormater(dataRangeInsurance),
       period_insurance_start: dateToStringFormater(periodInsuranceStart),
 
-      date_insurance_from: dataFormater(date_insurance_from),
-      date_certificate_stop: dataFormater(date_certificate_stop),
-      date_certificate_start: dataFormater(date_certificate_start),
-      date_membership_exclusion: dataFormater(date_membership_exclusion),
-      date_membership_start: dataFormater(date_membership_start),
-      date_membership_stop: dataFormater(date_membership_stop),
-      date_certificate_renew: dataFormater(date_certificate_renew),
+      date_insurance_from: dataFormatter(date_insurance_from),
+      date_certificate_stop: dataFormatter(date_certificate_stop),
+      date_certificate_start: dataFormatter(date_certificate_start),
+      date_membership_exclusion: dataFormatter(date_membership_exclusion),
+      date_membership_start: dataFormatter(date_membership_start),
+      date_membership_stop: dataFormatter(date_membership_stop),
+      date_certificate_renew: dataFormatter(date_certificate_renew),
+      date_course: dataFormatter(date_course),
     };
 
     // REQUEST
@@ -147,6 +139,17 @@ const Profile = () => {
           scrollToFirstError
           validateTrigger="onSubmit"
         >
+          <div className="checkbox-hide-me__wrapper">
+            <Form.Item name="is_hidden" valuePropName="checked">
+              <Checkbox>
+                <b>HE</b>
+                {' '}
+                отображать мои данные на сайте ПНК
+              </Checkbox>
+            </Form.Item>
+          </div>
+          <br />
+
           <div className="container mb-3">
             <Paragraph>
               <Text type="danger">*</Text>
@@ -196,11 +199,21 @@ const Profile = () => {
             </Form.Item>
           </div>
 
-          <div className="solo-checkbox bg-gray py-2 mb-2">
-            <Form.Item name="is_consultant" valuePropName="checked">
-              <Checkbox onChange={handleProvideServicesTaxConsultant}>
-                Не оказываю услуги в качестве налогового консультанта
-              </Checkbox>
+          <div className="container">
+            <Form.Item>
+              <Row>
+                <Col xs={24} sm={12} md={12} lg={8}>
+                  <Form.Item
+                    name="date_course"
+                    label="Дата прохождения обучения:"
+                  >
+                    <DatePicker
+                      placeholder="Выберите дату"
+                      format={config.dateFormat}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
             </Form.Item>
           </div>
 
@@ -309,50 +322,13 @@ const Profile = () => {
 
             <Contacts />
 
-            <p className="centered mb-3">Оказываемые услуги</p>
+            <p className="centered mb-3">
+              Сферы деятельности консультируемого лица
+            </p>
 
-            <p className="subtitle">ЮРИДИЧЕСКИМ ЛИЦАМ</p>
-
-            <CheckboxGroup
-              value={legalEntities}
-              onChange={handleChangeLegalEntities}
-            >
+            <CheckboxGroup value={services} onChange={handleChangeServices}>
               <Row>
-                {config.legalEntities.map((item, index) => (
-                  <Col span={24} key={item.id}>
-                    <Checkbox value={`checked-${index + 1}`}>
-                      {item.text}
-                    </Checkbox>
-                  </Col>
-                ))}
-              </Row>
-            </CheckboxGroup>
-
-            <p className="subtitle">ИНДИВИДУАЛЬНЫМ ПРЕДПРИНИМАТЕЛЯМ</p>
-
-            <CheckboxGroup
-              value={individualEntrepreneurs}
-              onChange={handleChangeIndividualEntrepreneurs}
-            >
-              <Row>
-                {config.individualEntrepreneurs.map((item, index) => (
-                  <Col span={24} key={item.id}>
-                    <Checkbox value={`checked-${index + 1}`}>
-                      {item.text}
-                    </Checkbox>
-                  </Col>
-                ))}
-              </Row>
-            </CheckboxGroup>
-
-            <p className="subtitle">ФИЗИЧЕСКИМ ЛИЦАМ</p>
-
-            <CheckboxGroup
-              value={individualPerson}
-              onChange={handleChangeIndividualPerson}
-            >
-              <Row>
-                {config.individualPerson.map((item, index) => (
+                {config.services.map((item, index) => (
                   <Col span={24} key={item.id}>
                     <Checkbox value={`checked-${index + 1}`}>
                       {item.text}
@@ -363,12 +339,12 @@ const Profile = () => {
             </CheckboxGroup>
           </div>
 
-          <div className="checkbox-hide-me__wrapper">
-            <Form.Item name="is_hidden" valuePropName="checked">
-              <Checkbox>
-                <b>HE</b>
-                {' '}
-                отображать мои данные на сайте ПНК
+          <br />
+
+          <div className="solo-checkbox bg-gray py-2 mb-2">
+            <Form.Item name="is_consultant" valuePropName="checked">
+              <Checkbox onChange={handleProvideServicesTaxConsultant}>
+                Не оказываю услуги в качестве налогового консультанта
               </Checkbox>
             </Form.Item>
           </div>
