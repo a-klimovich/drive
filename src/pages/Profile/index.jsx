@@ -90,7 +90,6 @@ const Profile = () => {
   const [currency, setCurrency] = useState('');
   const [education, setEducation] = useState([]);
   const [services, setServices] = useState([]);
-  const [photoFileList, setPhotoFileList] = useState([]);
   const [provideServicesTaxConsultant, setProvideServicesTaxConsultant] = useState(false);
 
   const handleChangeQualification = (e, val) => setQualification(e?.target?.value || val);
@@ -225,22 +224,20 @@ const Profile = () => {
           <div className="container mb-3">
             <Row>
               <Col xs={24}>
+                <Paragraph>
+                  Добавить ваше изображение в формате 3:4 с максимальным
+                  размером файла до 512 КБ
+                </Paragraph>
                 <Form.Item
                   name="photo"
                   label="Загрузить фото"
                   valuePropName="fileList"
                   getValueFromEvent={getPhotoFromEvent}
                 >
-                  <Paragraph>
-                    Добавить ваше изображение в формате 3:4 с максимальным
-                    размером файла до 512 КБ
-                  </Paragraph>
                   <Upload
                     accept=".jpg,.jpeg,.png"
                     maxCount={1}
                     beforeUpload={beforePhotoUpload}
-                    fileList={photoFileList}
-                    onChange={({ fileList }) => setPhotoFileList(fileList)}
                   >
                     <Button>Выбрать файл</Button>
                   </Upload>
@@ -431,14 +428,14 @@ const Profile = () => {
               <Contacts />
             </div>
 
-            <p className="centered mb-3">Колличество заключенныйх договоров</p>
+            <p className="centered mb-3">Количество заключенных договоров</p>
 
             <p className="centered mb-3">
               <Row>
                 <Col xs={24} sm={12} md={12} lg={8}>
                   <Form.Item
                     name="contracts_count"
-                    label="Колличество договоров"
+                    label="Количество договоров"
                   >
                     <InputNumber placeholder="3" />
                   </Form.Item>
