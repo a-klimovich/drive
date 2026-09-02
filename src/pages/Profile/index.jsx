@@ -38,25 +38,8 @@ const { Group: CheckboxGroup } = Checkbox;
 
 const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png'];
 const MAX_PHOTO_SIZE = 512 * 1024;
-const PHOTO_ASPECT_RATIO = 3 / 4;
-const PHOTO_ASPECT_RATIO_TOLERANCE = 0.02;
 
-const getImageAspectRatio = (file) => new Promise((resolve) => {
-  const image = new Image();
-  const url = URL.createObjectURL(file);
-
-  image.onload = () => {
-    URL.revokeObjectURL(url);
-    resolve(image.width / image.height);
-  };
-  image.onerror = () => {
-    URL.revokeObjectURL(url);
-    resolve(null);
-  };
-  image.src = url;
-});
-
-const beforePhotoUpload = async (file) => {
+const beforePhotoUpload = (file) => {
   if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
     openNotification('warning', 'Можно загрузить только файлы JPG или PNG');
     return Upload.LIST_IGNORE;
@@ -64,12 +47,6 @@ const beforePhotoUpload = async (file) => {
 
   if (file.size > MAX_PHOTO_SIZE) {
     openNotification('warning', 'Размер файла не должен превышать 512 КБ');
-    return Upload.LIST_IGNORE;
-  }
-
-  const aspectRatio = await getImageAspectRatio(file);
-  if (!aspectRatio || Math.abs(aspectRatio - PHOTO_ASPECT_RATIO) > PHOTO_ASPECT_RATIO_TOLERANCE) {
-    openNotification('warning', 'Фото должно иметь соотношение сторон 3:4');
     return Upload.LIST_IGNORE;
   }
 
@@ -225,7 +202,7 @@ const Profile = () => {
             <Row>
               <Col xs={24}>
                 <Paragraph>
-                  Добавить ваше изображение в формате 3:4 с максимальным
+                  Добавить ваше изображение с максимальным
                   размером файла до 512 КБ
                 </Paragraph>
                 <Form.Item
