@@ -38,8 +38,25 @@ const { Group: CheckboxGroup } = Checkbox;
 
 const ALLOWED_PHOTO_TYPES = ['image/jpeg', 'image/png'];
 const MAX_PHOTO_SIZE = 512 * 1024;
+const PHOTO_ASPECT_RATIO = 3 / 4;
+const PHOTO_ASPECT_RATIO_TOLERANCE = 0.02;
 
-const beforePhotoUpload = (file) => {
+const getImageAspectRatio = (file) => new Promise((resolve) => {
+  const image = new Image();
+  const url = URL.createObjectURL(file);
+
+  image.onload = () => {
+    URL.revokeObjectURL(url);
+    resolve(image.width / image.height);
+  };
+  image.onerror = () => {
+    URL.revokeObjectURL(url);
+    resolve(null);
+  };
+  image.src = url;
+});
+
+const beforePhotoUpload = async (file) => {
   if (!ALLOWED_PHOTO_TYPES.includes(file.type)) {
     openNotification('warning', 'Можно загрузить только файлы JPG или PNG');
     return Upload.LIST_IGNORE;
@@ -50,17 +67,16 @@ const beforePhotoUpload = (file) => {
     return Upload.LIST_IGNORE;
   }
 
+  const aspectRatio = await getImageAspectRatio(file);
+  if (!aspectRatio || Math.abs(aspectRatio - PHOTO_ASPECT_RATIO) > PHOTO_ASPECT_RATIO_TOLERANCE) {
+    openNotification('warning', 'Фото должно иметь соотношение сторон 3:4');
+    return Upload.LIST_IGNORE;
+  }
+
   return false;
 };
 
 const getPhotoFromEvent = (e) => (Array.isArray(e) ? e : e?.fileList);
-
-const fileToBase64 = (file) => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.onload = () => resolve(reader.result.split(',')[1]);
-  reader.onerror = reject;
-  reader.readAsDataURL(file);
-});
 
 const Profile = () => {
   const [form] = Form.useForm();
@@ -108,7 +124,7 @@ const Profile = () => {
     }
   }, [user]);
 
-  const onFinish = async (values) => {
+  const onFinish = (values) => {
     const {
       date_insurance_from,
       date_certificate_start,
@@ -146,13 +162,23 @@ const Profile = () => {
 
     const photoFile = photo?.[0]?.originFileObj;
 
+    let payload = updateValue;
+    let requestConfig;
+
     if (photoFile) {
-      updateValue.photo = await fileToBase64(photoFile);
+      const formData = new FormData();
+      formData.append('photo', photoFile);
+      Object.entries(updateValue).forEach(([key, val]) => {
+        const isPlainValue = val === null || typeof val !== 'object';
+        formData.append(key, isPlainValue ? val ?? '' : JSON.stringify(val));
+      });
+      payload = formData;
+      requestConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
     }
 
     // REQUEST
     request
-      .patch(`${BASE_URL.USER}`, updateValue)
+      .patch(`${BASE_URL.USER}`, payload, requestConfig)
       .then((response) => {
         if (response?.statusText === 'OK') {
           openNotification('OK');
@@ -199,7 +225,7 @@ const Profile = () => {
             <Row>
               <Col xs={24}>
                 <Paragraph>
-                  Добавить ваше изображение с максимальным
+                  Добавить ваше изображение в формате 3:4 с максимальным
                   размером файла до 512 КБ
                 </Paragraph>
                 <Form.Item
