@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "4.7.0",
-    "antd": "5.0.1",
+    "antd": "5.14.0",
     "axios": "0.27.2",
     "axios-retry": "3.3.1",
     "dayjs": "1.11.6",
@@ -40,10 +40,10 @@
   },
   "devDependencies": {
     "@craco/craco": "7.0.0",
-    "craco-alias": "3.0.1",
     "@types/node": "18.0.6",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "craco-alias": "3.0.1",
     "eslint": "8.26.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-import-resolver-alias": "1.1.2",

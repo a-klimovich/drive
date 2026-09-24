@@ -25,7 +25,7 @@ const Contacts = () => {
   const validateUrl = (_, value, callback) => {
     if (
       value
-      && !/^(http|https):\/\/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/\S*)?$/.test(value)
+      && !/^(http|https):\/\/(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(\/\S*)?$/.test(value)
     ) {
       callback('Ожидаемый формат https://сайт.доменная_зона или http://сайт.доменная_зона');
     } else {

@@ -80,7 +80,15 @@ const Profile = () => {
 
   useEffect(() => {
     if (user) {
-      form.setFieldsValue(normalizeValue(user));
+      const { photo, ...userWithoutPhoto } = user;
+      form.setFieldsValue({
+        ...normalizeValue(userWithoutPhoto),
+        photo: photo
+          ? [{
+            uid: '-1', name: 'photo', status: 'done', url: photo,
+          }]
+          : [],
+      });
 
       handleChangeQualification({}, user?.qualification);
       handleCurrencyValue({}, user?.currency);
@@ -146,8 +154,11 @@ const Profile = () => {
       const formData = new FormData();
       formData.append('photo', photoFile);
       Object.entries(updateValue).forEach(([key, val]) => {
-        const isPlainValue = val === null || typeof val !== 'object';
-        formData.append(key, isPlainValue ? val ?? '' : JSON.stringify(val));
+        if (Array.isArray(val)) {
+          val.forEach((item) => formData.append(key, item));
+        } else {
+          formData.append(key, val ?? '');
+        }
       });
       payload = formData;
       requestConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
@@ -271,7 +282,7 @@ const Profile = () => {
                 <Col xs={24} sm={12} md={12} lg={8}>
                   <Form.Item
                     name="experience"
-                    label="Стаж работы:"
+                    label="Стаж работы по специальности:"
                   >
                     <Input placeholder="30 лет" />
                   </Form.Item>
@@ -405,7 +416,7 @@ const Profile = () => {
               <Contacts />
             </div>
 
-            <p className="centered mb-3">Количество заключенных договоров</p>
+            <p className="centered mb-3">Количество заключенных договоров по налоговому консультированию за прошедший календарный год</p>
 
             <p className="centered mb-3">
               <Row>
