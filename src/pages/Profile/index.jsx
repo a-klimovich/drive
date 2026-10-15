@@ -1,4 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
+import {
+  useState, useEffect, useContext, useRef,
+} from 'react';
 import {
   DatePicker,
   Radio,
@@ -57,8 +59,11 @@ const getPhotoFromEvent = (e) => (Array.isArray(e) ? e : e?.fileList);
 
 const Profile = () => {
   const [form] = Form.useForm();
-  const { state, setLoaded, loaded } = useContext(Context);
+  const {
+    state, setState, setLoaded, loaded,
+  } = useContext(Context);
   const { user } = state;
+  const filledRef = useRef(false);
 
   const [dataRangeInsurance, setDataRangeInsurance] = useState(null);
   const [periodInsuranceStart, setPeriodInsuranceStart] = useState(null);
@@ -78,8 +83,10 @@ const Profile = () => {
   const handleChangeEducation = (checkedValues) => setEducation(checkedValues);
   const handleChangeServices = (checkedValues) => setServices(checkedValues);
 
+  // Fill the form once, so later state updates don't wipe unsaved edits
   useEffect(() => {
-    if (user) {
+    if (user && !filledRef.current) {
+      filledRef.current = true;
       const { photo, ...userWithoutPhoto } = user;
       form.setFieldsValue({
         ...normalizeValue(userWithoutPhoto),
@@ -100,6 +107,13 @@ const Profile = () => {
       setPeriodInsuranceStart(user?.period_insurance_start);
     }
   }, [user, form]);
+
+  // E-mail can be changed from the header modal
+  useEffect(() => {
+    if (filledRef.current) {
+      form.setFieldsValue({ email: user?.email });
+    }
+  }, [user?.email, form]);
 
   useEffect(() => {
     if (!user) {
@@ -169,6 +183,7 @@ const Profile = () => {
       .patch(`${BASE_URL.USER}`, payload, requestConfig)
       .then((response) => {
         if (response?.statusText === 'OK') {
+          setState((prev) => ({ ...prev, user: { ...prev.user, ...updateValue } }));
           openNotification('OK');
         }
       })
