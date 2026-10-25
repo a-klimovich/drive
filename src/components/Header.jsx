@@ -9,7 +9,7 @@ import {
 import decorIcon from 'components/Icons/decors';
 import SearchForm from 'components/Form/SearchForm';
 import ModalFeedback from 'components/ModalFeedback';
-import ModalChangeEmail from 'components/ModalChangeEmail';
+import ModalChangeUsername from 'components/ModalChangeUsername';
 
 import Context from 'context/Context';
 
@@ -102,7 +102,7 @@ const Header = () => {
               </Button>
             </Tooltip>
 
-            <ModalChangeEmail />
+            <ModalChangeUsername />
           </div>
         </Col>
 

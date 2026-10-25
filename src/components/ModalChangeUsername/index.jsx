@@ -7,28 +7,28 @@ import request from 'api/axios';
 import openNotification from 'components/Toasts';
 import Context from 'context/Context';
 
-const ModalChangeEmail = () => {
+const ModalChangeUsername = () => {
   const [form] = Form.useForm();
   const { state, setState } = useContext(Context);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const currentEmail = state?.user?.email;
+  const currentUsername = state?.user?.username;
 
   const handleCancel = () => {
     setOpen(false);
   };
 
-  const onFinish = async ({ email }) => {
-    if (email === currentEmail) {
+  const onFinish = async ({ username }) => {
+    if (username === currentUsername) {
       setOpen(false);
       return;
     }
 
     setLoading(true);
     try {
-      await request.patch(`${BASE_URL.USER}`, { email });
-      setState((prev) => ({ ...prev, user: { ...prev.user, email } }));
+      await request.patch(`${BASE_URL.USER}`, { username });
+      setState((prev) => ({ ...prev, user: { ...prev.user, username } }));
       openNotification('OK');
       setOpen(false);
     } catch (error) {
@@ -40,7 +40,7 @@ const ModalChangeEmail = () => {
 
   return (
     <>
-      <Tooltip placement="bottom" title="Изменить e-mail">
+      <Tooltip placement="bottom" title="Изменить e-mail (логин входа)">
         <Button
           type="text"
           htmlType="button"
@@ -51,7 +51,7 @@ const ModalChangeEmail = () => {
       </Tooltip>
 
       <Modal
-        title="Изменить e-mail"
+        title="Изменить e-mail (логин входа)"
         open={open}
         onCancel={handleCancel}
         afterClose={() => form.resetFields()}
@@ -66,20 +66,15 @@ const ModalChangeEmail = () => {
       >
         <Form
           form={form}
-          name="change-email"
+          name="change-username"
           onFinish={onFinish}
           layout="vertical"
-          initialValues={{ email: currentEmail }}
+          initialValues={{ username: currentUsername }}
         >
           <Form.Item
-            name="email"
+            name="username"
             label="E-mail"
-            rules={[
-              {
-                required: true,
-                type: 'email',
-              },
-            ]}
+            rules={[{ required: true, whitespace: true, message: 'Введите e-mail' }]}
           >
             <Input placeholder="Введите e-mail" />
           </Form.Item>
@@ -89,4 +84,4 @@ const ModalChangeEmail = () => {
   );
 };
 
-export default ModalChangeEmail;
+export default ModalChangeUsername;
